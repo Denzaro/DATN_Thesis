@@ -1,0 +1,74 @@
+\chapter{CƠ SỞ LÝ THUYẾT}
+\section{TỔNG QUAN VỀ GIAO THÔNG VÀ MÔ HÌNH GIAO THÔNG}
+\subsection{Các tiêu chí cơ bản trong phân tích lưu lượng}
+\subsection{Các mô hình giao thông}
+\subsection{Vai trò mô phỏng giao thông trong quản lý đô thị}
+
+
+\section{GIỚI THIỆU XỬ LÝ ẢNH}
+Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.
+
+Về bản chất, xử lý ảnh là quá trình thao tác trực tiếp trên ma trận điểm ảnh để làm rõ thông tin hữu ích và loại bỏ nhiễu hay các thành phần không cần thiết. Các kỹ thuật này thường được chia làm hai mức: xử lý ảnh mức thấp và mức cao. Mức thấp chủ yếu gồm các phép biến đổi tín hiệu như lọc nhiễu, điều chỉnh độ sáng, thay đổi không gian màu hoặc tăng độ sắc nét mà không xét đến nội dung ảnh. Trong khi đó, xử lý ảnh mức cao tập trung vào việc trích xuất đặc trưng như biên cạnh, điểm đặc trưng, kết cấu hay hình dạng, tạo dữ liệu có ý nghĩa cho các mô hình nhận diện và học sâu.
+Các thành phần cơ bản của xử lý ảnh:
+\begin{itemize}
+    \item \textbf{Hệ thống thu nhận hình ảnh (Image Sensor): } Để thu được ảnh số, cần hai thành phần cơ bản. Thứ nhất là cảm biến vật lý, có khả năng phản hồi với năng lượng phát ra từ đối tượng quan sát. Thứ hai là thiết bị chuyển đổi tín hiệu từ cảm biến sang dạng số, thường gọi là bộ số hóa (digitizer). Bộ số hóa này chịu trách nhiệm biến các tín hiệu thu được từ cảm biến thành dữ liệu số để máy tính có thể xử lý.
+    \item \textbf{Phần cứng xử lý ảnh chuyên dụng (Specialized Image Processing Hardware): } Để thực hiện các phép tính số học và logic trên toàn bộ ảnh, cần kết hợp giữa bộ số hóa và phần cứng chuyên dụng, thường được gọi là hệ thống tiền xử lý (front-end subsystem). Tốc độ xử lý của phần cứng này là yếu tố quan trọng nhất, vì các máy tính thông thường khó đáp ứng được yêu cầu truyền dữ liệu với tốc độ cao cần thiết cho xử lý ảnh thời gian thực.
+    \item \textbf{Máy tính: (Computer): } Máy tính trong hệ thống xử lý ảnh là máy tính đa năng, có thể là một PC thông thường hoặc siêu máy tính tùy vào quy mô ứng dụng. Một máy tính cá nhân cấu hình tốt thường đủ cho các tác vụ xử lý ảnh offline, phục vụ nghiên cứu và phân tích dữ liệu hình ảnh.
+    \item \textbf{Phần mềm xử lý ảnh (Image Processing Software): } Phần mềm xử lý ảnh gồm các module chuyên dụng thực hiện những nhiệm vụ cụ thể. Một bộ phần mềm thiết kế tốt sẽ cho phép người dùng viết ít lệnh nhất, đồng thời tận dụng tối đa các module có sẵn. Các gói phần mềm phát triển cao còn cho phép tích hợp các module và câu lệnh lập trình từ ít nhất một ngôn ngữ lập trình. Ví dụ, MATLAB là một trong những công cụ phổ biến được dùng trong các hệ thống xử lý ảnh.
+    \item \textbf{Lưu trữ dữ liệu (Mass Storage):} Lưu trữ là yếu tố quan trọng trong xử lý ảnh, đặc biệt khi làm việc với các ảnh có dung lượng lớn. Ví dụ, một ảnh có kích thước 1024 × 1024 pixel cần khoảng 1 megabyte nếu chưa nén. Các hệ thống xử lý ảnh thường phải lưu trữ hàng nghìn hoặc thậm chí hàng triệu ảnh. Hệ thống lưu trữ số tuân theo ba nguyên tắc cơ bản: Lưu trữ tạm thời (dùng trong quá trình xử lý), lưu trữ trực tuyến (phục vụ truy suất nhanh) và lưu trữ lâu dài (truy xuất ít, lưu trữ dài hạn.).
+    \item \textbf{Hiển thị hình ảnh (Image Displays): } Màn hình hiển thị thường là màn hình màu phẳng, được điều khiển bởi card đồ họa hoặc card hiển thị hình ảnh. Đây là thành phần quan trọng giúp máy tính trình chiếu và thao tác với dữ liệu hình ảnh.
+    \item \textbf{Thiết bị in ấn (Hardcopy): } Để lưu trữ hoặc trình bày hình ảnh, có thể dùng các thiết bị in ấn và ghi hình, bao gồm máy in laser, máy ảnh phim, thiết bị nhạy nhiệt, máy in phun, hoặc các phương tiện số như ổ đĩa quang và CD-ROM. Phim ảnh cung cấp độ phân giải cao nhất, trong khi giấy là phương tiện dễ sử dụng để trình bày nội dung. Khi dùng thiết bị chiếu ảnh số, hình ảnh vẫn tồn tại dưới dạng dữ liệu số, giúp dễ dàng trình chiếu hoặc lưu trữ lâu dài.
+    \item \textbf{Mạng và điện toán đám mây (Cloud): } Trong thời đại hiện nay, mạng và điện toán đám mây là những yếu tố thiết yếu trong xử lý ảnh. Vì dữ liệu hình ảnh thường có dung lượng rất lớn, băng thông trở thành vấn đề quan trọng khi truyền tải. Khi gửi dữ liệu qua Internet đến các địa điểm từ xa, hiệu quả truyền tải không phải lúc nào cũng cao, do đó công nghệ cáp quang và các giải pháp băng thông rộng được sử dụng. Bên cạnh đó, nén dữ liệu ảnh đóng vai trò quan trọng để giảm dung lượng truyền tải, giúp gửi lượng lớn hình ảnh một cách nhanh chóng và hiệu quả.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/digital_image_processing.png}
+    \captionsetup{justification=centering}
+    \caption[Các thành phần cơ bản của xử lý ảnh]{Các thành phần cơ bản của xử lý ảnh}
+    \label{fig:digital_image_processing}
+\end{figure}
+
+Trong bối cảnh ứng dụng hiện đại, đặc biệt là các hệ thống thông minh như theo dõi giao thông, giám sát đô thị hay phân tích dữ liệu từ camera, xử lý ảnh giữ vai trò như một giai đoạn tiền xử lý không thể thiếu. Ví dụ, dữ liệu từ camera giao thông thường gặp nhiều hạn chế: ánh sáng thay đổi liên tục, điều kiện thời tiết gây nhiễu, độ phân giải không đồng đều, và vật thể thường nhỏ hoặc bị che khuất. Nếu không có bước xử lý ảnh phù hợp, những hạn chế này sẽ ảnh hưởng trực tiếp đến độ chính xác của các mô hình phát hiện và đếm phương tiện. Các kỹ thuật phổ biến như cân bằng histogram, lọc Gaussian, chuyển đổi sang ảnh xám, khử nhiễu bằng median filter hay tăng độ tương phản đều được áp dụng để cải thiện độ rõ ràng trước khi đưa ảnh vào pipeline phân tích.
+
+Sự phát triển của học sâu trong hơn một thập kỷ qua đã mở ra một hướng mới cho xử lý ảnh, nơi mà các mô hình không chỉ thực hiện các phép biến đổi dựa trên quy tắc cố định mà còn học trực tiếp từ dữ liệu để tối ưu hóa chất lượng đầu ra. Các bài toán như khử nhiễu (denoising), tăng độ phân giải (super-resolution), tái tạo ảnh thiếu thông tin (inpainting), tách nền và nhiều dạng biến đổi phức tạp khác đều đạt được chất lượng vượt trội nhờ mạng nơ-ron tích chập (CNN) và các mô hình sinh ảnh như GAN. Đặc biệt, các hệ thống giám sát giao thông sử dụng camera có thể hưởng lợi trực tiếp từ những kỹ thuật này: ảnh từ camera độ phân giải thấp có thể được tăng cường bằng super-resolution, giúp mô hình phát hiện phương tiện hoạt động chính xác hơn trong môi trường phức tạp.
+
+Ngoài ra, xử lý ảnh còn liên quan chặt chẽ đến việc chuẩn hóa dữ liệu đầu vào cho các thuật toán học máy. Việc thay đổi kích thước, chuẩn hóa pixel theo phân phối thống nhất, hoặc điều chỉnh tỷ lệ khung hình đều giúp giảm tải tính toán và tăng độ ổn định khi huấn luyện mô hình nhận dạng hoặc dự đoán. Điều này đặc biệt quan trọng trong các hệ thống thời gian thực, nơi tốc độ xử lý và độ ổn định đóng vai trò quyết định.
+
+Tóm lại, xử lý ảnh là bước khởi đầu cho mọi pipeline thị giác máy tính, cung cấp nền tảng và dữ liệu chất lượng cho các thuật toán học sâu, phát hiện đối tượng và phân tích hành vi. Với sự phát triển nhanh chóng của các mô hình hiện đại, xử lý ảnh không chỉ còn dừng lại ở các kỹ thuật truyền thống mà đang chuyển mình mạnh mẽ và đóng vai trò quan trọng trong việc xây dựng những hệ thống thông minh, chính xác và tin cậy — đặc biệt trong lĩnh vực mô phỏng và quản lý giao thông dựa trên dữ liệu từ camera.
+
+
+\subsection{Super-Resolution với Real-ESRGAN}
+Super-Resolution (SR) là một kỹ thuật trong thị giác máy tính nhằm tái tạo hình ảnh có độ phân giải cao (High-Resolution - HR) từ một hoặc nhiều hình ảnh có độ phân giải thấp (Low-Resolution - LR). Mục tiêu của SR là phục hồi các chi tiết bị mất, giảm nhiễu, tăng độ sắc nét và cải thiện chất lượng hình ảnh một cách tự nhiên. Super-Resolution đóng vai trò quan trọng trong nhiều lĩnh vực như giám sát giao thông, y tế, vệ tinh, camera an ninh, và các hệ thống phân tích hình ảnh nơi dữ liệu được thu từ camera kém chất lượng hoặc bị giới hạn bởi điều kiện môi trường.
+
+Kỹ thuật Super-Resolution truyền thống dựa vào các phương pháp nội suy (như bicubic interpolation) thường chỉ phóng to kích thước mà không thể khôi phục chi tiết thật. Sự phát triển của học sâu, đặc biệt là mạng nơ-ron tích chập (CNN), đã tạo ra bước tiến lớn giúp mô hình SR có khả năng học trực tiếp mối quan hệ giữa ảnh LR và HR dựa trên dữ liệu huấn luyện. Điều này giúp tái tạo được cấu trúc phức tạp, chi tiết tinh vi, và giảm hiệu ứng mờ hoặc vỡ hình. Các mô hình SR hiện đại thường tập trung vào hai hướng chính: tăng độ phân giải chính xác theo pixel (pixel-wise accuracy) và phục hồi hình ảnh có độ tự nhiên cao (perceptual quality). Sự cân bằng giữa hai mục tiêu này là thách thức lớn trong nghiên cứu SR.
+
+Super-Resolution được sử dụng rộng rãi trong các hệ thống cần xác định các vật thể nhờ vào việc cải thiện độ phân giải hình ảnh, đặc biệt khi các vật thể có kích thước nhỏ hoặc ở xa camera. Các đối tượng nhỏ trong ảnh thường gặp nhiều thách thức trong việc nhận diện do những lý do sau:
+\begin{itemize}
+    \item \textbf{Mất thông tin gốc: } Các đối tượng có kích thước nhỏ thường mang ít thông tin đặc trưng, khiến chúng khó được mô hình nhận diện. Khi ảnh đi qua các lớp tích chập và các thao tác giảm kích thước không gian (downsampling), độ phân giải của feature map giảm dần. Quá trình này có thể làm mất hoặc làm mờ các tín hiệu đặc trưng của những vật thể nhỏ, dẫn đến việc mô hình không còn đủ thông tin để nhận dạng hoặc phân biệt chúng trong các tầng sau. Vì vậy, các đối tượng nhỏ rất dễ bị “xóa” khỏi quá trình trích xuất đặc trưng, làm giảm độ chính xác của hệ thống phát hiện.
+    \item  \textbf{Các đặc trưng đại diện trích xuất từ mô hinh không ổn định: } Các đặc trưng đại diện được mô hình trích xuất có thể trở nên kém ổn định đối với những đối tượng nhỏ. Các đặc trưng này vốn là yếu tố cốt lõi để mô hình phân loại và nhận dạng vật thể. Tuy nhiên, do các đối tượng kích thước nhỏ thường có chất lượng hình ảnh thấp và dễ bị hòa lẫn với nền hoặc các vật thể xung quanh, các đặc trưng thu được thường chứa nhiều nhiễu từ môi trường. Điều này làm giảm độ tin cậy của thông tin đại diện, kéo theo sự suy giảm đáng kể trong khả năng nhận diện.
+
+Đối với bài toán Super-Resolution, thách thức càng trở nên rõ rệt hơn. Việc tạo ra ảnh độ phân giải cao dẫn đến sự đa dạng lớn về kích thước và chi tiết của vật thể, từ đó mở rộng không gian tìm kiếm mà mô hình phải học. Mô hình không chỉ cần nắm bắt đặc trưng nội tại của vật thể mà còn phải học thêm sự biến thiên kích thước do quá trình tái tạo ảnh mang lại. Bên cạnh đó, việc thiếu hụt dữ liệu ảnh chất lượng cao phù hợp với từng bối cảnh cụ thể khiến mô hình gặp khó khăn trong quá trình học đặc trưng. Do vậy, hiệu quả của các mô hình SR trong những trường hợp này thường thấp hơn đáng kể so với khi chúng được huấn luyện trên các bộ dữ liệu lớn, đa dạng và được chuẩn hóa tốt như COCO hoặc ImageNet. 
+\end{itemize}
+
+Trong số các mô hình Super-Resolution dựa trên học sâu, Real-ESRGAN (Real Enhanced Super-Resolution Generative Adversarial Network) là một trong những mô hình tiên tiến và được ứng dụng rộng rãi do khả năng xử lý tốt hình ảnh thực tế. Real-ESRGAN là phiên bản cải tiến của ESRGAN, kế thừa kiến trúc GAN nhằm tạo ra ảnh đầu ra có độ tự nhiên cao, đồng thời khắc phục hạn chế của mô hình gốc là chỉ hoạt động tốt trên các tập dữ liệu "sạch" được tổng hợp nhân tạo. Real-ESRGAN được thiết kế để xử lý ảnh trong điều kiện thực, nơi hình ảnh thường bị nhiễu, mờ, nén JPEG, hoặc méo dạng quang học từ camera giám sát.
+
+Real-ESRGAN đạt được chất lượng phục hồi vượt trội nhờ hai yếu tố chính: mô hình suy giảm (degradation model) thực tế và kiến trúc mạng tối ưu hóa. Thay vì giả định suy giảm ảnh đơn giản như blur + downsample, Real-ESRGAN sử dụng mô hình suy giảm phức tạp và đa dạng nhằm mô phỏng chính xác những lỗi thường xuất hiện ở ảnh đời thực. Điều này giúp mô hình học được cách phục hồi trong nhiều tình huống khác nhau. Kiến trúc mạng generator của Real-ESRGAN dựa trên Residual-in-Residual Dense Block (RRDB), cho phép truyền thông tin hiệu quả, duy trì độ sâu lớn mà không gây mất ổn định khi huấn luyện. Đồng thời, mô hình sử dụng discriminator dựa trên PatchGAN và cơ chế loss perceptual để tối ưu cảm nhận thị giác, giúp ảnh đầu ra sắc nét và tự nhiên hơn.
+
+Trong các hệ thống giao thông thông minh, Super-Resolution nói chung và Real-ESRGAN nói riêng có ý nghĩa quan trọng khi xử lý khung hình từ camera giao thông vốn thường bị hạn chế bởi điều kiện thời tiết, ánh sáng yếu, hiện tượng rung lắc, hoặc độ phân giải thấp từ camera cũ. Việc tăng cường chất lượng ảnh bằng SR giúp mô hình phát hiện phương tiện như YOLO hoạt động chính xác hơn, đặc biệt trong các tình huống đông xe hoặc khi phương tiện ở xa. Điều này góp phần nâng cao độ tin cậy của hệ thống đếm xe, phân loại phương tiện, nhận dạng hành vi giao thông, và tăng độ chính xác của dữ liệu đầu vào cho mô hình dự báo như LSTM.
+
+Nhờ khả năng phục hồi chi tiết tốt từ ảnh chất lượng thấp, Real-ESRGAN trở thành một phần quan trọng trong chuỗi xử lý hình ảnh của nhiều bài toán thị giác máy tính hiện đại, giúp cải thiện cả độ phân giải lẫn khả năng diễn giải của mô hình phía sau. Sự kết hợp giữa Super-Resolution và các mô hình học sâu khác tạo nên một pipeline mạnh mẽ, đặc biệt phù hợp với các hệ thống giám sát, điều khiển và dự báo giao thông dựa trên dữ liệu từ camera thực tế.
+
+\section{Giới thiệu Super Resolution GAN}
+\subsection{Khái niệm super resolution}
+Super-Resolution (SR) là kỹ thuật tái tạo ảnh có độ phân giải cao (High-Resolution - HR) từ ảnh có độ phân giải thấp (Low-Resolution - LR). Nhiệm vụ này vốn được coi là một bài toán ngược (inverse problem) vì nhiều thông tin chi tiết đã bị mất khi ảnh được thu nhỏ hoặc nén. Mục tiêu của SR là khôi phục lại các chi tiết bị mất, đồng thời đảm bảo ảnh đầu ra sắc nét, tự nhiên và giữ đúng cấu trúc nội dung.
+
+Trước sự phát triển của học sâu, nhiều phương pháp như nội suy tuyến tính, nội suy bậc ba (bicubic) hay sử dụng mô hình dựa trên sparse coding đã được áp dụng nhưng còn hạn chế về chất lượng và khả năng tái tạo chi tiết. Sự xuất hiện của mạng nơ-ron tích chập (CNN) và sau đó là Generative Adversarial Networks (GAN) đã tạo ra bước tiến lớn, đặc biệt trong việc khôi phục các chi tiết có tính thực tế cao (perceptual details).
+
+
+
+
+
+\section{Công cụ mô phỏng giao thông: SUMO (Simulation of Urban Mobility)}
+\subsection{Giới thiệu SUMO}
+\subsection{Ưu điểm và hạn chế của SUMO trong nghiên cứu mô phỏng và thực tế giao thông đô thị}

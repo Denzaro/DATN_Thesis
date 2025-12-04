@@ -1,0 +1,85 @@
+\chapter{TỔNG QUAN}
+
+\section{GIỚI THIỆU}
+
+Trong bối cảnh đô thị hóa nhanh chóng và sự gia tăng mật độ phương tiện giao thông, việc quản lý và điều tiết giao thông hiệu quả đã trở thành một trong những thách thức lớn nhất mà các thành phố hiện đại phải đối mặt. Theo báo cáo của Tổ chức Hợp tác và Phát triển Kinh tế (OECD), tắc nghẽn giao thông không chỉ gây ra thiệt hại kinh tế hàng tỷ USD mỗi năm mà còn là nguyên nhân chính dẫn đến ô nhiễm không khí, tiêu thụ nhiên liệu không hiệu quả và giảm chất lượng cuộc sống của người dân~\cite{OECD2019Traffic}.
+
+Sự phát triển của công nghệ thông tin và truyền thông (ICT) cùng với sự xuất hiện của các hệ thống giao thông thông minh (Intelligent Transportation Systems - ITS) đã mở ra những cơ hội mới trong việc giải quyết các vấn đề giao thông. Đặc biệt, việc ứng dụng các kỹ thuật học máy và học sâu (Deep Learning) vào phân tích dữ liệu giao thông đã cho thấy những kết quả đầy hứa hẹn trong việc dự báo và tối ưu hóa luồng giao thông~\cite{Zhang2018DeepLearning}.
+
+Hệ thống camera giao thông hiện đại có khả năng thu thập một lượng lớn dữ liệu hình ảnh theo thời gian thực, tạo ra những "snapshot" phản ánh tình trạng giao thông tại các điểm quan sát. Những dữ liệu này, khi được xử lý bằng các thuật toán học sâu tiên tiến, có thể cung cấp thông tin quý giá về mật độ phương tiện, tốc độ di chuyển, và các mẫu hành vi giao thông, từ đó làm cơ sở cho việc dự báo và điều tiết giao thông hiệu quả.
+
+\section{MỤC TIÊU}
+
+Mục tiêu của đề tài là xây dựng một hệ thống tích hợp chặt chẽ giữa thu thập dữ liệu ảnh từ camera giao thông, xử lý bằng các phương pháp học sâu, và mô phỏng trên nền tảng SUMO để hỗ trợ dự báo tình trạng giao thông và đề xuất các biện pháp điều tiết thông minh. Cụ thể, đề tài nhằm:
+
+\begin{itemize}
+    \item Phát triển giải pháp xử lý ảnh snapshot từ camera giao thông thành các thông số vận tải như lưu lượng xe, tốc độ trung bình, mật độ giao thông và trạng thái các làn đường thông qua mô hình học sâu — từ đó chuyển đổi dữ liệu hình ảnh thô thành dạng đầu vào có cấu trúc cho mô phỏng.
+    \item Tích hợp dữ liệu thu được vào mô hình mô phỏng giao thông trên SUMO để tái hiện tình trạng giao thông thực tế ở khu vực nghiên cứu, từ đó xây dựng một môi trường “in silico” cho phân tích — cho phép đánh giá các kịch bản điều tiết (ví dụ: thay đổi phân bố tín hiệu đèn, điều hướng xe, ưu tiên làn) trước khi áp dụng ngoài thực tế.
+    \item Xây dựng mô hình dự báo ngắn hạn cho tình trạng giao thông (ví dụ: tình trạng ùn tắc, thời gian lưu thông, mật độ xe) dựa trên chuỗi dữ liệu thời gian từ camera và kết quả mô phỏng — nhằm giúp cơ quan quản lý giao thông có khả năng chủ động hơn trong việc ra quyết định.
+    \item Thiết kế và thử nghiệm chiến lược điều tiết giao thông thông minh (ví dụ: điều chỉnh tín hiệu, tái phân làn, điều hướng xe) dựa trên kết quả mô phỏng và dự báo, với mục tiêu giảm thiểu thời gian chờ, mật độ ùn tắc và nâng cao hiệu suất lưu thông tổng thể.
+
+    \item Đánh giá hiệu quả của hệ thống tích hợp thông qua các thước đo như ­thời gian lưu thông trung bình, mật độ xe, số lần dừng/chờ, độ chính xác dự báo và khả năng ứng dụng trong thực tế — từ đó đề xuất kiến nghị cho ứng dụng thực tiễn tại đô thị và khả năng mở rộng hệ thống.
+
+    \item Nâng cao tính linh hoạt và khả năng thích ứng của hệ thống khi phải đối mặt với các điều kiện giao thông thay đổi (giờ cao điểm, sự cố giao thông, điều kiện thời tiết…) bằng cách tận dụng khả năng học và mô phỏng để điều chỉnh chiến lược điều tiết phù hợp.
+\end{itemize}
+
+Tóm lại, mục tiêu của đề tài là tạo ra một công cụ hỗ trợ thông minh cho quản lý giao thông, kết hợp giữa học sâu và mô phỏng giao thông, giúp từ dữ liệu hình ảnh trực quan chuyển hóa thành các quyết định điều tiết sáng suốt, từ đó cải thiện lưu thông, giảm ùn tắc và nâng cao chất lượng dịch vụ giao thông đô thị.
+
+\section{PHƯƠNG PHÁP NGHIÊN CỨU}
+
+Để đạt được các mục tiêu đã đề ra, Nghiên cứu này áp dụng một quy trình nghiên cứu khoa học chặt chẽ, kết hợp giữa nghiên cứu lý thuyết, thực nghiệm mô phỏng và phân tích đánh giá định lượng. Các phương pháp cụ thể được triển khai như sau:
+
+Phương pháp nghiên cứu lý thuyết:
+
+Trước tiên, sẽ tiến hành khảo sát, tổng hợp và phân tích các kiến thức, lý thuyết nền tảng liên quan tới hệ thống giao thông đô thị, mô hình học sâu (deep learning) cho nhận dạng và đếm phương tiện, mô hình dự báo chuỗi thời gian như Long Short - Term Memory (LSTM), cũng như mô phỏng giao thông (traffic simulation) với SUMO. Cụ thể, sẽ tổng hợp các nghiên cứu về việc sử dụng mô hình thí dụ như YOLOv8 để phát hiện và đếm phương tiện từ camera giao thông (ví dụ các nghiên cứu cho thấy YOLOv8 được ứng dụng trong thực tế để đếm xe và tính mật độ giao thông). Đồng thời, tìm hiểu các phương pháp mô phỏng kết hợp camera/nhận dạng + mô hình điều tiết tín hiệu giao thông, các nghiên cứu tích hợp giữa phát hiện hình ảnh và mô phỏng như kết hợp giữa camera và SUMO. Qua đó, xây dựng cơ sở lý thuyết cho việc lựa chọn kiến trúc hệ thống, xác định các tham số chính, và xác định các chỉ tiêu đánh giá hiệu quả (thời gian lưu thông, mật độ, số lần dừng/chờ, độ chính xác dự báo, v.v.).
+
+Phương pháp thực nghiệm mô phỏng:
+\begin{itemize}
+    \item \textbf{Thu thập dữ liệu snapshot camera và xử lý bằng học sâu:} Sử dụng mô hình YOLOv8 để phát hiện và đếm phương tiện từ ảnh hoặc video snapshot thu được từ camera giao thông. Từ kết quả đếm được xác định các thông số như lưu lượng xe, mật độ theo từng mốc thời gian và từng điểm giao thông. Đây chính là bước chuyển dữ liệu hình ảnh thô thành dạng dữ liệu có cấu trúc để sử dụng tiếp. Việc này tận dụng các thư viện, công cụ thực nghiệm đã có (ví dụ từ thực tế/nguồn mở) như một số nghiên cứu đã thực hiện.
+    
+    \item \textbf{Xây dựng mô hình dự báo mật độ giao thông:} Từ chuỗi dữ liệu mật độ theo mốc thời gian thu được, tiến hành huấn luyện mô hình LSTM để dự báo mật độ giao thông cho 15 phút tiếp theo. Việc này gồm tiền xử lý dữ liệu (chuỗi thời gian, tạo các đặc trưng như thời gian, ngày, giờ, điểm giao thông, loại phương tiện nếu có), chia train/validation/test, lựa chọn cấu trúc mạng LSTM (số lớp, số đơn vị, dropout, epochs…), và kiểm định mô hình qua các chỉ tiêu như RMSE, MAE, MAPE.
+    
+    \item \textbf{Tích hợp mô phỏng giao thông với SUMO:} Sử dụng môi trường SUMO để tái hiện mạng lưới giao thông nghiên cứu, cấu hình các tham số như làn đường, tín hiệu giao thông, các điểm camera/tuyến đường tương ứng với dữ liệu thực tế. Sau đó, nhập dữ liệu mật độ xe thực tế (hoặc dữ liệu từ mô hình đếm) để khớp mô phỏng sao cho trạng thái mô phỏng càng sát thực càng tốt. Đây là bước “đồng bộ” giữa dữ liệu thực và mô phỏng.
+    
+    \item \textbf{Tích hợp module điều khiển giao thông:} Xây dựng thuật toán điều tiết giao thông (ví dụ: điều chỉnh tín hiệu, phân luồng, ưu tiên làn) dựa trên dự báo mật độ từ LSTM và kết quả mô phỏng. Thử chạy hai kịch bản: kịch bản không điều tiết (tín hiệu cố định hoặc theo chế độ hiện hữu) và kịch bản có điều tiết (tín hiệu và phân luồng thay đổi dựa trên dự báo và mô phỏng). Chạy mô phỏng SUMO cho cả hai kịch bản và thu thập dữ liệu kết quả.
+    
+    \item \textbf{Xây dựng dashboard trực quan:} Triển khai giao diện hiển thị gồm luồng xe chạy như mô phỏng (trong SUMO), biểu đồ mật độ theo thời gian, kết quả dự báo LSTM, và so sánh hiệu quả giữa hai kịch bản (có/không điều tiết). Dashboard sẽ giúp trực quan hóa kết quả và hỗ trợ phân tích.
+    
+    \item \textbf{Rút ra kết luận, đề xuất cải tiến và kiến nghị ứng dụng thực tiễn:} từ kết quả thực nghiệm và mô phỏng, chỉ rõ giới hạn của nghiên cứu, gợi ý mở rộng (ví dụ mở rộng mạng lưới, loại phương tiện đa dạng, tích hợp dữ liệu thời tiết, sự cố…).
+\end{itemize}
+
+Phương pháp phân tích đánh giá:
+\begin{itemize}
+    \item \textbf{Phân tích độ chính xác của bước phát hiện và đếm phương tiện từ camera:} So sánh với đếm thủ công hoặc dữ liệu tham chiếu nếu có.
+    
+    \item \textbf{Phân tích hiệu năng dự báo của mô hình LSTM:} Sử dụng các chỉ tiêu như RMSE, MAE, MAPE, R²… để đánh giá khả năng dự báo mật độ 15 phút tới.
+    
+    \item \textbf{Phân tích kết quả mô phỏng SUMO:} So sánh giữa kịch bản không điều tiết và có điều tiết trên các chỉ tiêu như thời gian lưu thông trung bình, mật độ xe, số lần dừng/chờ, độ ổn định luồng giao thông.
+    
+    \item \textbf{Đánh giá tổng thể hệ thống:} Xem xét khả năng tích hợp giữa các thành phần (đếm - dự báo - mô phỏng - điều tiết), tính khả thi triển khai thực tế, độ linh hoạt khi điều kiện giao thông thay đổi (giờ cao điểm, sự cố…).
+    \item \textbf{Trực quan hóa kết quả trên dashboard:} So sánh biểu đồ, luồng xe, và rút ra nhận xét về hiệu quả điều tiết, lợi ích đối với quản lý giao thông.
+\end{itemize}
+
+\section{GIỚI HẠN NGHIÊN CỨU}
+
+Hệ thống nghiên cứu này mặc dù cố gắng tích hợp các thành phần thu thập dữ liệu hình ảnh, học sâu, dự báo và mô phỏng điều tiết giao thông, nhưng vẫn tồn tại một số giới hạn đáng lưu ý. Trước hết, việc sử dụng ảnh snapshot từ camera giao thông chỉ phản ánh trạng thái “tĩnh” tại các thời điểm chụp và phụ thuộc vào điều kiện quan sát như góc đặt camera, ánh sáng, che khuất, chất lượng hình ảnh. Do đó, khả năng phát hiện và đếm phương tiện bằng mô hình YOLOv8 có thể bị ảnh hưởng bởi các biến môi trường (như mưa, sương, bóng đổ) hoặc khu vực giao thông phức tạp (nhiều phương tiện, làn không phân định rõ). Tiếp theo, dữ liệu thu được tại một hoặc một số điểm giao thông cụ thể có thể không đại diện cho toàn bộ mạng lưới giao thông hoặc các điều kiện giao thông khác nhau về giờ cao điểm, ngày lễ, sự cố - dẫn đến hạn chế trong khái quát hóa kết quả.
+
+Về phần mô hình học sâu và dự báo bằng Long Short-Term Memory (LSTM), mặc dù có khả năng dự báo mật độ giao thông cho 15 phút tiếp theo, nhưng việc huấn luyện chỉ trên dữ liệu từ các mốc thời gian cố định và điểm giao thông nhất định khiến mô hình có thể kém chính xác khi đối mặt với tình huống bất thường (như tai nạn, thay đổi bất ngờ lưu lượng, thời tiết cực đoan) mà không có dữ liệu học trước. Hơn nữa, mô hình dự báo chỉ tập trung vào một biến chính - mật độ phương tiện - và chưa tích hợp đầy đủ các yếu tố khác như loại phương tiện, tốc độ, hành vi người lái, ảnh hưởng từ tín hiệu đèn hoặc thay đổi hành lang giao thông.
+
+Phần mô phỏng giao thông với SUMO dù được “khớp” với dữ liệu thực tế đến mức có thể nhưng vẫn có giới hạn vì mô phỏng luôn là bản sao không hoàn hảo của môi trường thực. Mạng lưới mô phỏng có thể chưa mô hình hóa đầy đủ mọi chiều của thực tế như sự tương tác phức tạp giữa các phương tiện, hành vi bất định, ảnh hưởng thời tiết, người đi bộ, xe máy nhỏ, hoặc việc vi phạm giao thông - những yếu tố rất phổ biến tại đô thị như Hồ Chí Minh. Việc điều tiết giao thông thông qua thuật toán cũng đặt giả định rằng các thông số mô hình và dữ liệu đầu vào là đồng nhất và ổn định, trong khi thực tế có thể thay đổi nhanh và không thể đo trước hết.
+
+Cuối cùng, việc xây dựng dashboard trực quan để hiển thị kết quả mô phỏng, dự báo và điều tiết cũng gặp giới hạn do khả năng phản ánh toàn bộ thực tế - dashboard chỉ hiển thị dữ liệu và mô phỏng ở mức độ “có thể” và phù hợp với giả định nghiên cứu. Những quyết định điều tiết đưa ra từ mô hình có thể chưa tính tới đầy đủ chi phí thực thi, điều kiện vận hành thực tế, phản ứng của người tham giao thông hoặc các yếu tố tổ chức giao thông ngoài mô hình.
+
+Tóm lại, các giới hạn nghiên cứu chính bao gồm: dữ liệu nguồn (chỉ snapshot camera, tại các điểm giới hạn), khả năng khái quát hóa kết quả mô hình và mô phỏng, độ chính xác và phạm vi của mô hình dự báo, sự đơn giản hóa môi trường mô phỏng và giả định điều tiết, và khả năng ứng dụng thực tế bị chi phối bởi nhiều yếu tố ngoài mô hình. Hiểu và thừa nhận các giới hạn này giúp bạn đọc đánh giá đúng mức độ đóng góp của nghiên cứu, và tạo nền tảng cho các nghiên cứu tiếp theo.
+
+\section{BỐ CỤC}
+
+\textbf{Chương 1: Tổng quan} - Trình bày bối cảnh, động lực nghiên cứu, mục tiêu và phương pháp nghiên cứu.
+
+\textbf{Chương 2: Cơ sở lý thuyết} - Tổng quan các kiến thức nền tảng về xử lý ảnh, học sâu, dự báo chuỗi thời gian và học tăng cường.
+
+\textbf{Chương 3: Thiết kế hệ thống} - Trình bày kiến trúc tổng thể của hệ thống và thiết kế chi tiết các mô-đun.
+
+\textbf{Chương 4: Kết quả vào thảo luận} - Mô tả quá trình triển khai hệ thống và các thí nghiệm đánh giá.
+
+\textbf{Chương 5: Kết luận và hướng phát triển} - Tổng kết những đóng góp của nghiên cứu và đề xuất hướng phát triển tương lai.

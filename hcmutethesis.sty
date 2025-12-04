@@ -1,0 +1,72 @@
+
+\ProvidesPackage{hcmutethesis}
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{hyperref}
+
+% Layout settings
+\def\thesislayout{
+    \geometry{
+        a4paper,
+        left=30mm,
+        right=20mm,
+        top=25mm,
+        bottom=25mm,
+    }
+}
+
+% Custom Commands
+\newcommand{\ctname}[1]{\gdef\@tname{#1}}
+\newcommand{\cstuname}[1]{\gdef\@stuname{#1}}
+\newcommand{\csSuperviseA}[1]{\gdef\@sSuperviseA{#1}}
+\newcommand{\cttime}[1]{\gdef\@ttime{#1}}
+\newcommand{\creport}[1]{\gdef\@report{#1}}
+\newcommand{\cnganh}[1]{\gdef\@nganh{#1}}
+
+% Cover Page
+\def\coverpage{
+    \begin{titlepage}
+    \begin{center}
+        % \vspace*{1cm}
+        {\Large {BỘ GIÁO DỤC VÀ ĐÀO TẠO}} \\
+        {\Large \textbf{TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT\\ THÀNH PHỐ HỒ CHÍ MINH}} \\[2cm]
+        \centering
+        \includegraphics[width=20mm]{fig/hcmute.png}\\ [0.8cm]
+        {\Large \textbf{\@stuname}} \\[1.5cm]
+        {\fontsize{15.5pt}{24pt}\selectfont \textbf{\@tname}} \\[2.5cm]
+        {\Large {\@report}} \\ [0.4cm]
+        {\Large {\@nganh}} \\[3.5cm]
+        \fontsize{12pt}{12pt}\selectfont {{TP. Hồ Chí Minh, \@ttime}}
+    \end{center}
+    \end{titlepage}
+}
+
+\def\subcoverpage{
+    \begin{titlepage}
+    \begin{center}
+        % \vspace*{1cm}
+        {\Large {BỘ GIÁO DỤC VÀ ĐÀO TẠO}} \\
+        {\Large \textbf{TRƯỜNG ĐẠI HỌC SƯ PHẠM KỸ THUẬT\\ THÀNH PHỐ HỒ CHÍ MINH}} \\[3.5cm]
+        {\Large \textbf{\@stuname}} \\[3cm]
+        {\fontsize{15.5pt}{24pt}\selectfont \textbf{\@tname}} \\[3cm]
+        % {\Large {\@report}} \\ [0.5cm]
+        {\Large {\@nganh}} \\[2cm]
+    \end{center}
+    % \begin{left}
+        \fontsize{13pt}{14pt}\selectfont {Người hướng dẫn khoa học: {\@sSuperviseA}} \\[2.5cm]
+
+    % \end{left}
+    \begin{center}
+        \fontsize{12pt}{12pt}\selectfont {{TP. Hồ Chí Minh, \@ttime}}
+    \end{center}
+    \end{titlepage}
+}
+
+\newenvironment{abbreviation}{
+  \clearpage
+  \begin{center}
+    \fontsize{18}{1}\selectfont \bfseries Danh sách các từ viết tắt
+  \end{center}
+  \vspace{1cm}
+}{\clearpage}

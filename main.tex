@@ -1,0 +1,171 @@
+\documentclass[a4paper, oneside, 12pt]{book}
+
+
+\usepackage{hcmutethesis} % Custom style file for formatting
+
+
+% Additional packages
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\usepackage{colortbl} % Thêm gói này
+\usepackage{xcolor}   % Thêm gói này để định nghĩa màu
+% \usepackage{hyperref}
+\usepackage{pdfpages}
+\usepackage{etoolbox}
+\usepackage{rotating}
+\usepackage{siunitx}
+\sisetup{
+    output-decimal-marker = {,},
+    table-number-alignment = center % Căn giữa các số trong cột
+}
+\usepackage{array} % Để sử dụng các lệnh định dạng cột
+\usepackage{float}
+% \usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption} % Note: this package replaces subfigure and subfig
+\usepackage{graphicx} % For including images
+%\usepackage{adjustbox}
+% \usepackage{amssymb}
+% \usepackage[bookmarks=false]{hyperref}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\usepackage{multicol}
+\usepackage{multirow}
+
+%%========================================
+\usepackage{indentfirst}
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{1cm}
+\usepackage{titlesec}
+%\setcounter{secnumdepth}{4}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\titlespacing*{\section}{0pt}{20pt}{15pt} 
+%Heading 1
+\titleformat*{\section}{\fontsize{18pt}{0pt}\selectfont \bfseries}
+
+\titlespacing*{\subsection}{0pt}{15pt}{10pt} %Heading 2
+\titleformat*{\subsection}{\fontsize{16pt}{0pt}\selectfont \bfseries}
+
+\titlespacing*{\subsubsection}{0pt}{15pt}{10pt} %Heading 3
+\titleformat*{\subsubsection}{\fontsize{14pt}{0pt}\selectfont\bfseries }
+
+\titlespacing*{\paragraph}{0pt}{15pt}{0pt} %Heading 4
+\titleformat*{\paragraph}{\fontsize{13pt}{0pt}\selectfont \bfseries}
+
+\renewcommand{\figurename}{\fontsize{12pt}{0pt} Hình}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\usepackage{caption}
+
+\renewcommand{\tablename}{\fontsize{12pt}{0pt} Bảng}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\usepackage{caption}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\usepackage{caption}
+
+\usepackage{tabularx}
+\newcolumntype{s}{>{\hsize=0.4\hsize}X}
+\newcolumntype{a}{>{\hsize=1.8\hsize}X}
+%%========================================
+
+
+
+
+\renewcommand{\contentsname}{Mục Lục}
+\renewcommand{\listfigurename}{Danh sách hình}
+\renewcommand{\listtablename}{Danh sách bảng}
+\renewcommand{\chaptername}{Chương}
+\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\bibname}{TÀI LIỆU THAM KHẢO}
+% Bibliography style
+\bibliographystyle{IEEEtran}
+
+% Document layout
+\thesislayout
+\setstretch{1.5}
+\setlength{\parskip}{1em}
+
+
+% Custom Commands
+\ctname{Xây dựng hệ thống mô phỏng dự báo và điều tiết giao thông dựa trên dữ liệu snapshot từ camera giao thông sử dụng Học sâu và mô phỏng SUMO}
+
+\cstuname{Nguyễn Nhựt Đăng \\ Ngô Trọng Nghĩa}
+\creport{KHÓA LUẬN TỐT NGHIỆP}
+\cnganh{NGÀNH CÔNG NGHỆ KỸ THUẬT MÁY TÍNH}
+\csSuperviseA{TS. Huỳnh Thế Thiện}
+\cttime{Tháng 01, 2026}
+
+\begin{document}
+
+\coverpage
+\subcoverpage
+
+% NHẬN XÉT =============================================
+\newpage
+\thispagestyle{empty}
+\includepdf[pages=-, noautoscale=true, width=\paperwidth, height=\paperheight]{fig/NhanXet.pdf}
+
+% CHỈNH SỬA =============================================
+% \newpage
+% \thispagestyle{empty}
+% \includepdf[pages=-, noautoscale=true, width=\paperwidth, height=\paperheight]{fig/chinhsua.pdf}
+
+
+% Front Matter
+\frontmatter
+\include{chapters/frontmatter} % For introduction, declaration, acknowledgment
+
+% Table of Contents
+\tableofcontents
+\listoffigures
+\listoftables
+
+\begin{abbreviation}
+%\begin{table}[!h]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{3cm} p{11cm}}
+\textbf{Các từ viết tắt} &  \textbf{Định nghĩa} \\
+\hline
+None & Không có \\
+
+\hline
+\end{tabular}
+\end{center}
+%\end{table}
+\end{abbreviation}	
+
+% Main Matter
+\mainmatter
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+% \include{chapters/chapter3}
+% \include{chapters/chapter4}
+% \include{chapters/chapter5}
+% \include{chapters/chapter_new}
+
+% Back Matter
+\backmatter
+
+% Bibliography
+\addcontentsline{toc}{chapter}{TÀI LIỆU THAM KHẢO}
+\bibliography{references}
+
+% Appendices
+% \appendix
+% \include{chapters/appendix}
+
+\end{document}
