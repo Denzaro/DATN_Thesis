@@ -6,7 +6,7 @@
 
 
 \section{GIỚI THIỆU XỬ LÝ ẢNH}
-Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.
+Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.  \cite{NTH2015ImageProcessing}
 
 Về bản chất, xử lý ảnh là quá trình thao tác trực tiếp trên ma trận điểm ảnh để làm rõ thông tin hữu ích và loại bỏ nhiễu hay các thành phần không cần thiết. Các kỹ thuật này thường được chia làm hai mức: xử lý ảnh mức thấp và mức cao. Mức thấp chủ yếu gồm các phép biến đổi tín hiệu như lọc nhiễu, điều chỉnh độ sáng, thay đổi không gian màu hoặc tăng độ sắc nét mà không xét đến nội dung ảnh. Trong khi đó, xử lý ảnh mức cao tập trung vào việc trích xuất đặc trưng như biên cạnh, điểm đặc trưng, kết cấu hay hình dạng, tạo dữ liệu có ý nghĩa cho các mô hình nhận diện và học sâu.
 Các thành phần cơ bản của xử lý ảnh:
@@ -15,10 +15,10 @@ Các thành phần cơ bản của xử lý ảnh:
     \item \textbf{Phần cứng xử lý ảnh chuyên dụng (Specialized Image Processing Hardware): } Để thực hiện các phép tính số học và logic trên toàn bộ ảnh, cần kết hợp giữa bộ số hóa và phần cứng chuyên dụng, thường được gọi là hệ thống tiền xử lý (front-end subsystem). Tốc độ xử lý của phần cứng này là yếu tố quan trọng nhất, vì các máy tính thông thường khó đáp ứng được yêu cầu truyền dữ liệu với tốc độ cao cần thiết cho xử lý ảnh thời gian thực.
     \item \textbf{Máy tính: (Computer): } Máy tính trong hệ thống xử lý ảnh là máy tính đa năng, có thể là một PC thông thường hoặc siêu máy tính tùy vào quy mô ứng dụng. Một máy tính cá nhân cấu hình tốt thường đủ cho các tác vụ xử lý ảnh offline, phục vụ nghiên cứu và phân tích dữ liệu hình ảnh.
     \item \textbf{Phần mềm xử lý ảnh (Image Processing Software): } Phần mềm xử lý ảnh gồm các module chuyên dụng thực hiện những nhiệm vụ cụ thể. Một bộ phần mềm thiết kế tốt sẽ cho phép người dùng viết ít lệnh nhất, đồng thời tận dụng tối đa các module có sẵn. Các gói phần mềm phát triển cao còn cho phép tích hợp các module và câu lệnh lập trình từ ít nhất một ngôn ngữ lập trình. Ví dụ, MATLAB là một trong những công cụ phổ biến được dùng trong các hệ thống xử lý ảnh.
-    \item \textbf{Lưu trữ dữ liệu (Mass Storage):} Lưu trữ là yếu tố quan trọng trong xử lý ảnh, đặc biệt khi làm việc với các ảnh có dung lượng lớn. Ví dụ, một ảnh có kích thước 1024 × 1024 pixel cần khoảng 1 megabyte nếu chưa nén. Các hệ thống xử lý ảnh thường phải lưu trữ hàng nghìn hoặc thậm chí hàng triệu ảnh. Hệ thống lưu trữ số tuân theo ba nguyên tắc cơ bản: Lưu trữ tạm thời (dùng trong quá trình xử lý), lưu trữ trực tuyến (phục vụ truy suất nhanh) và lưu trữ lâu dài (truy xuất ít, lưu trữ dài hạn.).
+    \item \textbf{Lưu trữ dữ liệu (Mass Storage):} Lưu trữ là yếu tố quan trọng trong xử lý ảnh, đặc biệt khi làm việc với các ảnh có dung lượng lớn. Ví dụ, một ảnh có kích thước 1024 x 1024 pixel cần khoảng 1 megabyte nếu chưa nén. Các hệ thống xử lý ảnh thường phải lưu trữ hàng nghìn hoặc thậm chí hàng triệu ảnh. Hệ thống lưu trữ số tuân theo ba nguyên tắc cơ bản: Lưu trữ tạm thời (dùng trong quá trình xử lý), lưu trữ trực tuyến (phục vụ truy suất nhanh) và lưu trữ lâu dài (truy xuất ít, lưu trữ dài hạn.).
     \item \textbf{Hiển thị hình ảnh (Image Displays): } Màn hình hiển thị thường là màn hình màu phẳng, được điều khiển bởi card đồ họa hoặc card hiển thị hình ảnh. Đây là thành phần quan trọng giúp máy tính trình chiếu và thao tác với dữ liệu hình ảnh.
     \item \textbf{Thiết bị in ấn (Hardcopy): } Để lưu trữ hoặc trình bày hình ảnh, có thể dùng các thiết bị in ấn và ghi hình, bao gồm máy in laser, máy ảnh phim, thiết bị nhạy nhiệt, máy in phun, hoặc các phương tiện số như ổ đĩa quang và CD-ROM. Phim ảnh cung cấp độ phân giải cao nhất, trong khi giấy là phương tiện dễ sử dụng để trình bày nội dung. Khi dùng thiết bị chiếu ảnh số, hình ảnh vẫn tồn tại dưới dạng dữ liệu số, giúp dễ dàng trình chiếu hoặc lưu trữ lâu dài.
-    \item \textbf{Mạng và điện toán đám mây (Cloud): } Trong thời đại hiện nay, mạng và điện toán đám mây là những yếu tố thiết yếu trong xử lý ảnh. Vì dữ liệu hình ảnh thường có dung lượng rất lớn, băng thông trở thành vấn đề quan trọng khi truyền tải. Khi gửi dữ liệu qua Internet đến các địa điểm từ xa, hiệu quả truyền tải không phải lúc nào cũng cao, do đó công nghệ cáp quang và các giải pháp băng thông rộng được sử dụng. Bên cạnh đó, nén dữ liệu ảnh đóng vai trò quan trọng để giảm dung lượng truyền tải, giúp gửi lượng lớn hình ảnh một cách nhanh chóng và hiệu quả.
+    \item \textbf{Mạng và điện toán đám mây (Cloud): } Trong thời đại hiện nay, mạng và điện toán đám mây là những yếu tố thiết yếu trong xử lý ảnh. Vì dữ liệu hình ảnh thường có dung lượng rất lớn, băng thông trở thành vấn đề quan trọng khi truyền tải. Khi gửi dữ liệu qua Internet đến các địa điểm từ xa, hiệu quả truyền tải không phải lúc nào cũng cao, do đó công nghệ cáp quang và các giải pháp băng thông rộng được sử dụng. Bên cạnh đó, nén dữ liệu ảnh đóng vai trò quan trọng để giảm dung lượng truyền tải, giúp gửi lượng lớn hình ảnh một cách nhanh chóng và hiệu quả. \cite{GeeksforGeeksImageProcessing}
 \end{itemize}
 
 \begin{figure}[H]
@@ -31,44 +31,336 @@ Các thành phần cơ bản của xử lý ảnh:
 
 Trong bối cảnh ứng dụng hiện đại, đặc biệt là các hệ thống thông minh như theo dõi giao thông, giám sát đô thị hay phân tích dữ liệu từ camera, xử lý ảnh giữ vai trò như một giai đoạn tiền xử lý không thể thiếu. Ví dụ, dữ liệu từ camera giao thông thường gặp nhiều hạn chế: ánh sáng thay đổi liên tục, điều kiện thời tiết gây nhiễu, độ phân giải không đồng đều, và vật thể thường nhỏ hoặc bị che khuất. Nếu không có bước xử lý ảnh phù hợp, những hạn chế này sẽ ảnh hưởng trực tiếp đến độ chính xác của các mô hình phát hiện và đếm phương tiện. Các kỹ thuật phổ biến như cân bằng histogram, lọc Gaussian, chuyển đổi sang ảnh xám, khử nhiễu bằng median filter hay tăng độ tương phản đều được áp dụng để cải thiện độ rõ ràng trước khi đưa ảnh vào pipeline phân tích.
 
-Sự phát triển của học sâu trong hơn một thập kỷ qua đã mở ra một hướng mới cho xử lý ảnh, nơi mà các mô hình không chỉ thực hiện các phép biến đổi dựa trên quy tắc cố định mà còn học trực tiếp từ dữ liệu để tối ưu hóa chất lượng đầu ra. Các bài toán như khử nhiễu (denoising), tăng độ phân giải (super-resolution), tái tạo ảnh thiếu thông tin (inpainting), tách nền và nhiều dạng biến đổi phức tạp khác đều đạt được chất lượng vượt trội nhờ mạng nơ-ron tích chập (CNN) và các mô hình sinh ảnh như GAN. Đặc biệt, các hệ thống giám sát giao thông sử dụng camera có thể hưởng lợi trực tiếp từ những kỹ thuật này: ảnh từ camera độ phân giải thấp có thể được tăng cường bằng super-resolution, giúp mô hình phát hiện phương tiện hoạt động chính xác hơn trong môi trường phức tạp.
+Sự phát triển của học sâu trong hơn một thập kỷ qua đã mở ra một hướng mới cho xử lý ảnh, nơi mà các mô hình không chỉ thực hiện các phép biến đổi dựa trên quy tắc cố định mà còn học trực tiếp từ dữ liệu để tối ưu hóa chất lượng đầu ra. Các bài toán như khử nhiễu (denoising), tăng độ phân giải (super-resolution), tái tạo ảnh thiếu thông tin (inpainting), tách nền và nhiều dạng biến đổi phức tạp khác đều đạt được chất lượng vượt trội nhờ mạng nơ-ron tích chập (CNN) và các mô hình sinh ảnh như GAN. Đặc biệt, các hệ thống giám sát giao thông sử dụng camera có thể hưởng lợi trực tiếp từ những kỹ thuật này: ảnh từ camera độ phân giải thấp có thể được tăng cường bằng super-resolution, giúp mô hình phát hiện phương tiện hoạt động chính xác hơn trong môi trường phức tạp. \cite{IanGoodfellowDeepLearning}
 
 Ngoài ra, xử lý ảnh còn liên quan chặt chẽ đến việc chuẩn hóa dữ liệu đầu vào cho các thuật toán học máy. Việc thay đổi kích thước, chuẩn hóa pixel theo phân phối thống nhất, hoặc điều chỉnh tỷ lệ khung hình đều giúp giảm tải tính toán và tăng độ ổn định khi huấn luyện mô hình nhận dạng hoặc dự đoán. Điều này đặc biệt quan trọng trong các hệ thống thời gian thực, nơi tốc độ xử lý và độ ổn định đóng vai trò quyết định.
 
-Tóm lại, xử lý ảnh là bước khởi đầu cho mọi pipeline thị giác máy tính, cung cấp nền tảng và dữ liệu chất lượng cho các thuật toán học sâu, phát hiện đối tượng và phân tích hành vi. Với sự phát triển nhanh chóng của các mô hình hiện đại, xử lý ảnh không chỉ còn dừng lại ở các kỹ thuật truyền thống mà đang chuyển mình mạnh mẽ và đóng vai trò quan trọng trong việc xây dựng những hệ thống thông minh, chính xác và tin cậy — đặc biệt trong lĩnh vực mô phỏng và quản lý giao thông dựa trên dữ liệu từ camera.
+Tóm lại, xử lý ảnh là bước khởi đầu cho mọi đề tài thị giác máy tính, cung cấp nền tảng và dữ liệu chất lượng cho các thuật toán học sâu, phát hiện đối tượng và phân tích hành vi. Với sự phát triển nhanh chóng của các mô hình hiện đại, xử lý ảnh không chỉ còn dừng lại ở các kỹ thuật truyền thống mà đang chuyển mình mạnh mẽ và đóng vai trò quan trọng trong việc xây dựng những hệ thống thông minh, chính xác và tin cậy — đặc biệt trong lĩnh vực mô phỏng và quản lý giao thông dựa trên dữ liệu từ camera.
 
+\section{Giới THIỆU VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
+Super-Resolution Generative Adversarial Network (SRGAN), được Ledig và cộng sự giới thiệu vào năm 2016, là một trong những mô hình tiên phong ứng dụng mạng GAN vào bài toán tăng độ phân giải ảnh. Mục tiêu của SRGAN là khắc phục hạn chế của các phương pháp nội suy truyền thống và các mô hình tối ưu theo lỗi điểm ảnh như MSE, vốn thường tạo ra ảnh mượt nhưng thiếu chi tiết và không giữ được kết cấu tự nhiên. Thông qua cơ chế huấn luyện đối kháng, SRGAN học cách sinh ra ảnh có độ phân giải cao với chi tiết sắc nét hơn bằng cách sử dụng đồng thời hai thành phần: perceptual loss dựa trên đặc trưng trích xuất từ mạng VGG và adversarial loss từ Discriminator. Sự kết hợp này giúp mô hình tái tạo các hoa văn, kết cấu và đường nét tinh vi thường bị mất đi trong quá trình phóng to ảnh, từ đó tạo ra ảnh đầu ra có chất lượng thị giác chân thực và giàu chi tiết hơn so với các kỹ thuật SR truyền thống. \cite{Ledig2016SRGAN}
+\subsection{Tổng quan kiến trúc}
+SRGAN hoạt động theo cơ chế GAN truyền thống, trong đó có hai mạng nơ-ron đóng vai trò đối kháng nhau: Generator nhận ảnh độ phân giải thấp và sinh ra phiên bản độ phân giải cao, trong khi Discriminator cố gắng phân biệt ảnh thật với ảnh được tạo ra. Quá trình huấn luyện xen kẽ này buộc Generator phải liên tục cải thiện chất lượng ảnh sinh ra để ngày càng giống với ảnh thật hơn. \cite{GeeksforGeeksSRGAN}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/srgan_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Kiến trúc SRGAN]{Kiến trúc SRGAN}
+    \label{fig:srgan_arch}
+\end{figure}
 
-\subsection{Super-Resolution với Real-ESRGAN}
-Super-Resolution (SR) là một kỹ thuật trong thị giác máy tính nhằm tái tạo hình ảnh có độ phân giải cao (High-Resolution - HR) từ một hoặc nhiều hình ảnh có độ phân giải thấp (Low-Resolution - LR). Mục tiêu của SR là phục hồi các chi tiết bị mất, giảm nhiễu, tăng độ sắc nét và cải thiện chất lượng hình ảnh một cách tự nhiên. Super-Resolution đóng vai trò quan trọng trong nhiều lĩnh vực như giám sát giao thông, y tế, vệ tinh, camera an ninh, và các hệ thống phân tích hình ảnh nơi dữ liệu được thu từ camera kém chất lượng hoặc bị giới hạn bởi điều kiện môi trường.
+\subsection{Kiến trúc Generator}
+Generator sử dụng kiến trúc mạng Residual Network (ResNet) thay vì các mạng tích chập sâu thông thường. Việc lựa chọn ResNet đóng vai trò quan trọng bởi các kết nối tắt (skip connections) trong kiến trúc này giúp dòng gradient lan truyền hiệu quả hơn trong quá trình huấn luyện. Nhờ đó, mô hình có thể xây dựng các mạng rất sâu mà không gặp phải hiện tượng mất mát gradient, đồng thời cải thiện khả năng học đặc trưng tinh vi trong ảnh.
 
-Kỹ thuật Super-Resolution truyền thống dựa vào các phương pháp nội suy (như bicubic interpolation) thường chỉ phóng to kích thước mà không thể khôi phục chi tiết thật. Sự phát triển của học sâu, đặc biệt là mạng nơ-ron tích chập (CNN), đã tạo ra bước tiến lớn giúp mô hình SR có khả năng học trực tiếp mối quan hệ giữa ảnh LR và HR dựa trên dữ liệu huấn luyện. Điều này giúp tái tạo được cấu trúc phức tạp, chi tiết tinh vi, và giảm hiệu ứng mờ hoặc vỡ hình. Các mô hình SR hiện đại thường tập trung vào hai hướng chính: tăng độ phân giải chính xác theo pixel (pixel-wise accuracy) và phục hồi hình ảnh có độ tự nhiên cao (perceptual quality). Sự cân bằng giữa hai mục tiêu này là thách thức lớn trong nghiên cứu SR.
+Bộ sinh (Generator) được xây dựng từ 16 Residual Block, mỗi khối gồm hai lớp tích chập với kernel kích thước 3x3 và 64 kênh đặc trưng. Sau mỗi lớp tích chập là Batch Normalization và hàm kích hoạt Parametric ReLU (PReLU). Khác với ReLU hoặc LeakyReLU truyền thống, PReLU cho phép hệ số dốc ở vùng âm được học tự động, giúp mô hình thích nghi tốt hơn trong quá trình huấn luyện mà không làm tăng nhiều chi phí tính toán.
 
-Super-Resolution được sử dụng rộng rãi trong các hệ thống cần xác định các vật thể nhờ vào việc cải thiện độ phân giải hình ảnh, đặc biệt khi các vật thể có kích thước nhỏ hoặc ở xa camera. Các đối tượng nhỏ trong ảnh thường gặp nhiều thách thức trong việc nhận diện do những lý do sau:
+Giai đoạn tăng độ phân giải của mô hình được thực hiện thông qua hai lớp sub-pixel convolution đã được huấn luyện, giúp phóng to kích thước không gian một cách hiệu quả. Phương pháp này hoạt động bằng cách tái sắp xếp thông tin từ chiều kênh sang chiều không gian, cho phép mô hình học trực tiếp cách upsample ảnh thay vì sử dụng các kỹ thuật nội suy đơn giản.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/srgan_generator_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Kiến trúc của bộ Generator]{Kiến trúc của bộ Generator}
+    \label{fig:srgan_generator_arch}
+\end{figure}
+
+\subsection{Kiến trúc Discriminator}
+Bộ phân biệt (Discriminator) được thiết kế theo kiến trúc sâu gồm tám lớp tích chập 3x3, trong đó số lượng đặc trưng được mở rộng dần từ 64 lên 512 khi kích thước không gian giảm xuống thông qua các lớp tích chập có bước nhảy (strided convolution). Sau khối trích xuất đặc trưng này, mô hình sử dụng hai lớp kết nối đầy đủ (fully connected) và kết thúc bằng hàm kích hoạt sigmoid, nhằm đưa ra xác suất thể hiện mức độ “thật” của ảnh đầu vào—tức phân biệt ảnh thực với ảnh do bộ sinh tạo ra.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/srgan_discri_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Kiến trúc của bộ Discriminator]{Kiến trúc của bộ Discriminator}
+    \label{fig:srgan_discri_arch}
+\end{figure}
+
+\subsection{Thiết kế hàm mất mát}
+\textbf{Content Loss}\\
+Trong các phương pháp super-resolution truyền thống, Mean Squared Error (MSE) thường được sử dụng làm hàm mất mát, đo lường sai khác điểm ảnh giữa ảnh sinh và ảnh đích. Tuy nhiên, việc tối ưu theo MSE thường khiến ảnh tái tạo trở nên quá trơn mượt, thiếu chi tiết. Nguyên nhân là MSE thúc đẩy mô hình tạo ra một kết quả “trung bình” trong số nhiều khả năng khôi phục ảnh độ phân giải cao tương ứng với một ảnh đầu vào bị giảm chất lượng, từ đó làm mất đi các cấu trúc tinh tế và độ sắc nét vốn có.
+
+\begin{equation}
+l_{VGG/i,j}^{SR} = \frac{1}{W_{i,j}H_{i,j}} \sum_{x=1}^{W_{i,j}} \sum_{y=1}^{H_{i,j}} \left( \phi_{i,j}(I^{HR})_{x,y} - \phi_{i,j}(G_{\theta_G}(I^{LR}))_{x,y} \right)^2
+\end{equation}
+
+Trong đó:
 \begin{itemize}
-    \item \textbf{Mất thông tin gốc: } Các đối tượng có kích thước nhỏ thường mang ít thông tin đặc trưng, khiến chúng khó được mô hình nhận diện. Khi ảnh đi qua các lớp tích chập và các thao tác giảm kích thước không gian (downsampling), độ phân giải của feature map giảm dần. Quá trình này có thể làm mất hoặc làm mờ các tín hiệu đặc trưng của những vật thể nhỏ, dẫn đến việc mô hình không còn đủ thông tin để nhận dạng hoặc phân biệt chúng trong các tầng sau. Vì vậy, các đối tượng nhỏ rất dễ bị “xóa” khỏi quá trình trích xuất đặc trưng, làm giảm độ chính xác của hệ thống phát hiện.
-    \item  \textbf{Các đặc trưng đại diện trích xuất từ mô hinh không ổn định: } Các đặc trưng đại diện được mô hình trích xuất có thể trở nên kém ổn định đối với những đối tượng nhỏ. Các đặc trưng này vốn là yếu tố cốt lõi để mô hình phân loại và nhận dạng vật thể. Tuy nhiên, do các đối tượng kích thước nhỏ thường có chất lượng hình ảnh thấp và dễ bị hòa lẫn với nền hoặc các vật thể xung quanh, các đặc trưng thu được thường chứa nhiều nhiễu từ môi trường. Điều này làm giảm độ tin cậy của thông tin đại diện, kéo theo sự suy giảm đáng kể trong khả năng nhận diện.
-
-Đối với bài toán Super-Resolution, thách thức càng trở nên rõ rệt hơn. Việc tạo ra ảnh độ phân giải cao dẫn đến sự đa dạng lớn về kích thước và chi tiết của vật thể, từ đó mở rộng không gian tìm kiếm mà mô hình phải học. Mô hình không chỉ cần nắm bắt đặc trưng nội tại của vật thể mà còn phải học thêm sự biến thiên kích thước do quá trình tái tạo ảnh mang lại. Bên cạnh đó, việc thiếu hụt dữ liệu ảnh chất lượng cao phù hợp với từng bối cảnh cụ thể khiến mô hình gặp khó khăn trong quá trình học đặc trưng. Do vậy, hiệu quả của các mô hình SR trong những trường hợp này thường thấp hơn đáng kể so với khi chúng được huấn luyện trên các bộ dữ liệu lớn, đa dạng và được chuẩn hóa tốt như COCO hoặc ImageNet. 
+\item $l_{VGG/i,j}^{SR}$: Giá trị hàm mất mát (VGG) tại lớp $(i, j)$.
+\item $W_{i,j}, H_{i,j}$: Chiều rộng và chiều cao của bản đồ đặc trưng VGG tại tầng $(i, j)$, dùng để chuẩn hóa.
+\item $\phi_{i,j}$: Bản đồ đặc trưng được trích xuất từ lớp $(i, j)$ của mạng VGG đã được huấn luyện trước.
+\item $I^{HR}$: Ảnh độ phân giải cao thực tế (ground-truth).
+\item $I^{LR}$: Ảnh đầu vào có độ phân giải thấp.
+\item $G_{\theta_G}(I^{LR})$: Ảnh độ phân giải cao được sinh ra bởi bộ Generator G.
+\item $(x, y)$: Vị trí không gian một điểm trong bản đồ đặc trưng.
 \end{itemize}
 
-Trong số các mô hình Super-Resolution dựa trên học sâu, Real-ESRGAN (Real Enhanced Super-Resolution Generative Adversarial Network) là một trong những mô hình tiên tiến và được ứng dụng rộng rãi do khả năng xử lý tốt hình ảnh thực tế. Real-ESRGAN là phiên bản cải tiến của ESRGAN, kế thừa kiến trúc GAN nhằm tạo ra ảnh đầu ra có độ tự nhiên cao, đồng thời khắc phục hạn chế của mô hình gốc là chỉ hoạt động tốt trên các tập dữ liệu "sạch" được tổng hợp nhân tạo. Real-ESRGAN được thiết kế để xử lý ảnh trong điều kiện thực, nơi hình ảnh thường bị nhiễu, mờ, nén JPEG, hoặc méo dạng quang học từ camera giám sát.
+\textbf{Adversarial Loss}\\
+Adversarial loss đóng vai trò thúc đẩy bộ sinh tạo ra các ảnh mà bộ phân biệt không thể phân tách với ảnh độ phân giải cao thực sự. Thành phần mất mát này đặc biệt quan trọng trong việc khôi phục các chi tiết sắc nét và kết cấu chân thực, giúp ảnh được phóng đại trở nên tự nhiên và thuyết phục hơn về mặt thị giác.
+\begin{equation}
+l_{Gen}^{SR} = \sum_{n=1}^{N} - \log D_{\theta_D}(G_{\theta_G}(I^{LR}))
+\end{equation}
 
-Real-ESRGAN đạt được chất lượng phục hồi vượt trội nhờ hai yếu tố chính: mô hình suy giảm (degradation model) thực tế và kiến trúc mạng tối ưu hóa. Thay vì giả định suy giảm ảnh đơn giản như blur + downsample, Real-ESRGAN sử dụng mô hình suy giảm phức tạp và đa dạng nhằm mô phỏng chính xác những lỗi thường xuất hiện ở ảnh đời thực. Điều này giúp mô hình học được cách phục hồi trong nhiều tình huống khác nhau. Kiến trúc mạng generator của Real-ESRGAN dựa trên Residual-in-Residual Dense Block (RRDB), cho phép truyền thông tin hiệu quả, duy trì độ sâu lớn mà không gây mất ổn định khi huấn luyện. Đồng thời, mô hình sử dụng discriminator dựa trên PatchGAN và cơ chế loss perceptual để tối ưu cảm nhận thị giác, giúp ảnh đầu ra sắc nét và tự nhiên hơn.
+Trong đó:
+\begin{itemize}
+\item $l_{Gen}^{SR}$: Giá trị Adversarial loss cho bộ Generator.
+\item $N$: Số lượng mẫu ảnh.
+\item $D_{\theta_D}(G_{\theta_G}(I^{LR}))$: Xác suất mà bộ Discriminator đánh giá ảnh được sinh ra là ảnh thật.
+\item $G_{\theta_G}(I^{LR})$: Ảnh độ phân giải cao được sinh ra bởi bộ Generator sử dụng ảnh đầu vào có độ phân giải thấp $I^{LR}$.
+\item $-log D_{\theta D}(G_{\theta G}(I^{LR}))$: Phạt Generator khi Discriminator dễ dàng nhận ra ảnh giả mà nó tạo ra.
+\end{itemize}
 
-Trong các hệ thống giao thông thông minh, Super-Resolution nói chung và Real-ESRGAN nói riêng có ý nghĩa quan trọng khi xử lý khung hình từ camera giao thông vốn thường bị hạn chế bởi điều kiện thời tiết, ánh sáng yếu, hiện tượng rung lắc, hoặc độ phân giải thấp từ camera cũ. Việc tăng cường chất lượng ảnh bằng SR giúp mô hình phát hiện phương tiện như YOLO hoạt động chính xác hơn, đặc biệt trong các tình huống đông xe hoặc khi phương tiện ở xa. Điều này góp phần nâng cao độ tin cậy của hệ thống đếm xe, phân loại phương tiện, nhận dạng hành vi giao thông, và tăng độ chính xác của dữ liệu đầu vào cho mô hình dự báo như LSTM.
+\textbf{Tổng hợp hàm mất mát}\\
+\begin{equation}
+l^{SR} = l_X^{SR} + 10^{-3}l_{Gen}^{SR}
+\end{equation}
 
-Nhờ khả năng phục hồi chi tiết tốt từ ảnh chất lượng thấp, Real-ESRGAN trở thành một phần quan trọng trong chuỗi xử lý hình ảnh của nhiều bài toán thị giác máy tính hiện đại, giúp cải thiện cả độ phân giải lẫn khả năng diễn giải của mô hình phía sau. Sự kết hợp giữa Super-Resolution và các mô hình học sâu khác tạo nên một pipeline mạnh mẽ, đặc biệt phù hợp với các hệ thống giám sát, điều khiển và dự báo giao thông dựa trên dữ liệu từ camera thực tế.
+Trong đó:
+\begin{itemize}
+\item $l^{SR}$: Hàm mất mát tổng hợp cho super-resolution.
+\item $l_X^{SR}$: Content loss dựa trên đặc trưng VGG perceptual.
+\item $l_{Gen}^{SR}$: Adversarial loss từ bộ Generator.
+\item $10^{-3}$: Hệ số trọng số cân bằng giữa hai thành phần mất mát, đảm bảo Content Loss chiếm ưu thế trong quá trình huấn luyện.
+\end{itemize}
 
-\section{Giới thiệu Super Resolution GAN}
-\subsection{Khái niệm super resolution}
-Super-Resolution (SR) là kỹ thuật tái tạo ảnh có độ phân giải cao (High-Resolution - HR) từ ảnh có độ phân giải thấp (Low-Resolution - LR). Nhiệm vụ này vốn được coi là một bài toán ngược (inverse problem) vì nhiều thông tin chi tiết đã bị mất khi ảnh được thu nhỏ hoặc nén. Mục tiêu của SR là khôi phục lại các chi tiết bị mất, đồng thời đảm bảo ảnh đầu ra sắc nét, tự nhiên và giữ đúng cấu trúc nội dung.
+\section{GIỚI THIỆU VỀ ESRGAN VÀ REAL-ESRGAN}
+\subsection{ESRGAN}
+ESRGAN (Enhanced Super-Resolution GAN) là phiên bản cải tiến của SRGAN, tiếp tục khai thác sức mạnh của mô hình GAN trong bài toán tăng độ phân giải ảnh. ESRGAN khắc phục những hạn chế của SRGAN, đồng thời nâng cao chất lượng thị giác bằng cách tái tạo nhiều chi tiết tinh vi và sắc nét hơn. Những cải tiến đáng chú ý của ESRGAN gồm: \cite{XintaoWang2018ESRGAN}
+\begin{itemize}
+    \item \textbf{Residual-in-Residual Dense Block (RRDB): } Cấu trúc khối mới giúp tăng cường khả năng học đặc trưng và cải thiện độ ổn định khi huấn luyện, thay thế cho các residual block truyền thống.
+    \item \textbf{Nâng cấp perceptual loss: } Giúp mô hình tạo ra hình ảnh tự nhiên và chân thực hơn.
+    \item \textbf{Relativistic GAN: } ESRGAN sử dụng hàm mất mát GAN mang tính tương đối (Relativistic GAN loss) thay cho GAN cổ điển, nhằm giúp bộ phân biệt đánh giá ảnh thật có “tính chân thực cao hơn tương đối” so với ảnh giả, thay vì chỉ đánh giá theo dạng nhị phân thật/giả. 
+\end{itemize}
 
-Trước sự phát triển của học sâu, nhiều phương pháp như nội suy tuyến tính, nội suy bậc ba (bicubic) hay sử dụng mô hình dựa trên sparse coding đã được áp dụng nhưng còn hạn chế về chất lượng và khả năng tái tạo chi tiết. Sự xuất hiện của mạng nơ-ron tích chập (CNN) và sau đó là Generative Adversarial Networks (GAN) đã tạo ra bước tiến lớn, đặc biệt trong việc khôi phục các chi tiết có tính thực tế cao (perceptual details).
+\textbf{Các thành phần chính trong cấu trúc: }
+\begin{itemize}
+    \item \textbf{Generator: } Nhiệm vụ của bộ sinh là chuyển đổi ảnh đầu vào độ phân giải thấp (LR) thành ảnh độ phân giải cao (HR). Trong kiến trúc ESRGAN, các khối RRDB đóng vai trò trung tâm trong việc trích xuất đặc trưng và phóng đại ảnh, đây cũng là điểm cải tiến quan trọng so với SRGAN.
+    \item \textbf{Discriminator: } Bộ phân biệt được huấn luyện để phân loại xem một ảnh là ảnh HR thật hay ảnh SR do generator tạo ra. Mục tiêu của nó là phát hiện chính xác các ảnh giả nhằm thúc đẩy generator tạo ra hình ảnh ngày càng chân thực.
+    \item \textbf{Perceptual Loss: } Một cải tiến quan trọng của ESRGAN là sử dụng hàm mất mát cảm nhận, đo mức độ tương đồng thị giác giữa ảnh sinh và ảnh thật bằng cách so sánh các bản đồ đặc trưng trích xuất từ mạng VGG đã được huấn luyện trước. Điều này giúp ảnh SR có tính tự nhiên và dễ chịu hơn đối với người quan sát.
+\end{itemize}
 
+\textbf{Các hàm mất mát trong ESRGAN: }
+\begin{itemize}
+    \item \textbf{Content Loss: } Đo sự khác biệt giữa ảnh HR thật và ảnh HR được mô hình tạo ra, thường tính theo mức pixel với chỉ số MSE.
+    \item \textbf{Adversarial Loss: } Bảo đảm rằng ảnh sinh trông càng giống ảnh thật càng tốt bằng việc tối ưu dựa trên phản hồi từ discriminator.
+    \item \textbf{Perceptual Loss: } So sánh các đặc trưng bậc cao giữa ảnh sinh và ảnh thật, nhằm duy trì chất lượng thị giác, chi tiết và kết cấu trong ảnh.
+\end{itemize}
 
+\subsection{Real-ESRGAN}
+Real-ESRGAN (Real-World Enhanced Super-Resolution Generative Adversarial Network) được phát triển nhằm khắc phục các hạn chế của ESRGAN khi xử lý dữ liệu ngoài đời thực. Trong khi ESRGAN chủ yếu hoạt động tốt trên các tập dữ liệu tổng hợp và giả lập—nơi nhiễu, mờ và suy giảm được mô hình hóa đơn giản—Real-ESRGAN hướng tới việc tái tạo ảnh độ phân giải cao từ các đầu vào bị suy giảm phức tạp và không dự đoán được trong thực tế. Mô hình này sử dụng cơ chế GAN bất đối xứng (asymmetric GAN) với bộ suy giảm mạnh mẽ (degradation model) gồm nhiều giai đoạn, mô phỏng các hiện tượng suy giảm thường gặp như nhiễu cảm biến, nén JPEG, mất chi tiết do chuyển động và sai lệch quang học.
 
+Real-ESRGAN áp dụng kiến trúc RRDB (Residual-in-Residual Dense Block) tương tự ESRGAN nhưng được điều chỉnh để tăng tính ổn định và độ bền khi huấn luyện trên dữ liệu phi chuẩn hóa. Ngoài ra, Real-ESRGAN giới thiệu bộ phân biệt cải tiến (U-shaped discriminator) giúp mô hình học được nhiều mức độ suy giảm khác nhau. Nhờ các cải tiến này, Real-ESRGAN có khả năng tái tạo chi tiết tốt hơn, ổn định hơn trên ảnh chụp thực tế, và cung cấp kết quả nhất quán ngay cả trong điều kiện ảnh đầu vào bị hỏng nghiêm trọng.
+
+\section{GIỚI THIỆU NHẬN DIỆN ĐỐI TƯỢNG}
+Một trong những lĩnh vực trọng tâm của Trí tuệ nhân tạo (Artificial Intelligence) là Thị giác máy tính (Computer Vision). Đây là ngành nghiên cứu các phương pháp thu nhận, xử lý và phân tích ảnh số nhằm mô phỏng khả năng “nhìn” và “hiểu” thế giới trực quan của con người. Computer Vision bao gồm nhiều bài toán quan trọng như phân đoạn ảnh, nhận dạng đối tượng, mô phỏng cảnh, siêu phân giải hình ảnh, tái tạo 3D và nhiều hướng tiếp cận khác. Trong số đó, Object Detection được xem là một trong những bài toán cốt lõi và có tác động lớn nhất nhờ tính ứng dụng rộng rãi trong thực tiễn.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/object_detection.jpeg}
+    \captionsetup{justification=centering}
+    \caption[Nhận diện đối tượng]{Nhận diện đối tượng}
+    \label{fig:object_detection}
+\end{figure}
+
+Một số ứng dụng của nhận diện đối tượng bao gồm:
+\begin{itemize}
+    \item Phân tích thể thao: Theo dõi vị trí và chuyển động của cầu thủ trên sân.
+    \item Y tế: Phát hiện bất thường trong hình ảnh y khoa. 
+    \item Giao thông thông minh: Nhận diện phương tiện, biển báo giao thông, phát hiện vi phạm.
+    \item Thương mại điện tử: Tìm kiếm sản phẩm theo hình ảnh, kiểm tra hàng hóa tự động. 
+    \item Nông nghiệp: Giám sát cây trồng, phát hiện sâu bệnh qua hình ảnh.
+    \item Robot tự hành: Giúp robot nhận diện và tương tác với môi trường xung quanh.
+\end{itemize}
+Trong những năm gần đây, hai kiến trúc phát hiện đối tượng có ảnh hưởng sâu rộng và hình thành nền tảng cho nhiều hệ thống thị giác máy tính hiện đại là Mạng Nơ-ron Tích chập (Convolutional Neural Networks - CNN) và You Only Look Once (YOLO).
+
+Mạng Nơ-ron Tích chập (CNN) sử dụng phép tích chập như một cơ chế cốt lõi để trích xuất và học các đặc trưng không gian của hình ảnh. Bằng cách áp dụng các bộ lọc trượt trên toàn bộ ảnh, CNN có khả năng phát hiện các đặc trưng từ thấp đến cao, từ cạnh, góc, cho đến các cấu trúc phức tạp. Từ kiến trúc nền tảng này, nhiều biến thể đã được phát triển nhằm cải thiện tốc độ và độ chính xác, tiêu biểu như R-CNN, Fast R-CNN hay Mask R-CNN, góp phần nâng cao hiệu quả trong các nhiệm vụ định vị và phân loại đối tượng.
+
+YOLO (You Only Look Once) là một trong những mô hình phát hiện đối tượng thời gian thực nổi bật nhất. Được đề xuất lần đầu vào năm 2015, YOLO mang tính đột phá khi tiếp cận bài toán phát hiện đối tượng theo cách hoàn toàn mới: thay vì xử lý theo từng vùng như các mô hình truyền thống, YOLO dự đoán trực tiếp bounding boxes và nhãn lớp chỉ qua một lần quan sát toàn bộ ảnh. Nhờ đó, YOLO đạt được tốc độ xử lý rất cao trong khi vẫn đảm bảo độ chính xác đáng kể, và nhanh chóng trở thành lựa chọn phổ biến trong nhiều ứng dụng thực tế.
+
+Tại Việt Nam, các nghiên cứu đã khai thác mô hình YOLO trong các bài toán như nhận dạng biển số xe và giám sát giao thông, cho thấy hiệu quả trong các hệ thống quản lý và kiểm soát thông minh. Đồng thời, nhiều công trình cũng tiến hành so sánh giữa YOLO và các thuật toán khác như SSD nhằm xác định giải pháp tối ưu cho từng nhu cầu ứng dụng cụ thể.
+
+\section{GIỚI THIỆU MÔ HÌNH YOLO}
+YOLO (You Only Look Once) là một mô hình phát hiện đối tượng dựa trên mạng nơ-ron tích chập (CNN), được thiết kế để thực hiện nhận dạng, phân loại và định vị đối tượng trong ảnh một cách nhanh chóng và hiệu quả. Không giống như các phương pháp truyền thống chia bài toán thành nhiều giai đoạn (như đề xuất vùng và phân loại), YOLO xử lý toàn bộ ảnh chỉ trong một lần duy nhất, từ đó mang lại tốc độ vượt trội. \cite{VietHoangYOLO}
+Bản chất “nhìn một lần” của YOLO giúp mô hình đạt tốc độ xử lý thời gian thực mà vẫn duy trì độ chính xác cao, khiến nó trở thành một trong những kiến trúc phổ biến nhất trong lĩnh vực phát hiện đối tượng cho các ứng dụng như giám sát thông minh, xe tự hành và phân tích video.
+Về mặt kiến trúc, YOLO được cấu trúc thành ba thành phần chính: Backbone, Neck, và Head, mỗi phần đảm nhiệm một vai trò quan trọng trong quá trình phát hiện đối tượng:
+\begin{itemize}
+\item \textbf{Backbone (Mạng trích xuất đặc trưng): } YOLO sử dụng một mạng nơ-ron tích chập sâu (CNN) làm nền tảng để trích xuất đặc trưng từ ảnh đầu vào. Backbone học các thông tin quan trọng như cạnh, hình dạng, họa tiết và cấu trúc đối tượng, tạo nên nền tảng cho quá trình phát hiện chính xác.
+\item \textbf{Neck (Phần kết nối đặc trưng): }Bộ phận này thường tích hợp các kiến trúc như FPN (Feature Pyramid Network) hoặc PANet (Path Aggregation Network). Neck có nhiệm vụ kết hợp và khuếch tán thông tin từ nhiều tầng của Backbone, giúp mô hình duy trì khả năng phát hiện tốt đối với các đối tượng ở nhiều kích thước khác nhau, từ rất nhỏ đến rất lớn.
+\item \textbf{Head (Phần dự đoán đầu ra): } Đây là nơi thực hiện các phép dự đoán cuối cùng, bao gồm tọa độ hộp giới hạn (bounding boxes), điểm tin cậy (confidence scores) và xác suất thuộc lớp đối tượng. Head tổng hợp thông tin từ Backbone và Neck để đưa ra kết quả phát hiện hoàn chỉnh.
+\end{itemize}
+Nhờ sự phối hợp hiệu quả giữa ba thành phần này, YOLO đạt được tốc độ xử lý nhanh trong khi vẫn giữ được độ chính xác cao, trở thành một trong những kiến trúc phát hiện đối tượng hiệu quả nhất hiện nay.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/yolo_arch.png}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng YOLO]{Sơ đồ kiến trúc mạng YOLO}
+    \label{fig:yolo_arch}
+\end{figure}
+
+\subsection{Nguyên lý hoạt động của YOLO}
+YOLO hoạt động theo 4 bước chính:
+\begin{itemize}
+\item \textbf{Chia ảnh thành lưới (grid) S x S: } Ảnh đầu vào được chia thành một lưới gồm S hàng × S cột ô (grid-cells). Mỗi ô “chịu trách nhiệm” phát hiện các đối tượng mà “tâm” của hộp giới hạn (bounding box) rơi vào ô đó. Ý tưởng là phân vùng ảnh để mỗi phần nhỏ có thể dự đoán xem có đối tượng hay không, thay vì lặp toàn bộ ảnh nhiều lần.
+\item \textbf{Trích xuất đặc trưng ảnh với mạng CNN (backbone + feature layers): } YOLO sử dụng một mạng nơ-ron tích chập (CNN) để “đọc” toàn bộ ảnh – các lớp convolution + pooling + … trích xuất đặc trưng (features) từ ảnh. Các lớp cuối (fully connected / detection layers) sau khi feature extraction sẽ dùng để dự đoán bounding boxes + nhãn + độ tin cậy.
+\item \textbf{Dự đoán nhiều bounding boxes + xác suất + lớp đối tượng ở mỗi ô lưới: } Mỗi ô (grid cell) dự đoán B hộp giới hạn (bounding boxes). Mỗi hộp gồm các thông số: tâm x, y; chiều rộng w, chiều cao h (thường được chuẩn hóa), + một “điểm tin cậy (confidence score)” biểu thị: khả năng có đối tượng + độ tin cậy vị trí. Ngoài ra, mỗi ô cũng dự đoán xác suất (conditional class probabilities) cho mỗi lớp đối tượng mà ảnh đó có thể chứa. 
+\item \textbf{Kết hợp kết quả và loại bỏ dư thừa (Non-Maximum Suppression – NMS): } Vì nhiều hộp có thể “đụng chồng” nhau (ví dụ cùng dự đoán một đối tượng), sau khi mạng đưa ra tất cả dự đoán, YOLO sử dụng kỹ thuật NMS để giữ lại hộp có “điểm tin cậy tốt nhất” và loại bỏ các hộp dư chồng lặp. Kết quả cuối: một danh sách các hộp (bounding boxes), mỗi hộp có nhãn lớp đối tượng và độ tin cậy — tương ứng với những đối tượng được phát hiện trong ảnh.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/yolo_workflow.jpg}
+    \captionsetup{justification=centering}
+    \caption[Cơ chế hoạt động của YOLO]{Cơ chế hoạt động của YOLO}
+    \label{fig:yolo_workflow}
+\end{figure}
+
+\subsection{Hàm mất mát (Loss Function) trong YOLO}
+Trong YOLO, hàm mất mát (loss function) được xây dựng từ sự khác biệt giữa dự đoán của mô hình và nhãn thực tế. Tổng độ lỗi là sự kết hợp của ba thành phần chính, mỗi thành phần phản ánh một khía cạnh quan trọng trong quá trình phát hiện đối tượng:
+
+\begin{enumerate}
+    \item \textbf{Classification Loss - Sai số phân loại: } Đo mức độ chính xác khi mô hình dự đoán lớp của đối tượng trong mỗi ô lưới. Mục tiêu là đảm bảo mô hình không chỉ phát hiện được vật thể, mà còn nhận diện đúng loại của nó.
+    \item \textbf{Localization Loss – Sai số định vị bounding box: } Đánh giá độ lệch giữa bounding box dự đoán và bounding box thật dựa trên bốn tham số: vị trí tâm (x, y) và kích thước (w, h). Thành phần này giúp mô hình học cách khoanh vùng đối tượng chính xác hơn.
+    \item \textbf{Confidence Loss – Sai số về mức độ tin cậy: } Phản ánh sự khác biệt giữa “mức độ chắc chắn” mà mô hình cho rằng ô lưới chứa một vật thể và giá trị nhãn thực tế. Đây là yếu tố quan trọng giúp YOLO biết được ô nào nên dự đoán và ô nào nên bỏ qua.
+\end{enumerate}
+
+\textbf{Classification Loss: }\\
+Classification loss là sai số phản ánh mức độ chính xác khi mô hình dự đoán lớp của đối tượng. Thành phần này chỉ được tính cho những ô lưới thật sự chứa object, còn các ô không có vật thể sẽ được bỏ qua để tránh làm nhiễu quá trình học.
+Classification loss được xác định theo công thức sau:
+
+\begin{equation}
+L_{classification} = \sum_{i=0}^{S^2} 1_{i}^{obj} \sum_{c \in classes} (p_i(c) - \hat{p}_i(c))^2
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $I_{i}^{obj}$: Biến chỉ báo, bằng 1 nếu ô lưới i chứa object, ngược lại bằng 0.
+    \item $\hat{p}_i(c)$: Xác xuất có điều kiện của lớp c tại ô vuông tương ứng mà mô hình dự đoán.
+\end{itemize}
+
+\textbf{Localization Loss: }\\
+Localization loss là thành phần đo sai số vị trí và kích thước của bounding box mà mô hình dự đoán. Nó so sánh tọa độ tâm cùng chiều rộng và chiều cao của bounding box dự đoán với giá trị thực tế (ground truth) trong dữ liệu huấn luyện.
+Một điểm quan trọng là các giá trị này không được tính trực tiếp theo kích thước ảnh gốc, mà phải được chuẩn hoá về khoảng [0, 1] dựa trên kích thước của ô lưới và vị trí tương đối của bounding box. Việc chuẩn hóa giúp mô hình học ổn định hơn, hội tụ nhanh hơn và đạt độ chính xác cao hơn.
+Localization loss được tính bằng tổng sai số giữa độ tâm (x,y) và kích thước (w,h) của bounding box dự đoán so với ground truth.
+Ở mỗi ô lưới chứa đối tượng, YOLO chọn một bounding box có IOU cao nhất với ground truth để chịu trách nhiệm dự đoán. Sai số được tính dựa trên bounding box được chọn này.
+Công thức tính Localization loss như sau:
+\begin{equation}
+L_{localization} = \lambda_{coord} \sum_{i=0}^{S^2} \sum_{j=0}^{B} 1_{ij}^{obj} \left[ (x_i - \hat{x}_i)^2 + (y_i - \hat{y}_i)^2 + (\sqrt{w_i} - \sqrt{\hat{w}_i})^2 + (\sqrt{h_i} - \sqrt{\hat{h}_i})^2 \right]
+\end{equation}
+Trong đó:
+\begin{itemize}
+    \item $\lamda_{coord}$: Hệ số điều chỉnh, thường được đặt giá trị cao hơn để nhấn mạnh tầm quan trọng của localization loss.
+    \item $1_{ij}^{obj}$: Biến chỉ báo, bằng 1 nếu ô lưới i chứa object và bounding box j chịu trách nhiệm dự đoán, ngược lại bằng 0.
+    \item $x_i,y_i,w_i,h_i$: Tọa độ tâm và kích thước thực tế của bounding box.
+    \item $\hat{x_i},\hat{y_i},\hat{w_i},\hat{h_i}$: Tọa độ tâm và kích thước dự đoán của bounding box.
+\end{itemize}
+
+\textbf{Confidence Loss:}\\
+Confidence loss đo mức độ chênh lệch giữa “độ tin cậy” mà mô hình gán cho một bounding box (khả năng ô lưới đó chứa object) và giá trị nhãn thực tế. Khác với hai thành phần loss còn lại, confidence loss được tính cho tất cả các ô lưới, bao gồm cả ô có đối tượng và ô không có đối tượng. Nhờ đó, mô hình học được cách phân biệt đâu là vùng chứa object thật và đâu là vùng nền (background), giúp giảm dự đoán sai và tăng độ chính xác tổng thể.
+\begin{equation}
+L_{confidence} = \sum_{i=0}^{S^2} \sum_{j=0}^{B} 1_{ij}^{obj} \left[ 1_{ij}^{obj} (C_i - \hat{C}_i)^2 + \lambda_{noobj} 1_{ij}^{noobj} (C_i - \hat{C}_i)^2 \right]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\lambda_{noobj}$: Hệ số điều chỉnh quan trọng được sử dụng để kiểm soát trọng số của phần lỗi liên quan đến các bounding box không chứa đối tượ (no-object).
+    \item $1_{ij}^{noobj}$: Cho biết bounding box thứ  của cell i không chứa đối tượng.
+    \item $C_{i}$: Độ tin cậy thực tế (1 nếu có đối tượng, 0 nếu không có).
+    \item $\hat{C}_{i}$: Độ tin cậy dự đoán của bounding box.
+\end{itemize}
+
+\textbf{Tổng hợp hàm mất mát trong YOLO: }
+\begin{equation}
+L_{total} = L_{classification} + L_{localization} + L_{confidence}
+\end{equation}
+
+\subsection{Các chỉ số đánh giá hiệu suất của YOLO}
+Trong bài toán phát hiện đối tượng, ba chỉ số quan trọng thường được sử dụng để đánh giá hiệu suất mô hình gồm Mean Average Precision (mAP), Average Precision (AP) và Intersection over Union (IoU).
+\textbf{Mean Average Precision (mAP): } mAP đánh giá hiệu suất tổng thể của mô hình bằng cách lấy trung bình giá trị AP trên toàn bộ các lớp đối tượng. Để tính mAP, trước hết ta xác định AP của từng lớp dựa trên tích phân của đường cong Precision–Recall. Sau đó, mAP được tính bằng trung bình cộng của các AP này. Giá trị mAP càng cao chứng tỏ mô hình đạt được độ chính xác (precision) và độ thu hồi (recall) tốt trên toàn bộ tập đối tượng.
+\textbf{Average Precision (AP): } AP phản ánh hiệu suất của mô hình tại các mức độ thu hồi khác nhau thông qua quan hệ giữa hai đại lượng:
+\begin{itemize}
+    \item Precision (Độ chính xác): TP/(TP + FP)
+    \item Recall (Độ thu hồi): TP/(TP + FN)
+\end{itemize}
+AP được tính bằng diện tích dưới đường cong Precision-Recall (PR curve), thể hiện sự đánh đổi giữa khả năng phát hiện đúng (precision) và khả năng tìm được nhiều đối tượng nhất (recall).
+\textbf{Intersection over Union (IoU): } IoU đo mức độ trùng khớp giữa bounding box dự đoán và bounding box ground truth. Chỉ số này được tính bằng tỉ lệ giữa diện tích vùng giao nhau và diện tích vùng hợp nhất của hai bounding box. Giá trị IoU càng cao cho thấy mô hình định vị đối tượng càng chính xác. Công thức tính:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/IOU.jpg}
+    \captionsetup{justification=centering}
+    \caption[Cách tính chỉ số IOU]{Cách tính chỉ số IOU}
+    \label{fig:IOU}
+\end{figure}
+
+\subsection{NON-MAXIMUM SUPPRESSION}
+Trong giai đoạn suy luận, YOLO thường tạo ra nhiều bounding box trùng lặp, đặc biệt tại những khu vực có mật độ đối tượng cao hoặc khi các ô lưới lân cận cùng dự đoán một vật thể. Việc xuất hiện quá nhiều bounding box chồng chéo không chỉ gây dư thừa mà còn làm giảm chất lượng dự đoán. 
+Để khắc phục vấn đề này, YOLO sử dụng kỹ thuật Non-Maximum Suppression (NMS). Phương pháp này sàng lọc và loại bỏ các bounding box kém quan trọng, chỉ giữ lại hộp có độ tin cậy cao nhất trong số các hộp chồng lặp lên nhau. Nhờ đó, mô hình tránh được việc “đếm” một đối tượng nhiều lần và tập trung vào các dự đoán chính xác nhất, giúp kết quả nhận dạng trở nên rõ ràng và đáng tin cậy hơn.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/non_max_supression.png}
+    \captionsetup{justification=centering}
+    \caption[Kết quả sau khi áp dụng Non-Maximum Suppression]{Kết quả sau khi áp dụng Non-Maximum Suppression}
+    \label{fig:non_max_supression}
+\end{figure}
+
+Các bước của Non-Maximum Suppression bao gồm:
+\begin{itemize}
+    \item Bước 1: Loại bỏ các bounding box có xác suất chứa vật thể nhỏ hơn một ngưỡng đã cho, thường là 0.5.
+    \item Bước 2: Chọn bounding box có độ tin cậy cao nhất.
+    \item Bước 3: Tính toán IoU giữa bounding box đã chọn và các bounding box còn lại. Loại bỏ những hộp có IoU lớn hơn một ngưỡng nhất định (ví dụ 0.4) để tránh chồng lấp.
+\end{itemize}
+
+\section{TỔNG QUAN VỀ MÔ HÌNH YOLOV11}
+YOLO11 là thế hệ mới nhất trong chuỗi mô hình YOLO do Ultralytics phát triển, hướng tới bài toán phát hiện đối tượng theo thời gian thực với hiệu năng vượt trội. Kế thừa và mở rộng những thành tựu của các phiên bản tiền nhiệm, YOLO11 được trang bị nhiều cải tiến quan trọng về kiến trúc mạng cũng như chiến lược huấn luyện, qua đó nâng cao đồng thời độ chính xác, tốc độ suy luận và hiệu quả tính toán. Nhờ tính linh hoạt và khả năng thích ứng cao, YOLO11 phù hợp với nhiều bài toán thị giác máy tính trong các kịch bản ứng dụng thực tế.
+
+\subsection{Kiến trúc mô hình YOLOv11}
+Kế thừa nền tảng kiến trúc đã được khẳng định, YOLOv11 tiếp tục phát triển và hoàn thiện những thành quả của YOLOv8 thông qua các cải tiến về cấu trúc mạng và chiến lược tối ưu tham số, từ đó nâng cao đáng kể hiệu quả và độ chính xác trong bài toán phát hiện đối tượng.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/yolov11_arch.png}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng YOLOv11]{Sơ đồ kiến trúc mạng YOLOv11}
+    \label{fig:yolov11_arch}
+\end{figure}
+
+Các khối trong kiến trúc YOLOv11 bao gồm:
+\begin{itemize}
+    \item \textbf{SPFF (Spatial Pyramid Pooling - Fast): } Khối SPPF được sử dụng để mở rộng vùng cảm thụ (receptive field) của mạng bằng cách áp dụng các phép pooling với kích thước khác nhau trên cùng một đặc trưng đầu vào. Nhờ đó, mô hình có thể khai thác thông tin ngữ cảnh đa tỷ lệ mà không làm tăng đáng kể chi phí tính toán, giúp cải thiện khả năng phát hiện các đối tượng có kích thước khác nhau.
+    \item \textbf{C2PSA (Cross Stage Partial with Self-Attention): } C2PSA là khối đặc trưng kết hợp giữa cơ chế Cross Stage Partial (CSP) và Self-Attention. Khối này giúp tăng cường khả năng học mối quan hệ không gian – ngữ nghĩa giữa các vùng trong ảnh, đồng thời giảm số lượng tham số và chi phí tính toán. Nhờ đó, mô hình có thể tập trung tốt hơn vào các vùng quan trọng của đối tượng.
+    \item \textbf{C3K2: } C3K2 là một biến thể của khối C3, sử dụng các lớp tích chập với kernel kích thước nhỏ (ví dụ 3x3) và cấu trúc residual để trích xuất đặc trưng hiệu quả. Khối này giúp cân bằng giữa độ sâu mạng, khả năng biểu diễn đặc trưng và tốc độ suy luận, đặc biệt phù hợp cho các tác vụ phát hiện đối tượng thời gian thực.
+    \item \textbf{Các khối đặc trưng nhiều màu ở trung tâm hình: } Các khối này biểu diễn các feature maps ở nhiều mức không gian khác nhau, tương ứng với các tầng đặc trưng đa tỷ lệ được trích xuất từ backbone/neck. Việc kết hợp các feature maps này cho phép mô hình phát hiện hiệu quả cả đối tượng nhỏ, trung bình và lớn.
+\end{itemize}
+
+\subsection{Tính năng nổi bật của mô hình YOLOv11}
+YOLOv11 được phát triển như một bước tiến quan trọng trong dòng mô hình YOLO, tập trung đồng thời vào độ chính xác, tốc độ xử lý và hiệu quả tính toán. Những đặc điểm nổi bật của mô hình có thể được tóm lược như sau:
+\begin{itemize}
+    \item \textbf{Trích xuất đặt trưng nâng cao: } YOLOv11 áp dụng kiến trúc backbone và neck được cải tiến, cho phép khai thác đặc trưng hình ảnh ở nhiều mức không gian và ngữ nghĩa khác nhau. Nhờ đó, mô hình nâng cao khả năng biểu diễn đặc trưng, đặc biệt hiệu quả trong việc phát hiện các đối tượng nhỏ, chồng lấp hoặc xuất hiện trong bối cảnh phức tạp.
+    \item \textbf{Tối ưu hóa hiệu suất và tốc độ suy luận: } Với thiết kế kiến trúc tinh gọn cùng quy trình huấn luyện được tối ưu hóa, YOLOv11 đạt tốc độ xử lý vượt trội trong khi vẫn duy trì sự cân bằng hợp lý giữa độ chính xác và hiệu năng. Điều này giúp mô hình đáp ứng tốt các yêu cầu của các ứng dụng thời gian thực.
+    \item \textbf{Độ chính xác cao với số lượng tham số giảm: } Nhờ các cải tiến trong thiết kế mô hình, YOLOv11m đạt giá trị mAP cao hơn trên bộ dữ liệu COCO, đồng thời giảm khoảng 22\%  số lượng tham số so với YOLOv8m. Sự tối ưu này giúp nâng cao hiệu quả tính toán, giảm yêu cầu tài nguyên mà không làm suy giảm chất lượng dự đoán.
+    \item \textbf{Khả năng thích ứng linh hoạt trong nhiều môi trường triển khai: } YOLOv11 có thể được triển khai hiệu quả trên nhiều nền tảng khác nhau, từ các thiết bị biên (edge devices), hệ thống nhúng, đến các môi trường đám mây và hạ tầng tăng tốc GPU của NVIDIA. Tính linh hoạt này giúp mô hình dễ dàng tích hợp vào các hệ thống ứng dụng thực tế.
+    \item \textbf{Hỗ trợ đa dạng các tác vụ thị giác máy tính: } Không chỉ giới hạn ở bài toán phát hiện đối tượng, YOLOv11 còn được thiết kế để hỗ trợ nhiều nhiệm vụ thị giác máy tính khác nhau như phân đoạn ảnh, phân loại hình ảnh, ước tính tư thế, phát hiện đối tượng theo hướng (oriented object detection). Nhờ đó, phạm vi ứng dụng của YOLOv11 được mở rộng đáng kể trong các bài toán thực tiễn.
+\end{itemize}
+
+\subcsection{Hiệu suất của mô hình YOLOv11}
+YOLOv11 - phiên bản mới nhất trong họ mô hình YOLO - đã được Ultralytics tiến hành đánh giá và so sánh hiệu suất với các phiên bản tiền nhiệm từ YOLOv5 đến YOLOv10. Kết quả thực nghiệm cho thấy YOLOv11 đạt được những cải tiến rõ rệt cả về độ chính xác lẫn tốc độ suy luận, qua đó khẳng định ưu thế vượt trội của kiến trúc mới.
+
+Cụ thể, YOLOv11x đạt giá trị khoảng 54,5\% $mAP50_{50-95}$ với độ trễ suy luận chỉ 13 ms, vượt qua toàn bộ các phiên bản YOLO trước đó trong cả hai tiêu chí độ chính xác và hiệu năng. Điều này cho thấy mô hình có khả năng xử lý các bài toán phát hiện đối tượng phức tạp trong thời gian thực với độ tin cậy cao.
+
+Đối với YOLOv11m, mô hình mang lại mức độ chính xác tương đương hoặc tiệm cận với các biến thể kích thước lớn của các thế hệ YOLO trước, nhưng yêu cầu tài nguyên tính toán thấp hơn đáng kể. Đặc điểm này giúp YOLOv11m trở thành lựa chọn cân bằng giữa hiệu năng và chi phí triển khai.
+
+Trong khi đó, YOLOv11s hướng đến các hệ thống yêu cầu độ trễ cực thấp. Mô hình đạt khoảng 47\% $mAP_{50-95}$ trong khoảng độ trễ từ 2-6 ms, cho phép triển khai hiệu quả trong các ứng dụng thời gian thực trên thiết bị biên mà vẫn duy trì mức độ chính xác chấp nhận được.
+Nhìn chung, các kết quả đánh giá cho thấy YOLOv11 không chỉ cải thiện hiệu suất so với các phiên bản trước, mà còn mở rộng khả năng ứng dụng trong nhiều kịch bản khác nhau, từ hệ thống nhúng hạn chế tài nguyên đến các nền tảng tính toán hiệu năng cao.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/yolov11_vs_prev_ver.png}
+    \captionsetup{justification=centering}
+    \caption[Hiệu suất của mô hình yolov11 so với các phiên bản trước]{Hiệu suất của mô hình yolov11 so với các phiên bản trước}
+    \label{fig:yolov11_vs_prev_ver}
+\end{figure}
+Ngoài ra, đường cong cải tiến của YOLOv11 cho thấy khả năng mở rộng (scaling) vượt trội giữa các biến thể của mô hình, cho phép khai thác tài nguyên tính toán một cách hiệu quả và linh hoạt hơn so với các thế hệ trước. Đặc tính này giúp các phiên bản YOLOv11 duy trì sự cân bằng tối ưu giữa độ chính xác và hiệu năng khi thay đổi quy mô mô hình. Những kết quả đạt được đã khẳng định YOLOv11 là một bước tiến đáng kể trong lĩnh vực phát hiện đối tượng theo thời gian thực, đáp ứng hiệu quả các yêu cầu ngày càng khắt khe của các ứng dụng thị giác máy tính hiện đại.
 
 
 \section{Công cụ mô phỏng giao thông: SUMO (Simulation of Urban Mobility)}
 \subsection{Giới thiệu SUMO}
 \subsection{Ưu điểm và hạn chế của SUMO trong nghiên cứu mô phỏng và thực tế giao thông đô thị}
+
+\section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
