@@ -281,7 +281,7 @@ Trong bài toán phát hiện đối tượng, ba chỉ số quan trọng thư�
     \item Recall (Độ thu hồi): TP/(TP + FN)
 \end{itemize}
 AP được tính bằng diện tích dưới đường cong Precision-Recall (PR curve), thể hiện sự đánh đổi giữa khả năng phát hiện đúng (precision) và khả năng tìm được nhiều đối tượng nhất (recall).
-\textbf{Intersection over Union (IoU): } IoU đo mức độ trùng khớp giữa bounding box dự đoán và bounding box ground truth. Chỉ số này được tính bằng tỉ lệ giữa diện tích vùng giao nhau và diện tích vùng hợp nhất của hai bounding box. Giá trị IoU càng cao cho thấy mô hình định vị đối tượng càng chính xác. Công thức tính:
+\textbf{Intersection over Union (IoU): } IoU đo mức độ trùng khớp giữa bounding box dự đoán và bounding box ground truth. Chỉ số này được tính bằng tỉ lệ giữa diện tích vùng giao nhau và diện tích vùng hợp nhất của hai bounding box. Giá trị IoU càng cao cho thấy mô hình định vị đối tượng càng chính xác. Công thức tính như hình \ref{fig:IOU} dưới đây:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{fig/IOU.jpg}

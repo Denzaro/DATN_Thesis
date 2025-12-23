@@ -1,0 +1,59 @@
+\chapter{THIẾT KẾ HỆ THỐNG}
+
+\section{YÊU CẦU CỦA HỆ THỐNG}
+Hệ thống được đề xuất hướng tới việc mô phỏng, dự báo và điều tiết giao thông dựa trên dữ liệu hình ảnh snapshot thu thập từ camera giao thông, kết hợp các kỹ thuật học sâu và mô phỏng giao thông vi mô. Để đáp ứng mục tiêu nghiên cứu và đảm bảo khả năng triển khai thực tế, hệ thống cần thỏa mãn các yêu cầu chức năng và phi chức năng sau.
+
+Về giai đoạn thu thập dữ liệu, hệ thống cần đảm bảo các yêu cầu sau:
+\begin{itemize}
+    \item Tiếp nhận được dữ liệu hình ảnh giao thông dạng snapshot từ các camera giao thông đặt tại các nút giao.
+    \item Các ảnh này phải được quản lý, lưu trữ và gắn nhãn thời gian rõ ràng.
+\end{itemize}
+
+Về giai đoạn tiền xử lý dữ liệu, nhận diện và đếm phương tiện, hệ thống cần đáp ứng các yêu cầu sau:
+\begin{itemize}
+    \item Các ảnh đầu vào cần được thực hiện các bước xử lý ảnh cơ bản như tăng độ phân giải, giảm nhiễu và chuẩn hóa kích thước.
+    \item Hệ thống tích hợp mô hình YOLOv11 nhằm nhận diện các phương tiện giao thông chính trên từng ảnh snapshot, trong đó các phương tiện được quy ước và phân loại thành hai nhóm: xe hai bánh (xe máy) và xe bốn bánh (xe hơi).
+    \item Kết quả phát hiện bao gồm số lượng phương tiện theo từng loại tại mỗi thời điểm và tại từng địa điểm giám sát cụ thể, trong đó “địa điểm” được hiểu là vị trí camera đại diện cho một khu vực giao thông trên bản đồ.
+    \item Lưu trữ kết quả đếm phương tiện với timestamp và vị trí tương ứng để phục vụ cho các bước xử lý tiếp theo.
+    \item Đảm bảo độ chính xác cao trong việc nhận diện và đếm phương tiện, với sai số không vượt quá 5\% so với thực tế.
+\end{itemize}
+
+Tiếp đến là yêu cầu về mô phỏng giao thông:
+\begin{itemize}
+    \item None
+\end{itemize}
+
+Đối với giai đoạn xây dựng chuỗi thời gian và dự báo lưu lượng giao thông, hệ thống cần thỏa mãn các yêu cầu sau:
+\begin{itemize}
+    \item None
+\end{itemize}
+
+Đối với giai đoạn tích hợp và điều khiển luồng giao thông, hệ thống cần đáp ứng các yêu cầu sau:
+\begin{itemize}
+    \item Hệ thống tích hợp các giá trị dự báo từ LSTM vào môi trường mô phỏng giao thông SUMO, trong đó lưu lượng phương tiện, tốc độ dòng xe hoặc phân bố phương tiện tại các nút giao được điều chỉnh tương ứng với trạng thái giao thông dự kiến.
+    \item None
+\end{itemize}
+
+Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống cần:
+\begin{itemize}
+    \item Cung cấp giao diện trực quan để hiển thị kết quả nhận diện, đếm phương tiện, dự báo lưu lượng và mô phỏng giao thông.
+    \item Hỗ trợ các biểu đồ, bản đồ nhiệt và các công cụ phân tích để người dùng có thể dễ dàng hiểu và đánh giá tình hình giao thông. 
+     \item So sánh hiệu quẩ giữa việc xử dụng chiến lược điều tiết và không sử dụng để đánh giá hiệu quả của các biện pháp điều tiết dựa trên các chỉ số: thời gian di chuyển trung bình, thời gian đợi, chiều dài hàng đợi.
+\end{itemize}
+
+\section{KIẾN TRÚC HỆ THỐNG}
+\subsection{Sơ đồ khối hệ thống}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=0.6\textheight, keepaspectratio]{fig/system_block_diagram.png}
+    \caption{Sơ đồ khối kiến trúc hệ thống}
+    \label{fig:system_block_diagram}
+\end{figure}
+
+Chức năng từng khối:
+\begin{itemize}
+    \item \textbf{Khối thu thập dữ liệu: } Khối thu thập dữ liệu chịu trách nhiệm tiếp nhận các hỉnh ảnh snapshot từ nguồn mở Open Street Map (OSM). Trong đề tài này, dữ liệu không được thu thập trực tiếp từ hệ thống camera vật lý mà được lấy từ nguồn dữ liệu mở, nơi các camera giao thông đã được thiết lập và công bố sẵn cho mục đích quan sát và tham khảo. Quá trình thu thập dữ liệu được thực hiện thông qua truy suất tự động (web scraping) để tải về các hình ảnh snapshot tại các thời điểm xác định (khoảng 12 giây một ảnh). 
+    \item \textbf{Khối lưu trữ: } Khối lưu trữ đóng vai trò quản lý toàn bộ dữ liệu hình ảnh thu thập được và dữ liệu trung gian được sinh ra trong quá trình xử lý. Các snapshot thu thập từ camera bên OSM được lưu trữ theo dạng cấu trúc thư mục.
+
+
+\end{itemize}
