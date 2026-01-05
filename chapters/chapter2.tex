@@ -1,10 +1,4 @@
 \chapter{CƠ SỞ LÝ THUYẾT}
-\section{TỔNG QUAN VỀ GIAO THÔNG VÀ MÔ HÌNH GIAO THÔNG}
-\subsection{Các tiêu chí cơ bản trong phân tích lưu lượng}
-\subsection{Các mô hình giao thông}
-\subsection{Vai trò mô phỏng giao thông trong quản lý đô thị}
-
-
 \section{GIỚI THIỆU XỬ LÝ ẢNH}
 Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.  \cite{NTH2015ImageProcessing}
 
@@ -358,9 +352,81 @@ Nhìn chung, các kết quả đánh giá cho thấy YOLOv11 không chỉ cải 
 \end{figure}
 Ngoài ra, đường cong cải tiến của YOLOv11 cho thấy khả năng mở rộng (scaling) vượt trội giữa các biến thể của mô hình, cho phép khai thác tài nguyên tính toán một cách hiệu quả và linh hoạt hơn so với các thế hệ trước. Đặc tính này giúp các phiên bản YOLOv11 duy trì sự cân bằng tối ưu giữa độ chính xác và hiệu năng khi thay đổi quy mô mô hình. Những kết quả đạt được đã khẳng định YOLOv11 là một bước tiến đáng kể trong lĩnh vực phát hiện đối tượng theo thời gian thực, đáp ứng hiệu quả các yêu cầu ngày càng khắt khe của các ứng dụng thị giác máy tính hiện đại.
 
+\section{TỔNG QUAN VỀ MÔ PHỎNG GIAO THÔNG ĐÔ THỊ}
 
-\section{Công cụ mô phỏng giao thông: SUMO (Simulation of Urban Mobility)}
-\subsection{Giới thiệu SUMO}
-\subsection{Ưu điểm và hạn chế của SUMO trong nghiên cứu mô phỏng và thực tế giao thông đô thị}
+\section{CÔNG CỤ MÔ PHỎNG GIAO THÔNG: SUMO}
+\subsection{Giới thiệu phần mềm SUMO}
+SUMO (Simulation of Urban Mobility) là phần mềm mô phỏng giao thông đô thị miễn phí và mã nguồn mở, được phát triển bởi Viện Nghiên cứu Giao thông Vận tải Đức (German Aerospace Center - DLR). Phần mềm này cho phép xây dựng và mô phỏng các mạng lưới giao thông đô thị phức tạp với mức độ chi tiết cao, bao gồm hệ thống đường bộ, nút giao thông, làn đường, hệ thống tín hiệu đèn giao thông, nhiều loại phương tiện khác nhau (ô tô, xe máy, xe buýt, xe tải) cũng như các đối tượng tham gia giao thông khác như người đi bộ và xe đạp. SUMO hoạt động dựa trên mô hình mô phỏng vi mô, trong đó mỗi phương tiện được mô phỏng như một thực thể độc lập, cho phép theo dõi chính xác vị trí, vận tốc và hành vi di chuyển của từng đối tượng trong suốt quá trình mô phỏng.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/sumo_logo.png}
+    \captionsetup{justification=centering}
+    \caption[Phần mềm SUMO]{Phần mềm SUMO}
+    \label{fig:sumo_logo}
+\end{figure}
+
+Nhờ khả năng tùy biến cao thông qua các tham số mô phỏng, mô hình hành vi lái xe và dữ liệu đầu vào linh hoạt, SUMO được sử dụng rộng rãi trong nghiên cứu khoa học, quy hoạch giao thông và kỹ thuật giao thông. Một số ứng dụng tiêu biểu của SUMO bao gồm:
+
+\begin{itemize}
+    \item \textbf{Phân tích và hiểu rõ hoạt động của mạng lưới giao thông: } SUMO cho phép mô phỏng chi tiết hành vi của các phương tiện và người tham gia giao thông trong mạng lưới đô thị, từ đó giúp người dùng hiểu rõ hơn cơ chế vận hành của hệ thống giao thông. Thông qua mô phỏng, các điểm nghẽn, khu vực dễ xảy ra ùn tắc và những vấn đề tiềm ẩn trong tổ chức giao thông có thể được xác định một cách trực quan và định lượng, làm cơ sở cho việc đề xuất các giải pháp cải thiện.
+    \item \textbf{Hỗ trợ lập kế hoạch và thiết kế giao thông đô thị: } Phần mềm được sử dụng để xây dựng và đánh giá các kịch bản quy hoạch giao thông, bao gồm mở rộng hoặc điều chỉnh mạng lưới đường bộ, tối ưu hóa hệ thống đèn tín hiệu, tổ chức lại luồng giao thông, cũng như triển khai và đánh giá hiệu quả của các hệ thống giao thông công cộng.
+    \item \textbf{Đánh giá tác động của các dự án và chính sách giao thông: } SUMO cho phép mô phỏng và so sánh các kịch bản trước và sau khi triển khai dự án giao thông, từ đó đánh giá tác động của các biện pháp can thiệp đối với lưu lượng, mật độ, thời gian di chuyển và mức độ ùn tắc. Điều này giúp các nhà quản lý và kỹ sư giao thông đưa ra quyết định dựa trên dữ liệu mô phỏng thay vì chỉ dựa vào kinh nghiệm.
+    \item \textbf{Hỗ trợ nghiên cứu và thử nghiệm các giải pháp giao thông thông minh: } Nhờ khả năng tích hợp với các thuật toán điều khiển và mô hình học máy, SUMO thường được sử dụng trong nghiên cứu các hệ thống giao thông thông minh (ITS), chẳng hạn như điều khiển đèn tín hiệu thích nghi, dự báo mật độ giao thông, hay đánh giá tác động của phương tiện tự hành trong môi trường giao thông đô thị.
+    \item \textbf{Giảm chi phí và rủi ro khi triển khai thực tế: } Việc thử nghiệm các phương án tổ chức và quản lý giao thông trong môi trường mô phỏng giúp giảm thiểu chi phí, rủi ro và tác động tiêu cực có thể xảy ra khi áp dụng trực tiếp các giải pháp mới vào hệ thống giao thông thực tế.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/sumo_gui.png}
+    \captionsetup{justification=centering}
+    \caption[Giao diện mô phỏng của SUMO]{Giao diện mô phỏng của SUMO}
+    \label{fig:sumo_gui}
+\end{figure}
+
+\subsection{Kiến trúc tổng thể của SUMO}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/sumo_workflow.png}
+    \captionsetup{justification=centering}
+    \caption[Kiến trúc tổng thể của SUMO]{Kiến trúc tổng thể của SUMO}
+    \label{fig:sumo_workflow}
+\end{figure}
+
+Trong đó:
+\begin{itemize}
+    \item \textbf{Lớp chuẩn bị xây dựng mạng lưới: } NETEDIT được dùng để xây dựng, chỉnh sửa hạ tầng giao thông một cách trực quan; NETCONVERT nhập/chuẩn hoá mạng lưới từ các dữ liệu như OSM, VISUM sang định dạng .net.xml chuẩn của SUMO.
+    
+    \item \textbf{Lớp sinh tuyến và luồng phương tiện:  } DUAROUTER và JTRROUTER xử lý tạo các lộ trình di chuyển cho phương tiện dựa trên mạng lưới và dữ liệu yêu cầu; OD2TRIPS hoặc các công cụ tương tự sinh ra các bài toán O-D thành các chuyến xe riêng lẻ. Các tệp này (như .rou.xml) sẽ được SUMO sử dụng khi mô phỏng.
+
+    \item \textbf{Lớp SUMO Engine: } Đây là thành phần trung tâm thực thi mô phỏng vi mô, xử lý chuyển động từng phương tiện khoảng theo thời gian, tính toán tương tác giữa các đối tượng, tín hiệu giao thông và các luật lưu thông.
+
+    \item \textbf{Lớp tương tác và trực quan hóa: } Cho phép quan sát mô phỏng, xem phương tiện, mạng lưới và tín hiệu giao thông theo thời gian thực; nhưng GUI không ảnh hưởng đến logic mô phỏng gốc (chỉ để hiển thị).
+    
+    \item \textbf{Lớp giao diện lập trình TraCI: } TraCI (Traffic Control Interface) là giao diện lập trình cho phép ứng dụng bên ngoài (Python, C++, RL/AI…) kết nối và điều khiển mô phỏng đang chạy, truy vấn trạng thái đối tượng, điều chỉnh tín hiệu, phương tiện, hoặc thu thập dữ liệu theo thời gian thực. TraCI thường được dùng khi tích hợp AI/ML với SUMO.
+    
+    \item \textbf{Lớp giao diện lập trình SUMO-GUI: } Cho phép quan sát mô phỏng, xem phương tiện, mạng lưới và tín hiệu giao thông theo thời gian thực; nhưng GUI không ảnh hưởng đến logic mô phỏng gốc (chỉ để hiển thị).
+\end{itemize}
+
+\subsection{Nguyên lý mô phỏng trong SUMO}
+SUMO (Simulation of Urban Mobility) là một phần mềm mô phỏng giao thông vi mô (microscopic), trong đó mỗi phương tiện và hành vi của nó được mô phỏng một cách riêng lẻ trên một mạng lưới đường đã được định nghĩa. Mô phỏng vi mô cho phép mô hình hóa các yếu tố chi tiết như vận tốc, vị trí, khoảng cách giữa các xe và phản ứng của từng phương tiện đối với môi trường xung quanh, bao gồm đèn tín hiệu, mật độ lưu thông và tương tác với các phương tiện khác. Đây là điểm khác biệt so với mô phỏng vĩ mô, nơi lưu lượng được xem như dòng tổng thể mà không xét chi tiết từng đơn vị xe riêng lẻ.
+
+Một trong những nguyên lý then chốt trong SUMO là mô hình car-following — mô hình hành vi lái xe theo sau. Trong mô hình này, mỗi phương tiện (được gọi là ego) điều chỉnh vận tốc dựa trên khoảng cách và vận tốc của phương tiện phía trước (leader), với mục tiêu tránh va chạm và duy trì khoảng cách an toàn. Trong SUMO, mô hình car-following được phát triển dựa trên công trình của Stefan Krauß và các mở rộng sau này, cho phép mô phỏng hành vi longitudinal (dọc theo chiều di chuyển) của xe một cách chi tiết.
+
+Ngoài hành vi theo sau, SUMO cũng mô phỏng hành vi thay đổi làn và các quyết định liên quan đến chuyển làn. Các thuật toán lane-changing trong SUMO đánh giá mức lợi ích của việc chuyển sang làn khác — ví dụ như khả năng đạt được vận tốc cao hơn — và điều kiện an toàn khi thực hiện thao tác này, từ đó giả lập hành vi lái xe lateral (theo chiều ngang).
+
+Mô phỏng trong SUMO diễn ra ở mức độ rời rạc theo thời gian: tại mỗi bước thời gian (time step), vị trí và vận tốc của từng phương tiện được tính toán dựa trên mô hình hành vi, đồng thời các sự kiện như tín hiệu đèn, thay đổi tuyến đường hay phản ứng với phương tiện khác được cập nhật. SUMO sử dụng phương pháp mô phỏng space-continuous (không gian liên tục) và time-discrete (thời gian rời rạc), cho phép mô phỏng chính xác sự di chuyển của phương tiện theo từng bước thời gian được chọn.
+
+\subsection{Điều khiển tín hiệu giao thông trong SUMO}
+Trong mô phỏng giao thông bằng SUMO, tín hiệu đèn giao thông (traffic lights) được xem như một thành phần điều khiển quan trọng tại các nút giao nhằm điều phối lưu lượng phương tiện và giảm thiểu xung đột giữa các hướng di chuyển. SUMO cho phép mô hình hóa chi tiết các chương trình tín hiệu, bao gồm các pha (phases), độ dài chu kỳ, thứ tự chuyển trạng thái và các trạng thái cụ thể của từng tín hiệu (đỏ, vàng, xanh). Những chương trình này có thể được khai báo trực tiếp trong mạng mô phỏng hoặc được cung cấp dưới dạng tệp bổ sung để tùy chỉnh.
+Trong mô phỏng giao thông bằng SUMO, tín hiệu đèn giao thông (traffic lights) được xem như một thành phần điều khiển quan trọng tại các nút giao nhằm điều phối lưu lượng phương tiện và giảm thiểu xung đột giữa các hướng di chuyển. SUMO cho phép mô hình hóa chi tiết các chương trình tín hiệu, bao gồm các pha (phases), độ dài chu kỳ, thứ tự chuyển trạng thái và các trạng thái cụ thể của từng tín hiệu (đỏ, vàng, xanh). Những chương trình này có thể được khai báo trực tiếp trong mạng mô phỏng hoặc được cung cấp dưới dạng tệp bổ sung để tùy chỉnh.
+SUMO hỗ trợ nhiều chế độ điều khiển tín hiệu khác nhau. Ở mức cơ bản, các tín hiệu có thể hoạt động theo chu kỳ cố định (static control), trong đó mỗi pha được định nghĩa rõ ràng với thời lượng cụ thể và tín hiệu sẽ lặp lại tuần hoàn trong suốt quá trình mô phỏng. Đây là dạng điều khiển truyền thống thường dùng trong các bài toán tham chiếu hoặc so sánh đơn giản.
+Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic Control Interface), SUMO cho phép các chương trình điều khiển bên ngoài (ví dụ script Python) kết nối với mô phỏng để điều chỉnh tín hiệu động theo trạng thái mạng. Qua TraCI, có thể truy vấn trạng thái của mô phỏng và gửi các lệnh như thay đổi pha hiện tại, điều chỉnh thời lượng pha hay chuyển sang chương trình tín hiệu khác. Điều này mở ra khả năng tích hợp với các mô hình dự báo, thuật toán điều khiển máy học hoặc điều khiển thích ứng phức tạp hơn, nơi quyết định điều khiển được đưa ra bởi một bộ điều khiển bên ngoài dựa trên dữ liệu đầu vào thời gian thực mô phỏng.
+
+\subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
+None
+\section{GIỚI THIỆU VỀ HỌC SÂU}
+
+\section{GIỚI THIỆU VỀ MÔ HÌNH LSTM}
 
 \section{TỔNG QUAN VỀ MÔ HÌNH LSTM}

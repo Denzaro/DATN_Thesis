@@ -64,5 +64,11 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
 \subsection{Thiết kế khối thu thập dữ liệu}
 None
 \subsection{Thiết kế khối lưu trữ}
-
+None
+\subsection{Thiết kế khối tiền xử lý ảnh}
+Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và đếm phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
+    \begin{enumerate}
+        \item \textbf{Tăng cường độ phân giải và lọc nhiễu (Super-resolution): } Sử dụng Real-ESRGAN để nâng cao độ phân giải của ảnh đầu vào, giúp làm rõ các chi tiết nhỏ và giảm nhiễu ảnh.
+        \item \textbf{Chuẩn hóa kích thước ảnh (Resizing): }
+    \end{enumerate}
 
