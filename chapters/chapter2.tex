@@ -353,6 +353,29 @@ Nhìn chung, các kết quả đánh giá cho thấy YOLOv11 không chỉ cải 
 Ngoài ra, đường cong cải tiến của YOLOv11 cho thấy khả năng mở rộng (scaling) vượt trội giữa các biến thể của mô hình, cho phép khai thác tài nguyên tính toán một cách hiệu quả và linh hoạt hơn so với các thế hệ trước. Đặc tính này giúp các phiên bản YOLOv11 duy trì sự cân bằng tối ưu giữa độ chính xác và hiệu năng khi thay đổi quy mô mô hình. Những kết quả đạt được đã khẳng định YOLOv11 là một bước tiến đáng kể trong lĩnh vực phát hiện đối tượng theo thời gian thực, đáp ứng hiệu quả các yêu cầu ngày càng khắt khe của các ứng dụng thị giác máy tính hiện đại.
 
 \section{TỔNG QUAN VỀ MÔ PHỎNG GIAO THÔNG ĐÔ THỊ}
+\subsection{Vai trò của mô phỏng trong quản lý giao thông đô thị}
+Sự gia tăng nhanh chóng của phương tiện cá nhân, quá trình đô thị hóa mạnh mẽ cùng với hạ tầng giao thông hạn chế đã khiến bài toán quản lý và điều hành giao thông đô thị trở nên ngày càng phức tạp. Các quyết định điều chỉnh tín hiệu đèn, tổ chức làn đường hay phân luồng giao thông nếu được triển khai trực tiếp ngoài thực tế thường tiềm ẩn rủi ro cao, chi phí lớn và khó đánh giá trước hiệu quả. Trong bối cảnh đó, mô phỏng giao thông đóng vai trò như một công cụ hỗ trợ quan trọng, cho phép tái hiện và phân tích hành vi giao thông trong môi trường ảo trước khi áp dụng vào thực tiễn.
+
+Mô phỏng giao thông đô thị cho phép các nhà nghiên cứu và cơ quan quản lý đánh giá tác động của nhiều kịch bản khác nhau, chẳng hạn như thay đổi lưu lượng xe, điều chỉnh chu kỳ tín hiệu đèn hoặc áp dụng các chiến lược điều tiết mới. Thông qua mô phỏng, các chỉ số quan trọng như thời gian lưu thông trung bình, mật độ xe, mức độ ùn tắc hay số lần dừng chờ có thể được định lượng một cách khách quan. Nhờ đó, mô phỏng không chỉ giúp giảm thiểu rủi ro khi triển khai ngoài thực tế mà còn góp phần nâng cao hiệu quả ra quyết định trong quản lý giao thông đô thị.
+\subsection{Khái niệm và phân loại mô phỏng giao thông}
+Mô phỏng giao thông là quá trình xây dựng một mô hình toán học hoặc mô hình tính toán nhằm mô tả và tái hiện sự chuyển động của các phương tiện, người tham gia giao thông và tương tác của chúng trên mạng lưới đường bộ theo thời gian. Tùy theo mức độ chi tiết và phạm vi mô phỏng, các mô hình giao thông thường được phân loại thành ba nhóm chính: mô phỏng vĩ mô, mô phỏng trung mô và mô phỏng vi mô.
+
+Mô phỏng vĩ mô xem giao thông như một dòng chảy liên tục, tương tự chất lưu, trong đó các đặc trưng như lưu lượng, mật độ và tốc độ trung bình được mô hình hóa thông qua các phương trình toán học. Cách tiếp cận này phù hợp cho phân tích ở quy mô lớn nhưng hạn chế trong việc mô tả hành vi chi tiết của từng phương tiện.
+
+Mô phỏng trung mô nằm giữa hai cấp độ vĩ mô và vi mô, trong đó phương tiện được nhóm thành các cụm hoặc dòng xe, cho phép cân bằng giữa độ chính xác và chi phí tính toán. Trong khi đó, mô phỏng vi mô mô tả chi tiết hành vi của từng phương tiện riêng lẻ, bao gồm gia tốc, giảm tốc, chuyển làn và tương tác với tín hiệu giao thông. Ngoài ra để chi tiết hơn, để mô tả hành vi bên trong của phương tiện và người lái ở mức liên tục theo thời gian, mô phỏng dưới vi mô được sử dụng. Mô phỏng dưới vi mô quan tâm đến các yếu tố như động cơ, hộp số, Mô-men xoắn, lực kéo, mức tiêu thụ nhiên liệu, phát thải khí CO2. \cite{SumoTrafficSimulations}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/traffic_models_simulation.png}
+    \captionsetup{justification=centering}
+    \caption[Các mức độ chi tiết trong trong các mô hình mô phỏng giao thông khác nhau]{Các mức độ chi tiết trong trong các mô hình mô phỏng giao thông khác nhau. Từ trái sang: vĩ mô, vi mô, dưới vi mô (trong vòng tròn là trung mô)}
+    \label{fig:traffic_simulation_types}
+\end{figure}
+
+\subsection{Mô phỏng giao thông theo thời gian và dựa trên dữ liệu}
+
+\subsection{Ứng dụng của mô phỏng giao thông trong nghiên cứu và thực tiễn}
+
 
 \section{CÔNG CỤ MÔ PHỎNG GIAO THÔNG: SUMO}
 \subsection{Giới thiệu phần mềm SUMO}
@@ -425,6 +448,7 @@ Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic C
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
 None
+
 \section{GIỚI THIỆU VỀ HỌC SÂU}
 
 \section{GIỚI THIỆU VỀ MÔ HÌNH LSTM}
