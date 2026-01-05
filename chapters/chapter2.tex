@@ -31,7 +31,85 @@ Ngoài ra, xử lý ảnh còn liên quan chặt chẽ đến việc chuẩn hó
 
 Tóm lại, xử lý ảnh là bước khởi đầu cho mọi đề tài thị giác máy tính, cung cấp nền tảng và dữ liệu chất lượng cho các thuật toán học sâu, phát hiện đối tượng và phân tích hành vi. Với sự phát triển nhanh chóng của các mô hình hiện đại, xử lý ảnh không chỉ còn dừng lại ở các kỹ thuật truyền thống mà đang chuyển mình mạnh mẽ và đóng vai trò quan trọng trong việc xây dựng những hệ thống thông minh, chính xác và tin cậy — đặc biệt trong lĩnh vực mô phỏng và quản lý giao thông dựa trên dữ liệu từ camera.
 
-\section{Giới THIỆU VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
+\section{TỔNG QUAN VỀ LÝ THUYẾT HỌC SÂU}
+Học sâu (Deep Learning) là một nhánh phát triển nâng cao của học máy (Machine Learning), lấy cảm hứng từ cấu trúc và cơ chế hoạt động của hệ thần kinh sinh học. Trọng tâm của học sâu là các mạng nơ-ron nhân tạo (Artificial Neural Networks - ANN) với nhiều tầng xử lý, cho phép mô hình học được các biểu diễn dữ liệu phức tạp thông qua việc xếp chồng nhiều phép biến đổi phi tuyến. Nhờ khả năng học đặc trưng tự động từ dữ liệu thô, học sâu đã trở thành nền tảng cốt lõi của nhiều hệ thống trí tuệ nhân tạo hiện đại.
+
+Mạng nơ-ron nhân tạo (ANN) là mô hình cơ bản nhất trong học sâu, bao gồm các nút nơ-ron được liên kết với nhau thông qua các trọng số. Khi số lượng lớp ẩn trong ANN tăng lên, mô hình được gọi là mạng nơ-ron sâu (Deep Neural Network - DNN). DNN có khả năng xấp xỉ các hàm phi tuyến phức tạp và mô hình hóa các mối quan hệ đa chiều trong dữ liệu lớn. Quá trình huấn luyện DNN được thực hiện thông qua thuật toán lan truyền ngược (backpropagation) kết hợp với các phương pháp tối ưu, cho phép điều chỉnh trọng số sao cho hàm mất mát được tối thiểu hóa.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/dnn_structure.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng nơ-ron sâu (Deep Neural Network) bao gồm lớp đầu vào, 3 lớp ẩn và lớp đầu ra.]{Sơ đồ kiến trúc mạng nơ-ron sâu (Deep Neural Network) bao gồm lớp đầu vào, 3 lớp ẩn và lớp đầu ra.}
+    \label{fig:dnn_structure}
+\end{figure}
+
+Trong lĩnh vực xử lý ảnh và thị giác máy tính, mạng nơ-ron tích chập (Convolutional Neural Networks - CNN) đóng vai trò trung tâm. CNN được thiết kế chuyên biệt để khai thác cấu trúc không gian của dữ liệu hình ảnh thông qua các lớp tích chập và pooling. Cơ chế này giúp mô hình học được các đặc trưng từ mức thấp (cạnh, góc) đến mức cao (hình dạng, đối tượng), đồng thời giảm đáng kể số lượng tham số so với DNN truyền thống. Nhờ đó, CNN trở thành nền tảng của nhiều mô hình phát hiện và nhận dạng đối tượng hiện đại, tiêu biểu như các phiên bản YOLO được sử dụng rộng rãi trong các hệ thống giao thông thông minh.
+
+Bên cạnh dữ liệu dạng không gian, nhiều bài toán thực tế liên quan đến dữ liệu chuỗi theo thời gian, nơi thứ tự và mối quan hệ phụ thuộc theo thời gian đóng vai trò quan trọng. Mạng nơ-ron hồi tiếp (Recurrent Neural Networks - RNN) được đề xuất nhằm xử lý loại dữ liệu này bằng cách cho phép thông tin từ các bước thời gian trước ảnh hưởng đến quá trình xử lý hiện tại. Tuy nhiên, RNN truyền thống gặp hạn chế trong việc học các phụ thuộc dài hạn do hiện tượng tiêu biến hoặc bùng nổ gradient.
+
+Để khắc phục nhược điểm đó, Long Short-Term Memory (LSTM) - một biến thể của RNN - đã được phát triển với cơ chế cổng (gates) nhằm kiểm soát việc ghi nhớ và quên thông tin theo thời gian. Nhờ khả năng nắm bắt tốt các mối quan hệ dài hạn trong chuỗi dữ liệu, LSTM được ứng dụng hiệu quả trong các bài toán dự báo chuỗi thời gian, chẳng hạn như dự báo lưu lượng giao thông, mật độ phương tiện hoặc xu hướng biến đổi trạng thái giao thông theo thời gian.
+
+Tóm lại, học sâu cung cấp một khung lý thuyết toàn diện cho việc xử lý và phân tích dữ liệu phức tạp ở nhiều dạng khác nhau, từ dữ liệu hình ảnh đến dữ liệu chuỗi thời gian. Phần tiếp theo trình bày khái quát các cơ sở lý thuyết nền tảng của một số mô hình học sâu đã được nghiên cứu và có mối liên hệ trực tiếp với nội dung của đề tài.
+
+\subsection{Mạng nơ-ron sâu}
+Mạng nơ-ron sâu (Deep Neural Networks - DNN) là một nhánh quan trọng của học sâu, được phát triển dựa trên nền tảng của mạng nơ-ron nhân tạo truyền thống (Artificial Neural Networks - ANN). Điểm khác biệt cốt lõi của DNN so với các mô hình nơ-ron cổ điển nằm ở số lượng lớn các tầng ẩn (hidden layers), cho phép mô hình học được những biểu diễn đặc trưng có mức trừu tượng cao từ dữ liệu đầu vào. Nhờ khả năng biểu diễn mạnh mẽ này, DNN đã trở thành nền tảng cho nhiều mô hình học sâu hiện đại và đạt được những thành tựu vượt trội trong các lĩnh vực như thị giác máy tính, xử lý ngôn ngữ tự nhiên và phân tích chuỗi thời gian.
+
+Về mặt cấu trúc, một mạng nơ-ron sâu thường bao gồm ba thành phần chính: Tầng đầu vào (input layer), nhiều tầng ẩn (hidden layers) và tầng đầu ra (output layer). Mỗi tầng được cấu thành từ các nơ-ron, trong đó mỗi nơ-ron thực hiện phép biến đổi tuyến tính trên dữ liệu đầu vào thông qua các trọng số (weights) và hệ số dịch (bias), sau đó áp dụng một hàm kích hoạt phi tuyến (activation function) như ReLU, sigmoid hoặc tanh. Việc kết hợp nhiều tầng phi tuyến cho phép DNN xấp xỉ các hàm phức tạp, từ đó mô hình hóa được mối quan hệ phi tuyến trong dữ liệu thực tế.
+
+Quá trình huấn luyện mạng nơ-ron sâu được thực hiện thông qua thuật toán lan truyền ngược sai số (backpropagation) kết hợp với các phương pháp tối ưu hóa như Gradient Descent, Adam hoặc RMSProp. Trong quá trình này, sai số giữa đầu ra dự đoán của mô hình và giá trị mục tiêu được lan truyền ngược từ tầng đầu ra về các tầng trước để cập nhật trọng số, nhằm giảm hàm mất mát (loss function). Tuy nhiên, khi số lượng tầng tăng lên, DNN có thể gặp phải các vấn đề như hiện tượng tiêu biến gradient (vanishing gradient) hoặc bùng nổ gradient (exploding gradient), đòi hỏi các kỹ thuật cải tiến như chuẩn hóa dữ liệu, khởi tạo trọng số hợp lý hoặc sử dụng các kiến trúc mạng tiên tiến hơn.
+
+Trong thực tế, DNN đóng vai trò là nền tảng chung cho nhiều kiến trúc học sâu chuyên biệt. Các mô hình như mạng nơ-ron tích chập (CNN) được thiết kế để xử lý dữ liệu dạng ảnh và không gian, trong khi mạng nơ-ron hồi tiếp (RNN) và các biến thể như LSTM phù hợp với dữ liệu chuỗi thời gian. Trong phạm vi đề tài này, DNN là cơ sở lý thuyết quan trọng cho việc hiểu và triển khai các mô hình phát hiện phương tiện từ ảnh camera giao thông cũng như mô hình dự báo lưu lượng giao thông dựa trên chuỗi dữ liệu theo thời gian.
+
+\subsection{Mạng nơ-ron tích chập}
+Mạng nơ-ron tích chập (CNN) là kiến trúc mạng sâu tối ưu cho việc xử lý dữ liệu có cấu trúc lưới, đặc biệt là hình ảnh và chuỗi thời gian. Điểm ưu việt của CNN nằm ở cơ chế tích chập, cho phép tự động trích xuất các đặc trưng không gian và cục bộ từ dữ liệu đầu vào một cách hiệu quả. Chính khả năng này đã tạo tiền đề cho những bước tiến vượt bậc trong lĩnh vực thị giác máy tính, đóng vai trò cốt lõi trong các bài toán nhận diện hình ảnh, phát hiện vật thể và phân đoạn ảnh.
+
+Kiến trúc của một mạng CNN điển hình được cấu thành từ ba tầng chức năng chính:
+
+\begin{itemize}
+    \item \textbf{Lớp tích chập (Convolutional Layer): } Được coi là "trái tim" của mạng, lớp này chịu trách nhiệm trích xuất đặc trưng thông qua cơ chế tích chập giữa dữ liệu đầu vào và các bộ lọc (filters). Mỗi bộ lọc đóng vai trò như một công cụ dò tìm, học cách nhận diện từ các đường nét cơ bản đến những mẫu hình phức tạp. Đầu ra của quá trình này là các bản đồ đặc trưng (feature maps), chứa đựng các thông tin không gian quan trọng đã được chắt lọc.
+    \item \textbf{Lớp gộp (Pooling Layer): } Đóng vai trò tinh gọn mô hình, lớp gộp thực hiện giảm chiều dữ liệu (down-sampling) nhằm giảm thiểu số lượng tham số và khối lượng tính toán, đồng thời hạn chế hiện tượng quá khớp (overfitting). Hai kỹ thuật phổ biến nhất là gộp cực đại (Max Pooling) - lấy giá trị nổi bật nhất, và gộp trung bình (Average Pooling) - tính toán giá trị trung hòa trong vùng lân cận.
+    \item \textbf{Lớp kết nối đầy đủ (Fully Connected Layer): } Là chốt chặn cuối cùng của quy trình. Sau khi đi qua các tầng trích xuất và gộp, dữ liệu được duỗi phẳng (flatten) thành vector và đưa vào lớp FC. Tại đây, mạng lưới sẽ tổng hợp toàn bộ thông tin cục bộ để đưa ra quyết định phân loại cuối cùng, thường dưới dạng xác suất dự đoán.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/cnn_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng nơ-ron tích chập (CNN) bao gồm lớp đầu vào, các lớp tích chập, lớp gộp và lớp kết nối đầy đủ.]{Sơ đồ kiến trúc mạng nơ-ron tích chập (CNN) bao gồm lớp đầu vào, các lớp tích chập, lớp gộp và lớp kết nối đầy đủ. Các lớp tích chập và gộp đóng vai trò trích xuất và biểu diễn các đặc trưng từ hình ảnh, tạo thành các bản đồ đặc trưng. Sau đó, các bản đồ đặc trưng này được làm phẳng và chuyển qua các lớp kết nối đầy đủ để tạo ra kết quả dự đoán cuối cùng.}
+    \label{fig:cnn_arch}
+\end{figure}
+
+Như hình \ref{fig:cnn_arch} minh họa, quy trình được chia thành hai giai đoạn chính: Trích xuất đặc trưng (Feature Extraction), nơi ảnh đầu vào đi qua các lớp Tích chập (Convolution) kết hợp hàm ReLU và lớp Gộp (Pooling) để tạo ra các bản đồ đặc trưng; và Phân loại (Classification), nơi dữ liệu được làm phẳng (Flatten) và đưa qua các lớp Kết nối đầy đủ (Fully Connected). Cuối cùng, hàm kích hoạt Softmax tính toán phân phối xác suất để đưa ra dự đoán chính xác nhất là 'Zebra' (Ngựa vằn) với tỷ lệ 0.7.
+
+\subsection{Mạng nơ-ron hồi tiếp}
+Mạng nơ-ron hồi tiếp (Recurrent Neural Networks - RNN) là một lớp mô hình học sâu được thiết kế chuyên biệt cho việc xử lý dữ liệu tuần tự và dữ liệu phụ thuộc theo thời gian. Không giống như các mạng nơ-ron truyền thống giả định các mẫu dữ liệu là độc lập, RNN cho phép mô hình học được mối quan hệ giữa các phần tử trong một chuỗi bằng cách duy trì trạng thái nội tại qua các bước thời gian. Nhờ đặc tính này, RNN được ứng dụng rộng rãi trong các bài toán như dự báo chuỗi thời gian, xử lý ngôn ngữ tự nhiên, nhận dạng giọng nói và phân tích hành vi theo thời gian.
+
+Cấu trúc của một mạng RNN điển hình có thể được mô tả thông qua các thành phần chính sau:
+\begin{itemize}
+    \item \textbf{Dữ liệu đầu vào theo chuỗi: } Dữ liệu đầu vào của RNN được tổ chức dưới dạng chuỗi các phần tử theo thứ tự thời gian, ký hiệu là $\{x_1, x_2, \ldots, x_T\}$, trong đó mỗi $x_t$ biểu diễn dữ liệu tại thời điểm t.  Trong bài toán giao thông, các phần tử này có thể là lưu lượng xe, mật độ phương tiện hoặc các đặc trưng được trích xuất từ ảnh camera theo từng khung thời gian.
+    \item \textbf{Trạng thái ẩn (hidden state): } Trạng thái ẩn $h_t$ đóng vai trò là bộ nhớ tạm thời của mạng, lưu giữ thông tin từ các bước thời gian trước. Tại mỗi thời điểm, trạng thái ẩn được cập nhật dựa trên dữ liệu đầu vào hiện tại $x_t$ và trạng thái trước đó $h_{t-1}$. Cơ chế này cho phép RNN mô hình hóa các mối quan hệ phụ thuộc theo thời gian trong dữ liệu.
+    \item \textbf{Trọng số hồi tiếp (Recurrent Weights): } RNN sử dụng các trọng số được chia sẻ qua các bước thời gian, bao gồm trọng số kết nối từ đầu vào đến trạng thái ẩn và trọng số hồi tiếp từ trạng thái ẩn trước sang trạng thái ẩn hiện tại. Việc chia sẻ trọng số giúp mô hình giảm số lượng tham số và duy trì tính nhất quán trong việc xử lý chuỗi dữ liệu.
+    \item \textbf{Hàm kích hoạt (Activation Function): } Sau khi thực hiện phép biến đổi tuyến tính, trạng thái ẩn thường được đưa qua các hàm kích hoạt phi tuyến như tanh hoặc ReLU. Các hàm này giúp mạng học được các mối quan hệ phi tuyến trong dữ liệu chuỗi.
+    \item \textbf{Đầu ra (Output): } Tại mỗi bước thời gian hoặc tại bước cuối của chuỗi, RNN có thể sinh ra đầu ra $y_t$ tương ứng. Đầu ra này có thể được sử dụng cho nhiều mục đích khác nhau như phân loại, hồi quy hoặc dự báo giá trị trong tương lai.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/rnn_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cấu trúc mạng nơ-ron hồi tiếp (RNN)]{Sơ đồ cấu trúc mạng nơ-ron hồi tiếp (RNN). Hình ảnh minh họa các lớp đầu vào (Input), hai lớp ẩn (Hidden Layers) và lớp đầu ra (Output), với đặc điểm nhận dạng chính là các mũi tên cong (feedback loops) kết nối ngược từ lớp ẩn sau về lớp ẩn trước. }
+    \label{fig:rnn_arch}
+\end{figure}
+
+\section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
+\subsection{Động lực ra đời của LSTM}
+\subsection{Kiến trúc cơ bản của LSTM}
+\subsection{Cơ chế cổng trong LSTM}
+\subsection{Nguyên lý hoạt động của LSTM theo chuỗi thời gian}
+\subsection{Ứng dụng của LSTM trong dự báo chuỗi thời gian}
+
+\section{GIỚI THIỆU VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
 Super-Resolution Generative Adversarial Network (SRGAN), được Ledig và cộng sự giới thiệu vào năm 2016, là một trong những mô hình tiên phong ứng dụng mạng GAN vào bài toán tăng độ phân giải ảnh. Mục tiêu của SRGAN là khắc phục hạn chế của các phương pháp nội suy truyền thống và các mô hình tối ưu theo lỗi điểm ảnh như MSE, vốn thường tạo ra ảnh mượt nhưng thiếu chi tiết và không giữ được kết cấu tự nhiên. Thông qua cơ chế huấn luyện đối kháng, SRGAN học cách sinh ra ảnh có độ phân giải cao với chi tiết sắc nét hơn bằng cách sử dụng đồng thời hai thành phần: perceptual loss dựa trên đặc trưng trích xuất từ mạng VGG và adversarial loss từ Discriminator. Sự kết hợp này giúp mô hình tái tạo các hoa văn, kết cấu và đường nét tinh vi thường bị mất đi trong quá trình phóng to ảnh, từ đó tạo ra ảnh đầu ra có chất lượng thị giác chân thực và giàu chi tiết hơn so với các kỹ thuật SR truyền thống. \cite{Ledig2016SRGAN}
 \subsection{Tổng quan kiến trúc}
 SRGAN hoạt động theo cơ chế GAN truyền thống, trong đó có hai mạng nơ-ron đóng vai trò đối kháng nhau: Generator nhận ảnh độ phân giải thấp và sinh ra phiên bản độ phân giải cao, trong khi Discriminator cố gắng phân biệt ảnh thật với ảnh được tạo ra. Quá trình huấn luyện xen kẽ này buộc Generator phải liên tục cải thiện chất lượng ảnh sinh ra để ngày càng giống với ảnh thật hơn. \cite{GeeksforGeeksSRGAN}
@@ -194,7 +272,7 @@ Nhờ sự phối hợp hiệu quả giữa ba thành phần này, YOLO đạt �
 YOLO hoạt động theo 4 bước chính:
 \begin{itemize}
 \item \textbf{Chia ảnh thành lưới (grid) S x S: } Ảnh đầu vào được chia thành một lưới gồm S hàng × S cột ô (grid-cells). Mỗi ô “chịu trách nhiệm” phát hiện các đối tượng mà “tâm” của hộp giới hạn (bounding box) rơi vào ô đó. Ý tưởng là phân vùng ảnh để mỗi phần nhỏ có thể dự đoán xem có đối tượng hay không, thay vì lặp toàn bộ ảnh nhiều lần.
-\item \textbf{Trích xuất đặc trưng ảnh với mạng CNN (backbone + feature layers): } YOLO sử dụng một mạng nơ-ron tích chập (CNN) để “đọc” toàn bộ ảnh – các lớp convolution + pooling + … trích xuất đặc trưng (features) từ ảnh. Các lớp cuối (fully connected / detection layers) sau khi feature extraction sẽ dùng để dự đoán bounding boxes + nhãn + độ tin cậy.
+\item \textbf{Trích xuất đặc trưng ảnh với mạng CNN (backbone + feature layers): } YOLO sử dụng một mạng nơ-ron tích chập (CNN) để “đọc” toàn bộ ảnh - các lớp convolution + pooling + … trích xuất đặc trưng (features) từ ảnh. Các lớp cuối (fully connected / detection layers) sau khi feature extraction sẽ dùng để dự đoán bounding boxes + nhãn + độ tin cậy.
 \item \textbf{Dự đoán nhiều bounding boxes + xác suất + lớp đối tượng ở mỗi ô lưới: } Mỗi ô (grid cell) dự đoán B hộp giới hạn (bounding boxes). Mỗi hộp gồm các thông số: tâm x, y; chiều rộng w, chiều cao h (thường được chuẩn hóa), + một “điểm tin cậy (confidence score)” biểu thị: khả năng có đối tượng + độ tin cậy vị trí. Ngoài ra, mỗi ô cũng dự đoán xác suất (conditional class probabilities) cho mỗi lớp đối tượng mà ảnh đó có thể chứa. 
 \item \textbf{Kết hợp kết quả và loại bỏ dư thừa (Non-Maximum Suppression – NMS): } Vì nhiều hộp có thể “đụng chồng” nhau (ví dụ cùng dự đoán một đối tượng), sau khi mạng đưa ra tất cả dự đoán, YOLO sử dụng kỹ thuật NMS để giữ lại hộp có “điểm tin cậy tốt nhất” và loại bỏ các hộp dư chồng lặp. Kết quả cuối: một danh sách các hộp (bounding boxes), mỗi hộp có nhãn lớp đối tượng và độ tin cậy — tương ứng với những đối tượng được phát hiện trong ảnh.
 \end{itemize}
@@ -212,8 +290,8 @@ Trong YOLO, hàm mất mát (loss function) được xây dựng từ sự khác
 
 \begin{enumerate}
     \item \textbf{Classification Loss - Sai số phân loại: } Đo mức độ chính xác khi mô hình dự đoán lớp của đối tượng trong mỗi ô lưới. Mục tiêu là đảm bảo mô hình không chỉ phát hiện được vật thể, mà còn nhận diện đúng loại của nó.
-    \item \textbf{Localization Loss – Sai số định vị bounding box: } Đánh giá độ lệch giữa bounding box dự đoán và bounding box thật dựa trên bốn tham số: vị trí tâm (x, y) và kích thước (w, h). Thành phần này giúp mô hình học cách khoanh vùng đối tượng chính xác hơn.
-    \item \textbf{Confidence Loss – Sai số về mức độ tin cậy: } Phản ánh sự khác biệt giữa “mức độ chắc chắn” mà mô hình cho rằng ô lưới chứa một vật thể và giá trị nhãn thực tế. Đây là yếu tố quan trọng giúp YOLO biết được ô nào nên dự đoán và ô nào nên bỏ qua.
+    \item \textbf{Localization Loss - Sai số định vị bounding box: } Đánh giá độ lệch giữa bounding box dự đoán và bounding box thật dựa trên bốn tham số: vị trí tâm (x, y) và kích thước (w, h). Thành phần này giúp mô hình học cách khoanh vùng đối tượng chính xác hơn.
+    \item \textbf{Confidence Loss - Sai số về mức độ tin cậy: } Phản ánh sự khác biệt giữa “mức độ chắc chắn” mà mô hình cho rằng ô lưới chứa một vật thể và giá trị nhãn thực tế. Đây là yếu tố quan trọng giúp YOLO biết được ô nào nên dự đoán và ô nào nên bỏ qua.
 \end{enumerate}
 
 \textbf{Classification Loss: }\\
@@ -452,8 +530,6 @@ Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic C
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
 None
-
-\section{GIỚI THIỆU VỀ HỌC SÂU}
 
 \section{GIỚI THIỆU VỀ MÔ HÌNH LSTM}
 
