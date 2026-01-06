@@ -1,5 +1,5 @@
 \chapter{CƠ SỞ LÝ THUYẾT}
-\section{GIỚI THIỆU XỬ LÝ ẢNH}
+\section{TỔNG QUAN VỀ XỬ LÝ ẢNH}
 Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.  \cite{NTH2015ImageProcessing}
 
 Về bản chất, xử lý ảnh là quá trình thao tác trực tiếp trên ma trận điểm ảnh để làm rõ thông tin hữu ích và loại bỏ nhiễu hay các thành phần không cần thiết. Các kỹ thuật này thường được chia làm hai mức: xử lý ảnh mức thấp và mức cao. Mức thấp chủ yếu gồm các phép biến đổi tín hiệu như lọc nhiễu, điều chỉnh độ sáng, thay đổi không gian màu hoặc tăng độ sắc nét mà không xét đến nội dung ảnh. Trong khi đó, xử lý ảnh mức cao tập trung vào việc trích xuất đặc trưng như biên cạnh, điểm đặc trưng, kết cấu hay hình dạng, tạo dữ liệu có ý nghĩa cho các mô hình nhận diện và học sâu.
@@ -104,12 +104,124 @@ Cấu trúc của một mạng RNN điển hình có thể được mô tả th�
 
 \section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
 \subsection{Động lực ra đời của LSTM}
-\subsection{Kiến trúc cơ bản của LSTM}
-\subsection{Cơ chế cổng trong LSTM}
-\subsection{Nguyên lý hoạt động của LSTM theo chuỗi thời gian}
-\subsection{Ứng dụng của LSTM trong dự báo chuỗi thời gian}
+Mạng nơ-ron hồi tiếp (Recurrent Neural Network - RNN) được thiết kế nhằm xử lý các dạng dữ liệu có tính tuần tự, trong đó thông tin tại thời điểm hiện tại phụ thuộc vào các trạng thái trước đó. Tuy nhiên, trong thực tế, RNN truyền thống gặp phải hạn chế nghiêm trọng khi học các phụ thuộc dài hạn trong chuỗi thời gian, đặc biệt là hiện tượng tiêu biến gradient (vanishing gradient) và bùng nổ gradient (exploding gradient) trong quá trình lan truyền ngược theo thời gian (Backpropagation Through Time). Hệ quả là mô hình khó có thể ghi nhớ và khai thác hiệu quả các thông tin xảy ra ở những thời điểm xa trong quá khứ, làm suy giảm độ chính xác trong các bài toán dự báo dài hạn.
 
-\section{GIỚI THIỆU VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
+Trong nhiều bài toán thực tiễn, đặc biệt là dự báo chuỗi thời gian, mối quan hệ giữa dữ liệu không chỉ tồn tại ở các bước thời gian gần nhau mà còn kéo dài trong khoảng thời gian lớn. Ví dụ, trong lĩnh vực giao thông đô thị, lưu lượng xe tại một thời điểm chịu ảnh hưởng không chỉ bởi vài phút trước đó mà còn bởi các yếu tố mang tính chu kỳ như giờ cao điểm, ngày trong tuần hoặc các sự kiện định kỳ. RNN truyền thống khó nắm bắt được những mối quan hệ dài hạn này, dẫn đến khả năng dự báo kém ổn định và thiếu chính xác.
+
+Xuất phát từ những hạn chế trên, mạng Long Short-Term Memory (LSTM) được đề xuất nhằm cải thiện khả năng ghi nhớ thông tin dài hạn của RNN. Bằng cách đưa vào một cơ chế bộ nhớ riêng (Cell State) cùng với các cổng điều khiển (Forget Gate, Input Gate và Output Gate), LSTM cho phép mô hình chủ động quyết định thông tin nào cần được lưu giữ, cập nhật hoặc loại bỏ theo thời gian. Nhờ đó, LSTM khắc phục hiệu quả vấn đề tiêu biến gradient, đồng thời nâng cao khả năng mô hình hóa các phụ thuộc dài hạn trong chuỗi dữ liệu. Đây chính là lý do LSTM trở thành một trong những kiến trúc phổ biến và hiệu quả nhất cho các bài toán dự báo chuỗi thời gian, bao gồm dự báo lưu lượng và trạng thái giao thông đô thị.
+
+\subsection{Kiến trúc cơ bản của LSTM}
+Thành phần cốt lõi của một khối LSTM là bộ nhớ trạng thái (Cell State - $c_t$), hoạt động như một băng chuyền thông tin chạy xuyên suốt chuỗi thời gian với các tương tác tuyến tính tối thiểu, giúp thông tin được bảo toàn nguyên vẹn qua nhiều bước xử lý. Ngoài ra, còn có lớp ẩn trước đó (previous hidden state - $h_{t-1}$) đón vai trò như là đầu ra của 1 điểm trước đó và dữ liệu đầu vào tại thời điểm hiện tại ($x_t$).
+
+Bên cạnh ba thành phần quan trọng trên, LSTM còn sỡ hữu ba cổng điều khiển (gates) chính: Quên (Forget Gate), Đầu vào (Input gate) và Đầu ra (Output gate). Ba cổng này cùng với bộ nhớ trạng thái, các lớp ẩn và dữ liệu đầu vào hợp nên kiến trúc cơ bản của một khối LSTM như hình \ref{fig:lstm_arch} minh họa. \cite{LSTMExplanation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng LSTM]{Sơ đồ kiến trúc mạng LSTM}
+    \label{fig:lstm_arch}
+\end{figure}
+
+\subsection{Cơ chế hoạt động của các cổng trong LSTM}
+\textbf{Cổng quên (Forget Gate)}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_forget_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng quên trong LSTM (Phần được in đậm)]{Sơ đồ cổng quên trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_forget_gate}  
+\end{figure}
+
+Bước đầu tiên trong quá trình xử lý của LSTM là quyết định thông tin nào từ Cell State trước đó ($c_{t-1}$) cần được giữ lại hoặc loại bỏ. Để làm được điều đó, lớp ẩn trước đó ($h_{t-1}$) và dữ liệu đầu vào hiện tại ($x_t$) được đưa vào một mạng nơ-ron với hàm kích hoạt sigmoid ($\sigma$). Hàm sigmoid sẽ tạo ra một vector có giá trị trong khoảng [0,1], đảm bảo rằng đầu ra của hàm sigmoid sẽ tiến tới 0 khi dữ liệu đầu vào được cho là không liên quan và tiến tới 1 khi dữ liệu liên quan hơn.
+\begin{equation}
+    f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+\end{equation}
+Trong đó:
+\begin{itemize}
+    \item $f_t$ là đầu ra của Forget Gate tại thời điểm t.
+    \item $W_f$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại của Forget Gate.
+    \item $b_f$ là giá trị bias giúp điều chỉnh quyết định của Forget Gate.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\sigma$ là hàm kích hoạt sigmoid.
+\end{itemize}
+
+Đầu ra $f_t$ của Forget Gate sẽ được sử dụng để nhân với Cell State trước đó ($c_{t-1}$), quyết định phần thông tin nào sẽ được giữ lại trong bộ nhớ.
+
+
+\textbf{Cổng đầu vào (Input Gate)}\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_input_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng đầu vào trong LSTM (Phần được in đậm)]{Sơ đồ cổng đầu vào trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_input_gate} 
+\end{figure}
+
+Input Gate chịu trách nhiệm quyết định thông tin mới nào sẽ được thêm vào Cell State.Có thể nhìn thấy theo hình \ref{fig:lstm_input_gate}, quá trình cập nhật thông tin mới boa gồm sự phối hợp giữa Input Gate và vector ứng viên mới. Cụ thể:
+\begin{itemize}
+    \item Một vector ứng viên mới được tổng hợp từ lớp ẩn trước đó ($h_{t-1}$) và dữ liệu đầu vào hiện tại ($x_t$) thông qua một mạng nơ-ron với hàm kích hoạt tanh. Vector này biểu diễn các giá trị tiềm năng để cập nhật vào Cell State. Bởi vì giá trị hàm tanh trong khoảng [-1, 1], nó giúp điều chỉnh các giá trị ứng viên mới sao cho phù hợp với phạm vi của Cell State, tránh việc giá trị trở nên quá lớn.
+    \item Một mạng nơ-ron khác với hàm kích hoạt sigmoid được sử dụng như một bộ lọc để xác định mức độ quan trọng của từng giá trị trong vector ứng viên mới. Đầu ra của mạng này sẽ quyết định phần thông tin nào trong vector ứng viên sẽ được thêm vào Cell State.
+\end{itemize}
+
+Output của Input Gate được tính toán như sau:
+\begin{equation}
+    i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $i_t$ là đầu ra của Input Gate tại thời điểm t.
+    \item $W_i$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại của Input Gate.
+    \item $b_i$ là giá trị bias giúp điều chỉnh quyết định của Input Gate.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\sigma$ là hàm kích hoạt sigmoid.
+\end{itemize}
+
+Vector ứng viên mới được tính toán như sau:
+\begin{equation}
+    \tilde{c}_t = \tanh(W_c \cdot [h_{t-1}, x_t] + b_c)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\tilde{c}_t$ là vector ứng viên mới tại thời điểm t.
+    \item $W_c$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại để tạo ra vector ứng viên mới.
+    \item $b_c$ là giá trị bias giúp điều chỉnh quá trình tạo ra vector ứng viên mới.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\tanh$ là hàm kích hoạt tanh.
+\end{itemize}
+
+Đầu ra của 2 bước trên sẽ được sử dụng để cập nhật Cell State hiện tại ($c_t$) như sau:
+\begin{equation}
+    c_t = f_t \cdot c_{t-1} + i_t \cdot \tilde{c}_t
+\end{equation}
+
+\textbf{Cổng đầu ra (Output Gate)}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_output_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng đầu ra trong LSTM (Phần được in đậm)]{Sơ đồ cổng đầu ra trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_output_gate}
+\end{figure}
+
+Việc cập nhật dữ liệu cho Cell State đã hoàn tất, bước tiếp theo cũng là bước cuối cùng trong quá trình xử lý của LSTM là quyết định một lớp ẩn mới. Để làm điều này, LSTM sử dụng 3 thứ: Cell State mới, lớp ẩn trước đó và dữ liệu đầu vào hiện tại.
+Lý do cho việc tại sao lại không đưa cell state mới ra làm đầu ra cho Output Gate (Tức là lớp ẩn tiếp theo) là bởi vì Cell State chứa toàn bộ thông tin theo thời gian và không phải tất cả thông tin đều cần thiết cho việc dự báo tại thời điểm hiện tại. Do đó, Output Gate sẽ quyết định phần thông tin nào từ Cell State mới sẽ được sử dụng để tạo ra lớp ẩn mới.
+\begin{equation}
+    o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)
+    h_t = o_t \cdot \tanh(c_t)
+\end{equation}
+Tuy nhiên, lớp ẩn mới ($h_t$) là được coi là output của mô hình LSTM nhưng để ra được kết quả cuối cùng mà con người hiểu được, ta cần thêm một bước nữa là đưa lớp ẩn mới qua một lớp Linear Layer (Dense Layer).
+\subsection{Ứng dụng của LSTM trong dự báo chuỗi thời gian}
+Mạng bộ nhớ dài-ngắn hạn (LSTM) đại diện cho một bước tiến quan trọng trong lĩnh vực học sâu, đặc biệt là trong việc giải quyết các bài toán dự báo chuỗi thời gian phức tạp nhờ vào khả năng xử lý các phụ thuộc dài hạn. Khác với các mô hình mạng thần kinh tái phát truyền thống thường gặp phải hiện tượng triệt tiêu đạo hàm khi huấn luyện trên các chuỗi dữ liệu dài, LSTM được thiết kế với cấu trúc tế bào đặc biệt bao gồm các cổng kiểm soát luồng thông tin một cách tinh vi. Nhờ vào sự phối hợp giữa cổng quên, cổng vào và cổng ra, mô hình có khả năng chọn lọc thông tin quan trọng để lưu giữ trong trạng thái tế bào qua nhiều bước thời gian và loại bỏ những dữ liệu nhiễu không còn giá trị. Đặc tính này giúp LSTM vượt trội trong việc nắm bắt các quy luật lặp lại, xu hướng và các mối liên hệ nhân quả tiềm ẩn trong dữ liệu lịch sử.
+Trong lĩnh vực tài chính và kinh tế, LSTM đã trở thành một công cụ chủ đạo để dự báo các biến số có độ biến động cao như giá cổ phiếu, tỷ giá hối đoái và chỉ số lạm phát. Do dữ liệu tài chính thường chứa đựng nhiều yếu tố phi tuyến tính và chịu ảnh hưởng bởi tâm lý thị trường phức tạp, các phương pháp thống kê cổ điển như ARIMA thường khó có thể phản ánh đầy đủ các biến chuyển bất ngờ. LSTM có khả năng tự động trích xuất các đặc trưng từ dữ liệu quá khứ mà không cần các giả định khắt khe về phân phối xác suất, từ đó giúp các nhà đầu tư và hoạch định chính sách nhận diện được xu hướng tăng trưởng hoặc rủi ro suy thoái với độ chính xác cao hơn. Việc tích hợp LSTM vào các hệ thống giao dịch tự động cũng cho phép tối ưu hóa danh mục đầu tư dựa trên việc dự đoán các điểm đảo chiều của thị trường trong ngắn hạn và dài hạn.
+Đối với ngành năng lượng và quản lý hạ tầng, ứng dụng của LSTM tập trung mạnh mẽ vào việc dự báo nhu cầu tiêu thụ điện năng và quản lý lưới điện thông minh. Việc dự báo chính xác tải trọng điện đóng vai trò quyết định trong việc cân bằng cung cầu, giảm thiểu lãng phí và lập kế hoạch vận hành cho các nguồn năng lượng tái tạo như điện gió hay điện mặt trời vốn có tính bất định cao. LSTM chứng minh được hiệu quả vượt trội khi xử lý các chuỗi dữ liệu có tính chu kỳ đa dạng, từ chu kỳ theo giờ trong ngày đến chu kỳ theo mùa trong năm, đồng thời tích hợp hiệu quả các biến số ngoại sinh như điều kiện thời tiết và các sự kiện kinh tế xã hội. Tương tự, trong lĩnh vực giao thông vận tải, mô hình này được sử dụng để dự đoán lưu lượng xe cộ và thời gian di chuyển, hỗ trợ việc điều tiết giao thông và giảm thiểu ùn tắc tại các đô thị lớn.
+Lĩnh vực y tế và khoa học đời sống cũng chứng kiến những đóng góp quan trọng của LSTM trong việc giám sát sức khỏe bệnh nhân và dự báo xu hướng dịch bệnh. Thông qua việc phân tích các tín hiệu sinh học liên tục như điện tâm đồ, điện não đồ hoặc các chỉ số sinh tồn được thu thập từ thiết bị đeo thông minh, LSTM có khả năng phát hiện sớm các dấu hiệu bất thường và đưa ra cảnh báo về các biến cố lâm sàng trước khi chúng xảy ra. Trong công tác y tế cộng đồng, mô hình này hỗ trợ dự đoán sự lây lan của các bệnh truyền nhiễm dựa trên dữ liệu lịch sử về ca nhiễm, biến động thời tiết và mật độ dân cư. Khả năng xử lý các dữ liệu chuỗi thời gian không đồng nhất giúp các cơ quan y tế có cái nhìn toàn diện để đưa ra các biện pháp can thiệp kịp thời và hiệu quả.
+Mặc dù sở hữu những ưu điểm vượt trội về khả năng ghi nhớ, việc triển khai LSTM trong thực tế vẫn đòi hỏi sự cân nhắc kỹ lưỡng về chi phí tính toán và yêu cầu về khối lượng dữ liệu huấn luyện. Quá trình huấn luyện một mô hình LSTM thường yêu cầu tài nguyên phần cứng lớn và kỹ năng tinh chỉnh các siêu tham số để tránh hiện tượng quá khớp, đặc biệt khi làm việc với các chuỗi thời gian có nhiều nhiễu. Tuy nhiên, với sự phát triển của các kiến trúc lai phối hợp giữa LSTM với các cơ chế chú ý hoặc mạng thần kinh tích chập, khả năng biểu diễn của mô hình ngày càng được nâng cao. Những cải tiến này không chỉ giúp tăng tốc độ hội tụ mà còn cho phép mô hình tập trung vào những phân đoạn thời gian quan trọng nhất, khẳng định vị thế của LSTM như một trụ cột trong hệ thống các phương pháp dự báo hiện đại.
+
+\section{TỔNG QUAN VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
 Super-Resolution Generative Adversarial Network (SRGAN), được Ledig và cộng sự giới thiệu vào năm 2016, là một trong những mô hình tiên phong ứng dụng mạng GAN vào bài toán tăng độ phân giải ảnh. Mục tiêu của SRGAN là khắc phục hạn chế của các phương pháp nội suy truyền thống và các mô hình tối ưu theo lỗi điểm ảnh như MSE, vốn thường tạo ra ảnh mượt nhưng thiếu chi tiết và không giữ được kết cấu tự nhiên. Thông qua cơ chế huấn luyện đối kháng, SRGAN học cách sinh ra ảnh có độ phân giải cao với chi tiết sắc nét hơn bằng cách sử dụng đồng thời hai thành phần: perceptual loss dựa trên đặc trưng trích xuất từ mạng VGG và adversarial loss từ Discriminator. Sự kết hợp này giúp mô hình tái tạo các hoa văn, kết cấu và đường nét tinh vi thường bị mất đi trong quá trình phóng to ảnh, từ đó tạo ra ảnh đầu ra có chất lượng thị giác chân thực và giàu chi tiết hơn so với các kỹ thuật SR truyền thống. \cite{Ledig2016SRGAN}
 \subsection{Tổng quan kiến trúc}
 SRGAN hoạt động theo cơ chế GAN truyền thống, trong đó có hai mạng nơ-ron đóng vai trò đối kháng nhau: Generator nhận ảnh độ phân giải thấp và sinh ra phiên bản độ phân giải cao, trong khi Discriminator cố gắng phân biệt ảnh thật với ảnh được tạo ra. Quá trình huấn luyện xen kẽ này buộc Generator phải liên tục cải thiện chất lượng ảnh sinh ra để ngày càng giống với ảnh thật hơn. \cite{GeeksforGeeksSRGAN}
@@ -194,7 +306,7 @@ Trong đó:
 \item $10^{-3}$: Hệ số trọng số cân bằng giữa hai thành phần mất mát, đảm bảo Content Loss chiếm ưu thế trong quá trình huấn luyện.
 \end{itemize}
 
-\section{GIỚI THIỆU VỀ ESRGAN VÀ REAL-ESRGAN}
+\section{TỔNG QUAN VỀ ESRGAN VÀ REAL-ESRGAN}
 \subsection{ESRGAN}
 ESRGAN (Enhanced Super-Resolution GAN) là phiên bản cải tiến của SRGAN, tiếp tục khai thác sức mạnh của mô hình GAN trong bài toán tăng độ phân giải ảnh. ESRGAN khắc phục những hạn chế của SRGAN, đồng thời nâng cao chất lượng thị giác bằng cách tái tạo nhiều chi tiết tinh vi và sắc nét hơn. Những cải tiến đáng chú ý của ESRGAN gồm: \cite{XintaoWang2018ESRGAN}
 \begin{itemize}
@@ -222,7 +334,7 @@ Real-ESRGAN (Real-World Enhanced Super-Resolution Generative Adversarial Network
 
 Real-ESRGAN áp dụng kiến trúc RRDB (Residual-in-Residual Dense Block) tương tự ESRGAN nhưng được điều chỉnh để tăng tính ổn định và độ bền khi huấn luyện trên dữ liệu phi chuẩn hóa. Ngoài ra, Real-ESRGAN giới thiệu bộ phân biệt cải tiến (U-shaped discriminator) giúp mô hình học được nhiều mức độ suy giảm khác nhau. Nhờ các cải tiến này, Real-ESRGAN có khả năng tái tạo chi tiết tốt hơn, ổn định hơn trên ảnh chụp thực tế, và cung cấp kết quả nhất quán ngay cả trong điều kiện ảnh đầu vào bị hỏng nghiêm trọng.
 
-\section{GIỚI THIỆU NHẬN DIỆN ĐỐI TƯỢNG}
+\section{TỔNG QUAN VỀ NHẬN DIỆN ĐỐI TƯỢNG}
 Một trong những lĩnh vực trọng tâm của Trí tuệ nhân tạo (Artificial Intelligence) là Thị giác máy tính (Computer Vision). Đây là ngành nghiên cứu các phương pháp thu nhận, xử lý và phân tích ảnh số nhằm mô phỏng khả năng “nhìn” và “hiểu” thế giới trực quan của con người. Computer Vision bao gồm nhiều bài toán quan trọng như phân đoạn ảnh, nhận dạng đối tượng, mô phỏng cảnh, siêu phân giải hình ảnh, tái tạo 3D và nhiều hướng tiếp cận khác. Trong số đó, Object Detection được xem là một trong những bài toán cốt lõi và có tác động lớn nhất nhờ tính ứng dụng rộng rãi trong thực tiễn.
 
 \begin{figure}[H]
@@ -250,7 +362,7 @@ YOLO (You Only Look Once) là một trong những mô hình phát hiện đối 
 
 Tại Việt Nam, các nghiên cứu đã khai thác mô hình YOLO trong các bài toán như nhận dạng biển số xe và giám sát giao thông, cho thấy hiệu quả trong các hệ thống quản lý và kiểm soát thông minh. Đồng thời, nhiều công trình cũng tiến hành so sánh giữa YOLO và các thuật toán khác như SSD nhằm xác định giải pháp tối ưu cho từng nhu cầu ứng dụng cụ thể.
 
-\section{GIỚI THIỆU MÔ HÌNH YOLO}
+\section{TỔNG QUAN VỀ MÔ HÌNH YOLO}
 YOLO (You Only Look Once) là một mô hình phát hiện đối tượng dựa trên mạng nơ-ron tích chập (CNN), được thiết kế để thực hiện nhận dạng, phân loại và định vị đối tượng trong ảnh một cách nhanh chóng và hiệu quả. Không giống như các phương pháp truyền thống chia bài toán thành nhiều giai đoạn (như đề xuất vùng và phân loại), YOLO xử lý toàn bộ ảnh chỉ trong một lần duy nhất, từ đó mang lại tốc độ vượt trội. \cite{VietHoangYOLO}
 Bản chất “nhìn một lần” của YOLO giúp mô hình đạt tốc độ xử lý thời gian thực mà vẫn duy trì độ chính xác cao, khiến nó trở thành một trong những kiến trúc phổ biến nhất trong lĩnh vực phát hiện đối tượng cho các ứng dụng như giám sát thông minh, xe tự hành và phân tích video.
 Về mặt kiến trúc, YOLO được cấu trúc thành ba thành phần chính: Backbone, Neck, và Head, mỗi phần đảm nhiệm một vai trò quan trọng trong quá trình phát hiện đối tượng:
@@ -530,7 +642,3 @@ Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic C
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
 None
-
-\section{GIỚI THIỆU VỀ MÔ HÌNH LSTM}
-
-\section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
