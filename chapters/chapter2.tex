@@ -642,3 +642,14 @@ Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic C
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
 None
+
+\section{Tổng quan về OpenStreetMap}
+
+OpenStreetMap (OSM) là một dự án bản đồ mở, được xây dựng theo mô hình cộng đồng, cho phép người dùng trên toàn thế giới cùng thu thập, chỉnh sửa và chia sẻ dữ liệu bản đồ địa lý một cách tự do. Mục tiêu chính của OpenStreetMap là cung cấp một nguồn dữ liệu không gian mở, miễn phí, có thể sử dụng và tái phân phối cho nhiều mục đích khác nhau, từ nghiên cứu học thuật, phát triển ứng dụng đến các hệ thống thông tin địa lý (GIS) và mô phỏng giao thông.
+
+Dữ liệu của OpenStreetMap được tổ chức dưới dạng các đối tượng không gian cơ bản, bao gồm \textit{node} (điểm), \textit{way} (đường hoặc đa giác) và \textit{relation} (mối quan hệ giữa các đối tượng). Mỗi đối tượng được gán các thuộc tính (tag) để mô tả đặc trưng thực tế như loại đường, số làn xe, giới hạn tốc độ, hướng lưu thông hoặc chức năng của công trình. Nhờ cấu trúc linh hoạt này, OSM có khả năng biểu diễn chi tiết mạng lưới giao thông đô thị và các yếu tố hạ tầng liên quan.
+
+Trong lĩnh vực mô phỏng giao thông, OpenStreetMap đóng vai trò là nguồn dữ liệu đầu vào quan trọng để xây dựng và tái hiện mạng lưới đường bộ thực tế. Các phần mềm mô phỏng như SUMO có thể chuyển đổi trực tiếp dữ liệu OSM sang mô hình mạng giao thông, bao gồm các nút giao, đoạn đường, làn xe và tín hiệu đèn giao thông. Việc sử dụng OSM giúp giảm đáng kể công sức xây dựng mạng mô phỏng thủ công, đồng thời nâng cao tính thực tế và khả năng mở rộng của hệ thống mô phỏng.
+
+Với tính mở, độ phủ rộng và khả năng cập nhật liên tục, OpenStreetMap ngày càng được sử dụng phổ biến trong các nghiên cứu về giao thông thông minh, quy hoạch đô thị và hệ thống hỗ trợ ra quyết định. Trong phạm vi đề tài này, OSM được sử dụng như nền tảng dữ liệu không gian để xây dựng mạng lưới giao thông phục vụ cho mô phỏng và phân tích tình trạng giao thông đô thị.
+

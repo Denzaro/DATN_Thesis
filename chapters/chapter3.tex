@@ -64,7 +64,30 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
 \subsection{Thiết kế khối thu thập dữ liệu}
 None
 \subsection{Thiết kế khối lưu trữ}
-None
+Khối lưu trữ dữ liệu đóng vai trò tiếp nhận, tổ chức và quản lý toàn bộ dữ liệu trong hệ thống, bao gồm ảnh snapshot thu thập từ camera giao thông, dữ liệu sau tiền xử lý, kết quả nhận diện - đếm phương tiện, cũng như các tập dữ liệu đầu vào/đầu ra phục vụ mô phỏng và dự báo. Trong đề tài này, Google Drive được sử dụng như một nền tảng lưu trữ đám mây, đáp ứng yêu cầu về dung lượng, khả năng truy cập linh hoạt và thuận tiện cho việc chia sẻ, sao lưu dữ liệu trong quá trình nghiên cứu.
+
+Việc sử dụng Google Drive cho phép hệ thống tách biệt hoàn toàn giữa khâu xử lý và khâu lưu trữ, từ đó giảm phụ thuộc vào hạ tầng máy chủ cục bộ và tăng tính linh hoạt trong quá trình mở rộng hoặc thay đổi môi trường triển khai. Khối lưu trữ không thực hiện các chức năng xử lý dữ liệu phức tạp mà chỉ đảm nhiệm vai trò lưu trữ tệp và cung cấp dữ liệu cho các khối xử lý tiếp theo thông qua các script truy xuất tự động.
+
+Dữ liệu trên Google Drive được tổ chức theo một cấu trúc thư mục thống nhất, phản ánh các giai đoạn xử lý trong pipeline của hệ thống. Cấu trúc này giúp đảm bảo tính nhất quán, dễ truy vết và thuận tiện cho việc tự động hóa trong các bước xử lý và mô phỏng.
+
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+/DATN_Image_Traffic/
+│
+├── Raw_Images/
+│   └── <location>/
+|       └── <date>/
+|           └── <hour>/
+|               └── raw_YYYYMMDD_HHMMSS.jpg
+│
+│
+├── Results/
+│  └── <location>/
+|       └── <date>/
+|           └── <hour>/
+|               └── result_YYYYMMDD_HHMMSS.csv
+|               └── result_YYYYMMDD_HHMMSS.jpg
+\end{lstlisting}
+
 \subsection{Thiết kế khối tiền xử lý ảnh}
 Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và đếm phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
     \begin{enumerate}
