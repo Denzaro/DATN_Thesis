@@ -15,7 +15,7 @@ Về giai đoạn tiền xử lý dữ liệu, nhận diện và đếm phương
     \item Hệ thống tích hợp mô hình YOLOv11 nhằm nhận diện các phương tiện giao thông chính trên từng ảnh snapshot, trong đó các phương tiện được quy ước và phân loại thành hai nhóm: xe hai bánh (xe máy) và xe bốn bánh (xe hơi).
     \item Kết quả phát hiện bao gồm số lượng phương tiện theo từng loại tại mỗi thời điểm và tại từng địa điểm giám sát cụ thể, trong đó “địa điểm” được hiểu là vị trí camera đại diện cho một khu vực giao thông trên bản đồ.
     \item Lưu trữ kết quả đếm phương tiện với timestamp và vị trí tương ứng để phục vụ cho các bước xử lý tiếp theo.
-    \item Đảm bảo độ chính xác cao trong việc nhận diện và đếm phương tiện, với sai số không vượt quá 5\% so với thực tế.
+    \item Đảm bảo độ chính xác cao trong việc nhận diện và đếm phương tiện, với sai số không vượt quá $5\%$ so với thực tế.
 \end{itemize}
 
 Tiếp đến là yêu cầu về mô phỏng giao thông:
@@ -68,30 +68,66 @@ Khối lưu trữ dữ liệu đóng vai trò tiếp nhận, tổ chức và qu�
 
 Việc sử dụng Google Drive cho phép hệ thống tách biệt hoàn toàn giữa khâu xử lý và khâu lưu trữ, từ đó giảm phụ thuộc vào hạ tầng máy chủ cục bộ và tăng tính linh hoạt trong quá trình mở rộng hoặc thay đổi môi trường triển khai. Khối lưu trữ không thực hiện các chức năng xử lý dữ liệu phức tạp mà chỉ đảm nhiệm vai trò lưu trữ tệp và cung cấp dữ liệu cho các khối xử lý tiếp theo thông qua các script truy xuất tự động.
 
-Dữ liệu trên Google Drive được tổ chức theo một cấu trúc thư mục thống nhất, phản ánh các giai đoạn xử lý trong pipeline của hệ thống. Cấu trúc này giúp đảm bảo tính nhất quán, dễ truy vết và thuận tiện cho việc tự động hóa trong các bước xử lý và mô phỏng.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{fig/file_structure.png}
+    \caption[Cấu trúc lưu trữ dữ liệu trên Google Drive]{Cấu trúc lưu trữ dữ liệu trên Google Drive}
+    \label{fig:file_structure}
+\end{figure}
 
-\begin{lstlisting}[basicstyle=\ttfamily\small]
-/DATN_Image_Traffic/
-│
-├── Raw_Images/
-│   └── <location>/
-|       └── <date>/
-|           └── <hour>/
-|               └── raw_YYYYMMDD_HHMMSS.jpg
-│
-│
-├── Results/
-│  └── <location>/
-|       └── <date>/
-|           └── <hour>/
-|               └── result_YYYYMMDD_HHMMSS.csv
-|               └── result_YYYYMMDD_HHMMSS.jpg
-\end{lstlisting}
+Như trên hình \ref{fig:file_structure}, dữ liệu được tổ chức theo mô hình cây phân cấp, trong đó:
+\begin{itemize}
+    \item \textbf{DATN\_Image\_Traffic:} 
+    Thư mục chủ đạo chứa dữ liệu đầu vào thô và dữ liệu đã qua xử lý, chia làm hai nhánh chính:
+    
+    \begin{itemize}
+        \item \textbf{Raw Images:} 
+        Dữ liệu đầu vào thu thập trực tiếp từ camera giao thông (giaothong.hochiminhcity.gov.vn). Cấu trúc gồm:
+        \begin{itemize}
+            \item \textbf{Location Folder:} Tên thư mục theo địa điểm thực tế (Ví dụ: \texttt{Nga\_Tu\_So}, \texttt{Cau\_Giay}).
+            \item \textbf{Date Folder:} Phân loại theo ngày thu thập (Định dạng: \texttt{YYYY-MM-DD}).
+            \item \textbf{Hour Folder:} Phân loại theo khung giờ (Ví dụ: \texttt{01h}, \texttt{02h}...).
+            \item \textbf{[Unix\_Timestamp].jpg:} Các tệp ảnh gốc với tên là Unix Timestamp để đảm bảo tính duy nhất và tự động sắp xếp theo thời gian.
+        \end{itemize}
+
+        \item \textbf{Results:} 
+        Lưu trữ kết quả sau khi xử lý/nhận diện, duy trì cấu trúc tương tự nhánh Raw Images để dễ dàng đối chiếu:
+        \begin{itemize}
+            \item \textbf{[Unix\_Timestamp].xml:} Tệp tin chứa nhãn (labels) hoặc metadata tương ứng với ảnh gốc.
+            \item \textbf{[Hour].rar:} Tệp nén toàn bộ dữ liệu của khung giờ đó để tối ưu lưu trữ.
+            \item \textbf{[YYYYMMDD\_HHmmss].jpg:} Ảnh kết quả (đã vẽ bounding box...) đặt tên theo định dạng thời gian truyền thống để người dùng dễ đọc bằng mắt thường.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
 
 \subsection{Thiết kế khối tiền xử lý ảnh}
 Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và đếm phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
-    \begin{enumerate}
-        \item \textbf{Tăng cường độ phân giải và lọc nhiễu (Super-resolution): } Sử dụng Real-ESRGAN để nâng cao độ phân giải của ảnh đầu vào, giúp làm rõ các chi tiết nhỏ và giảm nhiễu ảnh.
-        \item \textbf{Chuẩn hóa kích thước ảnh (Resizing): }
-    \end{enumerate}
+\begin{enumerate}
+    \item \textbf{Tăng cường độ phân giải và chuẩn hóa kích thước ảnh: } Sử dụng Real-ESRGAN để nâng cao độ phân giải và giảm nhiễu cho các ảnh snapshot, ngoài ra còn tăng kích thước ảnh về chuẩn cố định nhằm đảm bảo tính nhất quán và cải thiện khả năng nhận diện của mô hình học sâu.
+    \item \textbf{Chia đều ảnh thành các phần (Tiling): }Ảnh sau khi được nâng cao chất lượng được chia thành bốn vùng con có kích thước bằng nhau. Việc chia nhỏ ảnh giúp mô hình tập trung tốt hơn vào các đặc trưng cục bộ, từ đó nâng cao độ chính xác trong việc phát hiện phương tiện, đặc biệt trong các tình huống mật độ giao thông cao hoặc khi các đối tượng bị che khuất một phần.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/upscale_image.png}
+    \caption[Lưu đồ chi tiết quá trình tiền xử lý ảnh]{Lưu đồ chi tiết quá trình tiền xử lý ảnh}
+    \label{fig:upscale_image}
+\end{figure}
+
+Giải thích lưu đồ tiền xử lý ảnh ở hình \ref{fig:upscale_image}: \\
+\hspace*{1cm} Ảnh đầu vào trước hết được đưa vào mô hình Real-ESRGAN đã được huấn luyện sẵn (pre-trained model) với các tham số cấu hình gồm hệ số phóng đại $scale=2$, mô hình \textit{RealESRGAN\_x2plus}, thiết bị xử lý \textit{cuda} và chế độ tính toán bán chính xác \textit{fp16}.
+
+Sau khi quá trình nâng cao độ phân giải hoàn tất, chất lượng ảnh đầu ra được đánh giá thông qua việc tính toán giá trị độ sáng trung bình của các pixel trong ảnh. 
+Nếu giá trị này nhỏ hơn một ngưỡng xác định (cụ thể là 5), ảnh được xem là không hợp lệ do quá tối và có khả năng phát sinh lỗi trong quá trình upscale. 
+Trong trường hợp này, hệ thống tiến hành thực hiện lại bước nâng cao độ phân giải với cấu hình tương tự, nhưng chuyển sang chế độ tính toán toàn chính xác (\textit{fp32}) nhằm tăng độ ổn định và độ chính xác của kết quả.
+
+Ngược lại, nếu ảnh đầu ra đạt yêu cầu về độ sáng, ảnh sẽ được chia thành bốn vùng con có kích thước bằng nhau (tiling). 
+Quá trình này được thực hiện bằng cách xác định tọa độ trung điểm theo chiều rộng và chiều cao của ảnh, từ đó cắt ảnh thành bốn phần tương ứng với các góc \textit{Top-Left}, \textit{Top-Right}, \textit{Bottom-Left} và \textit{Bottom-Right}.
+
+Cuối cùng, các ảnh con sau khi chia không được lưu dưới dạng các tệp ảnh riêng lẻ, mà được lưu trữ dưới dạng các giá trị trong bộ nhớ. 
+Cách tiếp cận này giúp giảm dung lượng lưu trữ và tối ưu thời gian xử lý của toàn bộ hệ thống.
+
+\section{Thiết kế khối nhận diện và phân tích phương tiện}
+
+
 
