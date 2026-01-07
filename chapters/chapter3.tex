@@ -178,6 +178,13 @@ Cuối cùng, kết quả đếm phương tiện hai bánh và bốn bánh, tỷ
 \end{figure}
 
 Giải thích lưu đồ nhận diện phương tiện 4 bánh có trong vùng ROI ở hình \ref{fig:segment_detection}: \\
-\hspace*{1cm} Đầu tiên, hệ thống sẽ tạo mặt nạ nhị phân cho vùng ROI dạng đa giác từ các tọa độ được lấy từ tệp cấu hình YAML. 
+\hspace*{1cm}Trước hết, hệ thống tạo một mặt nạ nhị phân cho vùng ROI dạng đa giác dựa trên các tọa độ được trích xuất từ tệp cấu hình YAML, nhằm xác định khu vực cần phân tích trong ảnh. Tiếp theo, mô hình YOLOv11 được sử dụng để phát hiện các phương tiện trong ảnh, với các tham số ngưỡng tin cậy và ngưỡng IOU được cấu hình trước.
 
+Sau khi thu được kết quả phát hiện, hệ thống lần lượt duyệt qua từng đối tượng và chỉ xem xét các phương tiện thuộc lớp xe bốn bánh. Đối với mỗi phương tiện hợp lệ về mặt lớp, hệ thống tính toán tọa độ bounding box và xác định xem tâm của bounding box có nằm trong vùng ROI hay không. Các phương tiện nằm ngoài vùng quan tâm sẽ không được đưa vào các bước xử lý tiếp theo.
+
+Đối với các phương tiện bốn bánh có tâm bounding box nằm trong vùng ROI, hệ thống tiếp tục kiểm tra độ tin cậy của dự đoán. Những đối tượng có độ tin cậy nhỏ hơn ngưỡng cấu hình sẽ bị loại bỏ. Các phương tiện thỏa mãn đầy đủ các điều kiện trên sẽ được đưa vào danh sách phương tiện hợp lệ. Danh sách này sau đó được sắp xếp theo độ tin cậy giảm dần nhằm ưu tiên giữ lại các phát hiện có độ tin cậy cao trong quá trình xử lý trùng lặp.
+
+Tiếp theo, hệ thống thực hiện loại bỏ các phát hiện trùng lặp dựa trên ngưỡng IOU đã được cấu hình. Trong trường hợp hai bounding box có giá trị IOU vượt quá ngưỡng cho phép, đối tượng có độ tin cậy thấp hơn sẽ bị loại bỏ khỏi danh sách.
+
+Cuối cùng, số lượng phương tiện bốn bánh hợp lệ còn lại được cộng dồn vào biến đếm tổng. Đồng thời, thông tin vị trí của các bounding box này được lưu lại để phục vụ cho việc tính toán tỷ lệ che phủ của xe hai bánh cũng như trực quan hóa kết quả trong các bước xử lý tiếp theo.
 
