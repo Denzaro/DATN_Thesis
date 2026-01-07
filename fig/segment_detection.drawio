@@ -30,7 +30,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Y-L3UAFn4Dddk599xS9s-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=0" value="Chạy mô hình YOLO trên ảnh&lt;br style=&quot;&quot;&gt;phát hiện tất cả phương tiện" vertex="1">
-          <mxGeometry height="45" width="230" x="65" y="440" as="geometry" />
+          <mxGeometry height="45" width="230" x="65" y="430" as="geometry" />
         </mxCell>
         <mxCell id="Y-L3UAFn4Dddk599xS9s-20" edge="1" parent="1" source="Y-L3UAFn4Dddk599xS9s-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;">
           <mxGeometry relative="1" as="geometry">
@@ -96,7 +96,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Y-L3UAFn4Dddk599xS9s-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10" value="Sắp xếp danh sách phát hiện&lt;br&gt;theo độ tin cậy giảm dần" vertex="1">
-          <mxGeometry height="40" width="200" x="430" y="640" as="geometry" />
+          <mxGeometry height="40" width="200" x="430" y="650" as="geometry" />
         </mxCell>
         <mxCell id="Y-L3UAFn4Dddk599xS9s-57" edge="1" parent="1" source="Y-L3UAFn4Dddk599xS9s-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Y-L3UAFn4Dddk599xS9s-56">
           <mxGeometry relative="1" as="geometry" />
