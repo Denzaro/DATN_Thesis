@@ -16,6 +16,11 @@
 *.bcf
 *.run.xml
 
+# Build folder - keep only main.pdf
+build/*
+!build/main.pdf
+!build/.gitkeep
+
 # Index files
 *.idx
 *.ilg
@@ -36,4 +41,4 @@
 *.swp
 *.swo
 *.bkp
-*.aux
+.github/
