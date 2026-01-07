@@ -431,7 +431,7 @@ L_{localization} = \lambda_{coord} \sum_{i=0}^{S^2} \sum_{j=0}^{B} 1_{ij}^{obj} 
 \end{equation}
 Trong đó:
 \begin{itemize}
-    \item $\lamda_{coord}$: Hệ số điều chỉnh, thường được đặt giá trị cao hơn để nhấn mạnh tầm quan trọng của localization loss.
+    \item $\lambda_{coord}$: Hệ số điều chỉnh, thường được đặt giá trị cao hơn để nhấn mạnh tầm quan trọng của localization loss.
     \item $1_{ij}^{obj}$: Biến chỉ báo, bằng 1 nếu ô lưới i chứa object và bounding box j chịu trách nhiệm dự đoán, ngược lại bằng 0.
     \item $x_i,y_i,w_i,h_i$: Tọa độ tâm và kích thước thực tế của bounding box.
     \item $\hat{x_i},\hat{y_i},\hat{w_i},\hat{h_i}$: Tọa độ tâm và kích thước dự đoán của bounding box.
@@ -524,7 +524,7 @@ YOLOv11 được phát triển như một bước tiến quan trọng trong dòn
     \item \textbf{Hỗ trợ đa dạng các tác vụ thị giác máy tính: } Không chỉ giới hạn ở bài toán phát hiện đối tượng, YOLOv11 còn được thiết kế để hỗ trợ nhiều nhiệm vụ thị giác máy tính khác nhau như phân đoạn ảnh, phân loại hình ảnh, ước tính tư thế, phát hiện đối tượng theo hướng (oriented object detection). Nhờ đó, phạm vi ứng dụng của YOLOv11 được mở rộng đáng kể trong các bài toán thực tiễn.
 \end{itemize}
 
-\subcsection{Hiệu suất của mô hình YOLOv11}
+\subsection{Hiệu suất của mô hình YOLOv11}
 YOLOv11 - phiên bản mới nhất trong họ mô hình YOLO - đã được Ultralytics tiến hành đánh giá và so sánh hiệu suất với các phiên bản tiền nhiệm từ YOLOv5 đến YOLOv10. Kết quả thực nghiệm cho thấy YOLOv11 đạt được những cải tiến rõ rệt cả về độ chính xác lẫn tốc độ suy luận, qua đó khẳng định ưu thế vượt trội của kiến trúc mới.
 
 Cụ thể, YOLOv11x đạt giá trị khoảng 54,5\% $mAP50_{50-95}$ với độ trễ suy luận chỉ 13 ms, vượt qua toàn bộ các phiên bản YOLO trước đó trong cả hai tiêu chí độ chính xác và hiệu năng. Điều này cho thấy mô hình có khả năng xử lý các bài toán phát hiện đối tượng phức tạp trong thời gian thực với độ tin cậy cao.
@@ -641,7 +641,56 @@ SUMO hỗ trợ nhiều chế độ điều khiển tín hiệu khác nhau. Ở 
 Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic Control Interface), SUMO cho phép các chương trình điều khiển bên ngoài (ví dụ script Python) kết nối với mô phỏng để điều chỉnh tín hiệu động theo trạng thái mạng. Qua TraCI, có thể truy vấn trạng thái của mô phỏng và gửi các lệnh như thay đổi pha hiện tại, điều chỉnh thời lượng pha hay chuyển sang chương trình tín hiệu khác. Điều này mở ra khả năng tích hợp với các mô hình dự báo, thuật toán điều khiển máy học hoặc điều khiển thích ứng phức tạp hơn, nơi quyết định điều khiển được đưa ra bởi một bộ điều khiển bên ngoài dựa trên dữ liệu đầu vào thời gian thực mô phỏng.
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
-None
+
+Giao thông đô thị thực tế là hệ thống động, lưu lượng xe và tốc độ phương tiện thay đổi liên tục theo từng giờ trong ngày. Nếu mô phỏng chỉ sử dụng lưu lượng cố định (ví dụ: luôn giả định 50 xe/phút suốt ngày), kết quả sẽ không phản ánh được thực tế: tốc độ sẽ không khác biệt giữa giờ cao điểm và giờ bình thường, các mô hình dự báo sẽ không học được mẫu hành vi thực sự. Để tạo ra một mô phỏng gần gũi với thực tế, cần phải thu thập dữ liệu lưu lượng từ thực tế (vào các giờ khác nhau trong ngày) và tái hiện những biến đổi này trong mô phỏng.
+
+\textbf{Tại sao cần chuyển đổi từ thực tế vào mô phỏng:}
+
+Việc mô phỏng lưu lượng và tốc độ theo thời gian có ý nghĩa quan trọng:
+
+\begin{itemize}
+    \item \textbf{Nếu không làm}: Mô phỏng sử dụng lưu lượng cố định hoặc tùy ý sẽ cho ra kết quả không chính xác. Tốc độ giả lập không tương ứng với thực tế, các mô hình dự báo huấn luyện trên dữ liệu này sẽ cho dự báo sai và không thể sử dụng để hỗ trợ quyết định thực tế.
+    
+    \item \textbf{Nếu làm}: Mô phỏng phản ánh đúng hành vi giao thông thực tế, tốc độ và lưu lượng biến thiên giống như ngoài đường. Điều này tạo dữ liệu huấn luyện chất lượng cao để các mô hình học máy và học sâu (như LSTM, CNN) học được các mẫu thực sự và đưa ra dự báo chính xác.
+\end{itemize}
+
+\textbf{Nguyên nhân biến thiên lưu lượng và tốc độ:}
+
+Lưu lượng và tốc độ biến thiên trong mô phỏng do các yếu tố sau:
+
+\begin{itemize}
+    \item \textbf{Nhu cầu di chuyển theo giờ}: Lưu lượng xe cao vào giờ cao điểm (sáng, chiều) khi nhiều người cần đi làm hay về nhà, và thấp vào giờ bình thường hay đêm.
+    
+    \item \textbf{Tác động của mật độ xe}: Khi lưu lượng tăng, các xe xếp gần nhau hơn, buộc phải giảm tốc để duy trì khoảng cách an toàn, từ đó tốc độ trung bình tự động giảm.
+    
+    \item \textbf{Ảnh hưởng của tín hiệu giao thông}: Tín hiệu đèn giao thông tạo sự ngắt quãng luồng giao thông. Khi đèn đỏ, các xe phải dừng hoàn toàn; khi đèn xanh, các xe tăng tốc. Điều này tạo ra sự biến thiên tốc độ có tính chu kỳ.
+\end{itemize}
+
+\textbf{Cách mô phỏng biến thiên lưu lượng và tốc độ:}
+
+Các công cụ mô phỏng giao thông như SUMO thường triển khai biến thiên lưu lượng và tốc độ theo thời gian thông qua các cơ chế sau:
+
+\begin{enumerate}
+    \item \textbf{Nhập dữ liệu lưu lượng theo thời gian}: Cho phép định nghĩa lưu lượng khác nhau cho các khoảng thời gian khác nhau (ví dụ: 6:00-9:00 có 100 xe/phút, 9:00-17:00 có 30 xe/phút, 17:00-20:00 có 80 xe/phút). Dữ liệu này thường được thu thập từ thực tế.
+    
+    \item \textbf{Mô hình hành vi lái xe}: SUMO sử dụng mô hình car-following để điều chỉnh tốc độ của từng phương tiện. Khi xe tiếp cận xe phía trước, tốc độ sẽ tự động giảm để duy trì khoảng cách an toàn. Hành vi này tạo ra sự giảm tốc tự động khi lưu lượng tăng.
+    
+    \item \textbf{Tích hợp tín hiệu đèn}: Mô phỏng kết hợp chương trình tín hiệu giao thông vào hành vi của xe. Khi gặp đèn đỏ, xe dừng; khi gặp đèn xanh, xe tiếp tục hoặc tăng tốc. Chu kỳ tín hiệu cố định tạo ra những sóng giao thông có tính chu kỳ.
+\end{enumerate}
+
+Kết quả là tốc độ trung bình sẽ thấp nhất vào giờ cao điểm khi lưu lượng cao, và cao hơn vào giờ bình thường khi lưu lượng thấp, phản ánh đúng hiện tượng trong giao thông thực tế.
+
+\textbf{Ứng dụng trong dự báo:}
+
+Dữ liệu lưu lượng và tốc độ theo thời gian từ mô phỏng cung cấp bộ dữ liệu huấn luyện quan trọng cho các mô hình dự báo (đặc biệt là mô hình LSTM và CNN được trình bày ở các mục trước). Thông qua dữ liệu này, các mô hình sẽ học được:
+
+\begin{itemize}
+    \item Mẫu thay đổi tốc độ theo giờ trong ngày (mẫu chu kỳ hàng ngày).
+    \item Mối quan hệ giữa lưu lượng cao và tốc độ thấp.
+    \item Cách tính toán dự báo dựa trên lịch sử tương tự từ các ngày trước đó.
+\end{itemize}
+
+Nhờ vậy, mô phỏng chính xác của sự biến thiên lưu lượng và tốc độ theo thời gian không chỉ tạo ra bộ dữ liệu huấn luyện chất lượng cao mà còn giúp các mô hình dự báo nắm bắt được bản chất động của giao thông đô thị, từ đó đưa ra dự báo đáng tin cậy cho việc quản lý giao thông.
 
 \section{Tổng quan về OpenStreetMap}
 
