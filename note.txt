@@ -1,0 +1,4 @@
+# Bổ sung hình khoảng cách an toàn giữa các xe
+# Bổ sung hình chuyển làn 
+# Hoàn thành "Điều khiển tín hiệu giao thông trong SUMO" và "Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian" trong chapter 2
++ 

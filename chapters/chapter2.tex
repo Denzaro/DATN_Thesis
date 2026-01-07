@@ -1,5 +1,5 @@
 \chapter{CƠ SỞ LÝ THUYẾT}
-\section{GIỚI THIỆU XỬ LÝ ẢNH}
+\section{TỔNG QUAN VỀ XỬ LÝ ẢNH}
 Xử lý ảnh (Image Processing) là lĩnh vực thuộc khoa học máy tính và kỹ thuật, tập trung vào việc phân tích và biến đổi hình ảnh nhằm cải thiện chất lượng hoặc trích xuất thông tin phục vụ quan sát và nhận dạng. Đây là nền tảng quan trọng của thị giác máy tính, vì hầu hết các thuật toán phân tích hay học máy đều yêu cầu dữ liệu hình ảnh đã được xử lý chuẩn hóa.  \cite{NTH2015ImageProcessing}
 
 Về bản chất, xử lý ảnh là quá trình thao tác trực tiếp trên ma trận điểm ảnh để làm rõ thông tin hữu ích và loại bỏ nhiễu hay các thành phần không cần thiết. Các kỹ thuật này thường được chia làm hai mức: xử lý ảnh mức thấp và mức cao. Mức thấp chủ yếu gồm các phép biến đổi tín hiệu như lọc nhiễu, điều chỉnh độ sáng, thay đổi không gian màu hoặc tăng độ sắc nét mà không xét đến nội dung ảnh. Trong khi đó, xử lý ảnh mức cao tập trung vào việc trích xuất đặc trưng như biên cạnh, điểm đặc trưng, kết cấu hay hình dạng, tạo dữ liệu có ý nghĩa cho các mô hình nhận diện và học sâu.
@@ -31,7 +31,197 @@ Ngoài ra, xử lý ảnh còn liên quan chặt chẽ đến việc chuẩn hó
 
 Tóm lại, xử lý ảnh là bước khởi đầu cho mọi đề tài thị giác máy tính, cung cấp nền tảng và dữ liệu chất lượng cho các thuật toán học sâu, phát hiện đối tượng và phân tích hành vi. Với sự phát triển nhanh chóng của các mô hình hiện đại, xử lý ảnh không chỉ còn dừng lại ở các kỹ thuật truyền thống mà đang chuyển mình mạnh mẽ và đóng vai trò quan trọng trong việc xây dựng những hệ thống thông minh, chính xác và tin cậy — đặc biệt trong lĩnh vực mô phỏng và quản lý giao thông dựa trên dữ liệu từ camera.
 
-\section{Giới THIỆU VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
+\section{TỔNG QUAN VỀ LÝ THUYẾT HỌC SÂU}
+Học sâu (Deep Learning) là một nhánh phát triển nâng cao của học máy (Machine Learning), lấy cảm hứng từ cấu trúc và cơ chế hoạt động của hệ thần kinh sinh học. Trọng tâm của học sâu là các mạng nơ-ron nhân tạo (Artificial Neural Networks - ANN) với nhiều tầng xử lý, cho phép mô hình học được các biểu diễn dữ liệu phức tạp thông qua việc xếp chồng nhiều phép biến đổi phi tuyến. Nhờ khả năng học đặc trưng tự động từ dữ liệu thô, học sâu đã trở thành nền tảng cốt lõi của nhiều hệ thống trí tuệ nhân tạo hiện đại.
+
+Mạng nơ-ron nhân tạo (ANN) là mô hình cơ bản nhất trong học sâu, bao gồm các nút nơ-ron được liên kết với nhau thông qua các trọng số. Khi số lượng lớp ẩn trong ANN tăng lên, mô hình được gọi là mạng nơ-ron sâu (Deep Neural Network - DNN). DNN có khả năng xấp xỉ các hàm phi tuyến phức tạp và mô hình hóa các mối quan hệ đa chiều trong dữ liệu lớn. Quá trình huấn luyện DNN được thực hiện thông qua thuật toán lan truyền ngược (backpropagation) kết hợp với các phương pháp tối ưu, cho phép điều chỉnh trọng số sao cho hàm mất mát được tối thiểu hóa.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/dnn_structure.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng nơ-ron sâu (Deep Neural Network) bao gồm lớp đầu vào, 3 lớp ẩn và lớp đầu ra.]{Sơ đồ kiến trúc mạng nơ-ron sâu (Deep Neural Network) bao gồm lớp đầu vào, 3 lớp ẩn và lớp đầu ra.}
+    \label{fig:dnn_structure}
+\end{figure}
+
+Trong lĩnh vực xử lý ảnh và thị giác máy tính, mạng nơ-ron tích chập (Convolutional Neural Networks - CNN) đóng vai trò trung tâm. CNN được thiết kế chuyên biệt để khai thác cấu trúc không gian của dữ liệu hình ảnh thông qua các lớp tích chập và pooling. Cơ chế này giúp mô hình học được các đặc trưng từ mức thấp (cạnh, góc) đến mức cao (hình dạng, đối tượng), đồng thời giảm đáng kể số lượng tham số so với DNN truyền thống. Nhờ đó, CNN trở thành nền tảng của nhiều mô hình phát hiện và nhận dạng đối tượng hiện đại, tiêu biểu như các phiên bản YOLO được sử dụng rộng rãi trong các hệ thống giao thông thông minh.
+
+Bên cạnh dữ liệu dạng không gian, nhiều bài toán thực tế liên quan đến dữ liệu chuỗi theo thời gian, nơi thứ tự và mối quan hệ phụ thuộc theo thời gian đóng vai trò quan trọng. Mạng nơ-ron hồi tiếp (Recurrent Neural Networks - RNN) được đề xuất nhằm xử lý loại dữ liệu này bằng cách cho phép thông tin từ các bước thời gian trước ảnh hưởng đến quá trình xử lý hiện tại. Tuy nhiên, RNN truyền thống gặp hạn chế trong việc học các phụ thuộc dài hạn do hiện tượng tiêu biến hoặc bùng nổ gradient.
+
+Để khắc phục nhược điểm đó, Long Short-Term Memory (LSTM) - một biến thể của RNN - đã được phát triển với cơ chế cổng (gates) nhằm kiểm soát việc ghi nhớ và quên thông tin theo thời gian. Nhờ khả năng nắm bắt tốt các mối quan hệ dài hạn trong chuỗi dữ liệu, LSTM được ứng dụng hiệu quả trong các bài toán dự báo chuỗi thời gian, chẳng hạn như dự báo lưu lượng giao thông, mật độ phương tiện hoặc xu hướng biến đổi trạng thái giao thông theo thời gian.
+
+Tóm lại, học sâu cung cấp một khung lý thuyết toàn diện cho việc xử lý và phân tích dữ liệu phức tạp ở nhiều dạng khác nhau, từ dữ liệu hình ảnh đến dữ liệu chuỗi thời gian. Phần tiếp theo trình bày khái quát các cơ sở lý thuyết nền tảng của một số mô hình học sâu đã được nghiên cứu và có mối liên hệ trực tiếp với nội dung của đề tài.
+
+\subsection{Mạng nơ-ron sâu}
+Mạng nơ-ron sâu (Deep Neural Networks - DNN) là một nhánh quan trọng của học sâu, được phát triển dựa trên nền tảng của mạng nơ-ron nhân tạo truyền thống (Artificial Neural Networks - ANN). Điểm khác biệt cốt lõi của DNN so với các mô hình nơ-ron cổ điển nằm ở số lượng lớn các tầng ẩn (hidden layers), cho phép mô hình học được những biểu diễn đặc trưng có mức trừu tượng cao từ dữ liệu đầu vào. Nhờ khả năng biểu diễn mạnh mẽ này, DNN đã trở thành nền tảng cho nhiều mô hình học sâu hiện đại và đạt được những thành tựu vượt trội trong các lĩnh vực như thị giác máy tính, xử lý ngôn ngữ tự nhiên và phân tích chuỗi thời gian.
+
+Về mặt cấu trúc, một mạng nơ-ron sâu thường bao gồm ba thành phần chính: Tầng đầu vào (input layer), nhiều tầng ẩn (hidden layers) và tầng đầu ra (output layer). Mỗi tầng được cấu thành từ các nơ-ron, trong đó mỗi nơ-ron thực hiện phép biến đổi tuyến tính trên dữ liệu đầu vào thông qua các trọng số (weights) và hệ số dịch (bias), sau đó áp dụng một hàm kích hoạt phi tuyến (activation function) như ReLU, sigmoid hoặc tanh. Việc kết hợp nhiều tầng phi tuyến cho phép DNN xấp xỉ các hàm phức tạp, từ đó mô hình hóa được mối quan hệ phi tuyến trong dữ liệu thực tế.
+
+Quá trình huấn luyện mạng nơ-ron sâu được thực hiện thông qua thuật toán lan truyền ngược sai số (backpropagation) kết hợp với các phương pháp tối ưu hóa như Gradient Descent, Adam hoặc RMSProp. Trong quá trình này, sai số giữa đầu ra dự đoán của mô hình và giá trị mục tiêu được lan truyền ngược từ tầng đầu ra về các tầng trước để cập nhật trọng số, nhằm giảm hàm mất mát (loss function). Tuy nhiên, khi số lượng tầng tăng lên, DNN có thể gặp phải các vấn đề như hiện tượng tiêu biến gradient (vanishing gradient) hoặc bùng nổ gradient (exploding gradient), đòi hỏi các kỹ thuật cải tiến như chuẩn hóa dữ liệu, khởi tạo trọng số hợp lý hoặc sử dụng các kiến trúc mạng tiên tiến hơn.
+
+Trong thực tế, DNN đóng vai trò là nền tảng chung cho nhiều kiến trúc học sâu chuyên biệt. Các mô hình như mạng nơ-ron tích chập (CNN) được thiết kế để xử lý dữ liệu dạng ảnh và không gian, trong khi mạng nơ-ron hồi tiếp (RNN) và các biến thể như LSTM phù hợp với dữ liệu chuỗi thời gian. Trong phạm vi đề tài này, DNN là cơ sở lý thuyết quan trọng cho việc hiểu và triển khai các mô hình phát hiện phương tiện từ ảnh camera giao thông cũng như mô hình dự báo lưu lượng giao thông dựa trên chuỗi dữ liệu theo thời gian.
+
+\subsection{Mạng nơ-ron tích chập}
+Mạng nơ-ron tích chập (CNN) là kiến trúc mạng sâu tối ưu cho việc xử lý dữ liệu có cấu trúc lưới, đặc biệt là hình ảnh và chuỗi thời gian. Điểm ưu việt của CNN nằm ở cơ chế tích chập, cho phép tự động trích xuất các đặc trưng không gian và cục bộ từ dữ liệu đầu vào một cách hiệu quả. Chính khả năng này đã tạo tiền đề cho những bước tiến vượt bậc trong lĩnh vực thị giác máy tính, đóng vai trò cốt lõi trong các bài toán nhận diện hình ảnh, phát hiện vật thể và phân đoạn ảnh.
+
+Kiến trúc của một mạng CNN điển hình được cấu thành từ ba tầng chức năng chính:
+
+\begin{itemize}
+    \item \textbf{Lớp tích chập (Convolutional Layer): } Được coi là "trái tim" của mạng, lớp này chịu trách nhiệm trích xuất đặc trưng thông qua cơ chế tích chập giữa dữ liệu đầu vào và các bộ lọc (filters). Mỗi bộ lọc đóng vai trò như một công cụ dò tìm, học cách nhận diện từ các đường nét cơ bản đến những mẫu hình phức tạp. Đầu ra của quá trình này là các bản đồ đặc trưng (feature maps), chứa đựng các thông tin không gian quan trọng đã được chắt lọc.
+    \item \textbf{Lớp gộp (Pooling Layer): } Đóng vai trò tinh gọn mô hình, lớp gộp thực hiện giảm chiều dữ liệu (down-sampling) nhằm giảm thiểu số lượng tham số và khối lượng tính toán, đồng thời hạn chế hiện tượng quá khớp (overfitting). Hai kỹ thuật phổ biến nhất là gộp cực đại (Max Pooling) - lấy giá trị nổi bật nhất, và gộp trung bình (Average Pooling) - tính toán giá trị trung hòa trong vùng lân cận.
+    \item \textbf{Lớp kết nối đầy đủ (Fully Connected Layer): } Là chốt chặn cuối cùng của quy trình. Sau khi đi qua các tầng trích xuất và gộp, dữ liệu được duỗi phẳng (flatten) thành vector và đưa vào lớp FC. Tại đây, mạng lưới sẽ tổng hợp toàn bộ thông tin cục bộ để đưa ra quyết định phân loại cuối cùng, thường dưới dạng xác suất dự đoán.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/cnn_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng nơ-ron tích chập (CNN) bao gồm lớp đầu vào, các lớp tích chập, lớp gộp và lớp kết nối đầy đủ.]{Sơ đồ kiến trúc mạng nơ-ron tích chập (CNN) bao gồm lớp đầu vào, các lớp tích chập, lớp gộp và lớp kết nối đầy đủ. Các lớp tích chập và gộp đóng vai trò trích xuất và biểu diễn các đặc trưng từ hình ảnh, tạo thành các bản đồ đặc trưng. Sau đó, các bản đồ đặc trưng này được làm phẳng và chuyển qua các lớp kết nối đầy đủ để tạo ra kết quả dự đoán cuối cùng.}
+    \label{fig:cnn_arch}
+\end{figure}
+
+Như hình \ref{fig:cnn_arch} minh họa, quy trình được chia thành hai giai đoạn chính: Trích xuất đặc trưng (Feature Extraction), nơi ảnh đầu vào đi qua các lớp Tích chập (Convolution) kết hợp hàm ReLU và lớp Gộp (Pooling) để tạo ra các bản đồ đặc trưng; và Phân loại (Classification), nơi dữ liệu được làm phẳng (Flatten) và đưa qua các lớp Kết nối đầy đủ (Fully Connected). Cuối cùng, hàm kích hoạt Softmax tính toán phân phối xác suất để đưa ra dự đoán chính xác nhất là 'Zebra' (Ngựa vằn) với tỷ lệ 0.7.
+
+\subsection{Mạng nơ-ron hồi tiếp}
+Mạng nơ-ron hồi tiếp (Recurrent Neural Networks - RNN) là một lớp mô hình học sâu được thiết kế chuyên biệt cho việc xử lý dữ liệu tuần tự và dữ liệu phụ thuộc theo thời gian. Không giống như các mạng nơ-ron truyền thống giả định các mẫu dữ liệu là độc lập, RNN cho phép mô hình học được mối quan hệ giữa các phần tử trong một chuỗi bằng cách duy trì trạng thái nội tại qua các bước thời gian. Nhờ đặc tính này, RNN được ứng dụng rộng rãi trong các bài toán như dự báo chuỗi thời gian, xử lý ngôn ngữ tự nhiên, nhận dạng giọng nói và phân tích hành vi theo thời gian.
+
+Cấu trúc của một mạng RNN điển hình có thể được mô tả thông qua các thành phần chính sau:
+\begin{itemize}
+    \item \textbf{Dữ liệu đầu vào theo chuỗi: } Dữ liệu đầu vào của RNN được tổ chức dưới dạng chuỗi các phần tử theo thứ tự thời gian, ký hiệu là $\{x_1, x_2, \ldots, x_T\}$, trong đó mỗi $x_t$ biểu diễn dữ liệu tại thời điểm t.  Trong bài toán giao thông, các phần tử này có thể là lưu lượng xe, mật độ phương tiện hoặc các đặc trưng được trích xuất từ ảnh camera theo từng khung thời gian.
+    \item \textbf{Trạng thái ẩn (hidden state): } Trạng thái ẩn $h_t$ đóng vai trò là bộ nhớ tạm thời của mạng, lưu giữ thông tin từ các bước thời gian trước. Tại mỗi thời điểm, trạng thái ẩn được cập nhật dựa trên dữ liệu đầu vào hiện tại $x_t$ và trạng thái trước đó $h_{t-1}$. Cơ chế này cho phép RNN mô hình hóa các mối quan hệ phụ thuộc theo thời gian trong dữ liệu.
+    \item \textbf{Trọng số hồi tiếp (Recurrent Weights): } RNN sử dụng các trọng số được chia sẻ qua các bước thời gian, bao gồm trọng số kết nối từ đầu vào đến trạng thái ẩn và trọng số hồi tiếp từ trạng thái ẩn trước sang trạng thái ẩn hiện tại. Việc chia sẻ trọng số giúp mô hình giảm số lượng tham số và duy trì tính nhất quán trong việc xử lý chuỗi dữ liệu.
+    \item \textbf{Hàm kích hoạt (Activation Function): } Sau khi thực hiện phép biến đổi tuyến tính, trạng thái ẩn thường được đưa qua các hàm kích hoạt phi tuyến như tanh hoặc ReLU. Các hàm này giúp mạng học được các mối quan hệ phi tuyến trong dữ liệu chuỗi.
+    \item \textbf{Đầu ra (Output): } Tại mỗi bước thời gian hoặc tại bước cuối của chuỗi, RNN có thể sinh ra đầu ra $y_t$ tương ứng. Đầu ra này có thể được sử dụng cho nhiều mục đích khác nhau như phân loại, hồi quy hoặc dự báo giá trị trong tương lai.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/rnn_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cấu trúc mạng nơ-ron hồi tiếp (RNN)]{Sơ đồ cấu trúc mạng nơ-ron hồi tiếp (RNN). Hình ảnh minh họa các lớp đầu vào (Input), hai lớp ẩn (Hidden Layers) và lớp đầu ra (Output), với đặc điểm nhận dạng chính là các mũi tên cong (feedback loops) kết nối ngược từ lớp ẩn sau về lớp ẩn trước. }
+    \label{fig:rnn_arch}
+\end{figure}
+
+\section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
+\subsection{Động lực ra đời của LSTM}
+Mạng nơ-ron hồi tiếp (Recurrent Neural Network - RNN) được thiết kế nhằm xử lý các dạng dữ liệu có tính tuần tự, trong đó thông tin tại thời điểm hiện tại phụ thuộc vào các trạng thái trước đó. Tuy nhiên, trong thực tế, RNN truyền thống gặp phải hạn chế nghiêm trọng khi học các phụ thuộc dài hạn trong chuỗi thời gian, đặc biệt là hiện tượng tiêu biến gradient (vanishing gradient) và bùng nổ gradient (exploding gradient) trong quá trình lan truyền ngược theo thời gian (Backpropagation Through Time). Hệ quả là mô hình khó có thể ghi nhớ và khai thác hiệu quả các thông tin xảy ra ở những thời điểm xa trong quá khứ, làm suy giảm độ chính xác trong các bài toán dự báo dài hạn.
+
+Trong nhiều bài toán thực tiễn, đặc biệt là dự báo chuỗi thời gian, mối quan hệ giữa dữ liệu không chỉ tồn tại ở các bước thời gian gần nhau mà còn kéo dài trong khoảng thời gian lớn. Ví dụ, trong lĩnh vực giao thông đô thị, lưu lượng xe tại một thời điểm chịu ảnh hưởng không chỉ bởi vài phút trước đó mà còn bởi các yếu tố mang tính chu kỳ như giờ cao điểm, ngày trong tuần hoặc các sự kiện định kỳ. RNN truyền thống khó nắm bắt được những mối quan hệ dài hạn này, dẫn đến khả năng dự báo kém ổn định và thiếu chính xác.
+
+Xuất phát từ những hạn chế trên, mạng Long Short-Term Memory (LSTM) được đề xuất nhằm cải thiện khả năng ghi nhớ thông tin dài hạn của RNN. Bằng cách đưa vào một cơ chế bộ nhớ riêng (Cell State) cùng với các cổng điều khiển (Forget Gate, Input Gate và Output Gate), LSTM cho phép mô hình chủ động quyết định thông tin nào cần được lưu giữ, cập nhật hoặc loại bỏ theo thời gian. Nhờ đó, LSTM khắc phục hiệu quả vấn đề tiêu biến gradient, đồng thời nâng cao khả năng mô hình hóa các phụ thuộc dài hạn trong chuỗi dữ liệu. Đây chính là lý do LSTM trở thành một trong những kiến trúc phổ biến và hiệu quả nhất cho các bài toán dự báo chuỗi thời gian, bao gồm dự báo lưu lượng và trạng thái giao thông đô thị.
+
+\subsection{Kiến trúc cơ bản của LSTM}
+Thành phần cốt lõi của một khối LSTM là bộ nhớ trạng thái (Cell State - $c_t$), hoạt động như một băng chuyền thông tin chạy xuyên suốt chuỗi thời gian với các tương tác tuyến tính tối thiểu, giúp thông tin được bảo toàn nguyên vẹn qua nhiều bước xử lý. Ngoài ra, còn có lớp ẩn trước đó (previous hidden state - $h_{t-1}$) đón vai trò như là đầu ra của 1 điểm trước đó và dữ liệu đầu vào tại thời điểm hiện tại ($x_t$).
+
+Bên cạnh ba thành phần quan trọng trên, LSTM còn sỡ hữu ba cổng điều khiển (gates) chính: Quên (Forget Gate), Đầu vào (Input gate) và Đầu ra (Output gate). Ba cổng này cùng với bộ nhớ trạng thái, các lớp ẩn và dữ liệu đầu vào hợp nên kiến trúc cơ bản của một khối LSTM như hình \ref{fig:lstm_arch} minh họa. \cite{LSTMExplanation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_arch.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ kiến trúc mạng LSTM]{Sơ đồ kiến trúc mạng LSTM}
+    \label{fig:lstm_arch}
+\end{figure}
+
+\subsection{Cơ chế hoạt động của các cổng trong LSTM}
+\textbf{Cổng quên (Forget Gate)}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_forget_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng quên trong LSTM (Phần được in đậm)]{Sơ đồ cổng quên trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_forget_gate}  
+\end{figure}
+
+Bước đầu tiên trong quá trình xử lý của LSTM là quyết định thông tin nào từ Cell State trước đó ($c_{t-1}$) cần được giữ lại hoặc loại bỏ. Để làm được điều đó, lớp ẩn trước đó ($h_{t-1}$) và dữ liệu đầu vào hiện tại ($x_t$) được đưa vào một mạng nơ-ron với hàm kích hoạt sigmoid ($\sigma$). Hàm sigmoid sẽ tạo ra một vector có giá trị trong khoảng [0,1], đảm bảo rằng đầu ra của hàm sigmoid sẽ tiến tới 0 khi dữ liệu đầu vào được cho là không liên quan và tiến tới 1 khi dữ liệu liên quan hơn.
+\begin{equation}
+    f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+\end{equation}
+Trong đó:
+\begin{itemize}
+    \item $f_t$ là đầu ra của Forget Gate tại thời điểm t.
+    \item $W_f$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại của Forget Gate.
+    \item $b_f$ là giá trị bias giúp điều chỉnh quyết định của Forget Gate.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\sigma$ là hàm kích hoạt sigmoid.
+\end{itemize}
+
+Đầu ra $f_t$ của Forget Gate sẽ được sử dụng để nhân với Cell State trước đó ($c_{t-1}$), quyết định phần thông tin nào sẽ được giữ lại trong bộ nhớ.
+
+
+\textbf{Cổng đầu vào (Input Gate)}\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_input_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng đầu vào trong LSTM (Phần được in đậm)]{Sơ đồ cổng đầu vào trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_input_gate} 
+\end{figure}
+
+Input Gate chịu trách nhiệm quyết định thông tin mới nào sẽ được thêm vào Cell State.Có thể nhìn thấy theo hình \ref{fig:lstm_input_gate}, quá trình cập nhật thông tin mới boa gồm sự phối hợp giữa Input Gate và vector ứng viên mới. Cụ thể:
+\begin{itemize}
+    \item Một vector ứng viên mới được tổng hợp từ lớp ẩn trước đó ($h_{t-1}$) và dữ liệu đầu vào hiện tại ($x_t$) thông qua một mạng nơ-ron với hàm kích hoạt tanh. Vector này biểu diễn các giá trị tiềm năng để cập nhật vào Cell State. Bởi vì giá trị hàm tanh trong khoảng [-1, 1], nó giúp điều chỉnh các giá trị ứng viên mới sao cho phù hợp với phạm vi của Cell State, tránh việc giá trị trở nên quá lớn.
+    \item Một mạng nơ-ron khác với hàm kích hoạt sigmoid được sử dụng như một bộ lọc để xác định mức độ quan trọng của từng giá trị trong vector ứng viên mới. Đầu ra của mạng này sẽ quyết định phần thông tin nào trong vector ứng viên sẽ được thêm vào Cell State.
+\end{itemize}
+
+Output của Input Gate được tính toán như sau:
+\begin{equation}
+    i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $i_t$ là đầu ra của Input Gate tại thời điểm t.
+    \item $W_i$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại của Input Gate.
+    \item $b_i$ là giá trị bias giúp điều chỉnh quyết định của Input Gate.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\sigma$ là hàm kích hoạt sigmoid.
+\end{itemize}
+
+Vector ứng viên mới được tính toán như sau:
+\begin{equation}
+    \tilde{c}_t = \tanh(W_c \cdot [h_{t-1}, x_t] + b_c)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\tilde{c}_t$ là vector ứng viên mới tại thời điểm t.
+    \item $W_c$ là ma trận trọng số của liên kết giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại để tạo ra vector ứng viên mới.
+    \item $b_c$ là giá trị bias giúp điều chỉnh quá trình tạo ra vector ứng viên mới.
+    \item $[h_{t-1}, x_t]$ là phép nối (concatenate) giữa lớp ẩn trước đó và dữ liệu đầu vào hiện tại. 
+    \item $\tanh$ là hàm kích hoạt tanh.
+\end{itemize}
+
+Đầu ra của 2 bước trên sẽ được sử dụng để cập nhật Cell State hiện tại ($c_t$) như sau:
+\begin{equation}
+    c_t = f_t \cdot c_{t-1} + i_t \cdot \tilde{c}_t
+\end{equation}
+
+\textbf{Cổng đầu ra (Output Gate)}\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/lstm_output_gate.jpg}
+    \captionsetup{justification=centering}
+    \caption[Sơ đồ cổng đầu ra trong LSTM (Phần được in đậm)]{Sơ đồ cổng đầu ra trong LSTM (Phần được in đậm)}
+    \label{fig:lstm_output_gate}
+\end{figure}
+
+Việc cập nhật dữ liệu cho Cell State đã hoàn tất, bước tiếp theo cũng là bước cuối cùng trong quá trình xử lý của LSTM là quyết định một lớp ẩn mới. Để làm điều này, LSTM sử dụng 3 thứ: Cell State mới, lớp ẩn trước đó và dữ liệu đầu vào hiện tại.
+Lý do cho việc tại sao lại không đưa cell state mới ra làm đầu ra cho Output Gate (Tức là lớp ẩn tiếp theo) là bởi vì Cell State chứa toàn bộ thông tin theo thời gian và không phải tất cả thông tin đều cần thiết cho việc dự báo tại thời điểm hiện tại. Do đó, Output Gate sẽ quyết định phần thông tin nào từ Cell State mới sẽ được sử dụng để tạo ra lớp ẩn mới.
+\begin{equation}
+    o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)
+    h_t = o_t \cdot \tanh(c_t)
+\end{equation}
+Tuy nhiên, lớp ẩn mới ($h_t$) là được coi là output của mô hình LSTM nhưng để ra được kết quả cuối cùng mà con người hiểu được, ta cần thêm một bước nữa là đưa lớp ẩn mới qua một lớp Linear Layer (Dense Layer).
+\subsection{Ứng dụng của LSTM trong dự báo chuỗi thời gian}
+Mạng bộ nhớ dài-ngắn hạn (LSTM) đại diện cho một bước tiến quan trọng trong lĩnh vực học sâu, đặc biệt là trong việc giải quyết các bài toán dự báo chuỗi thời gian phức tạp nhờ vào khả năng xử lý các phụ thuộc dài hạn. Khác với các mô hình mạng thần kinh tái phát truyền thống thường gặp phải hiện tượng triệt tiêu đạo hàm khi huấn luyện trên các chuỗi dữ liệu dài, LSTM được thiết kế với cấu trúc tế bào đặc biệt bao gồm các cổng kiểm soát luồng thông tin một cách tinh vi. Nhờ vào sự phối hợp giữa cổng quên, cổng vào và cổng ra, mô hình có khả năng chọn lọc thông tin quan trọng để lưu giữ trong trạng thái tế bào qua nhiều bước thời gian và loại bỏ những dữ liệu nhiễu không còn giá trị. Đặc tính này giúp LSTM vượt trội trong việc nắm bắt các quy luật lặp lại, xu hướng và các mối liên hệ nhân quả tiềm ẩn trong dữ liệu lịch sử.
+Trong lĩnh vực tài chính và kinh tế, LSTM đã trở thành một công cụ chủ đạo để dự báo các biến số có độ biến động cao như giá cổ phiếu, tỷ giá hối đoái và chỉ số lạm phát. Do dữ liệu tài chính thường chứa đựng nhiều yếu tố phi tuyến tính và chịu ảnh hưởng bởi tâm lý thị trường phức tạp, các phương pháp thống kê cổ điển như ARIMA thường khó có thể phản ánh đầy đủ các biến chuyển bất ngờ. LSTM có khả năng tự động trích xuất các đặc trưng từ dữ liệu quá khứ mà không cần các giả định khắt khe về phân phối xác suất, từ đó giúp các nhà đầu tư và hoạch định chính sách nhận diện được xu hướng tăng trưởng hoặc rủi ro suy thoái với độ chính xác cao hơn. Việc tích hợp LSTM vào các hệ thống giao dịch tự động cũng cho phép tối ưu hóa danh mục đầu tư dựa trên việc dự đoán các điểm đảo chiều của thị trường trong ngắn hạn và dài hạn.
+Đối với ngành năng lượng và quản lý hạ tầng, ứng dụng của LSTM tập trung mạnh mẽ vào việc dự báo nhu cầu tiêu thụ điện năng và quản lý lưới điện thông minh. Việc dự báo chính xác tải trọng điện đóng vai trò quyết định trong việc cân bằng cung cầu, giảm thiểu lãng phí và lập kế hoạch vận hành cho các nguồn năng lượng tái tạo như điện gió hay điện mặt trời vốn có tính bất định cao. LSTM chứng minh được hiệu quả vượt trội khi xử lý các chuỗi dữ liệu có tính chu kỳ đa dạng, từ chu kỳ theo giờ trong ngày đến chu kỳ theo mùa trong năm, đồng thời tích hợp hiệu quả các biến số ngoại sinh như điều kiện thời tiết và các sự kiện kinh tế xã hội. Tương tự, trong lĩnh vực giao thông vận tải, mô hình này được sử dụng để dự đoán lưu lượng xe cộ và thời gian di chuyển, hỗ trợ việc điều tiết giao thông và giảm thiểu ùn tắc tại các đô thị lớn.
+Lĩnh vực y tế và khoa học đời sống cũng chứng kiến những đóng góp quan trọng của LSTM trong việc giám sát sức khỏe bệnh nhân và dự báo xu hướng dịch bệnh. Thông qua việc phân tích các tín hiệu sinh học liên tục như điện tâm đồ, điện não đồ hoặc các chỉ số sinh tồn được thu thập từ thiết bị đeo thông minh, LSTM có khả năng phát hiện sớm các dấu hiệu bất thường và đưa ra cảnh báo về các biến cố lâm sàng trước khi chúng xảy ra. Trong công tác y tế cộng đồng, mô hình này hỗ trợ dự đoán sự lây lan của các bệnh truyền nhiễm dựa trên dữ liệu lịch sử về ca nhiễm, biến động thời tiết và mật độ dân cư. Khả năng xử lý các dữ liệu chuỗi thời gian không đồng nhất giúp các cơ quan y tế có cái nhìn toàn diện để đưa ra các biện pháp can thiệp kịp thời và hiệu quả.
+Mặc dù sở hữu những ưu điểm vượt trội về khả năng ghi nhớ, việc triển khai LSTM trong thực tế vẫn đòi hỏi sự cân nhắc kỹ lưỡng về chi phí tính toán và yêu cầu về khối lượng dữ liệu huấn luyện. Quá trình huấn luyện một mô hình LSTM thường yêu cầu tài nguyên phần cứng lớn và kỹ năng tinh chỉnh các siêu tham số để tránh hiện tượng quá khớp, đặc biệt khi làm việc với các chuỗi thời gian có nhiều nhiễu. Tuy nhiên, với sự phát triển của các kiến trúc lai phối hợp giữa LSTM với các cơ chế chú ý hoặc mạng thần kinh tích chập, khả năng biểu diễn của mô hình ngày càng được nâng cao. Những cải tiến này không chỉ giúp tăng tốc độ hội tụ mà còn cho phép mô hình tập trung vào những phân đoạn thời gian quan trọng nhất, khẳng định vị thế của LSTM như một trụ cột trong hệ thống các phương pháp dự báo hiện đại.
+
+\section{TỔNG QUAN VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
 Super-Resolution Generative Adversarial Network (SRGAN), được Ledig và cộng sự giới thiệu vào năm 2016, là một trong những mô hình tiên phong ứng dụng mạng GAN vào bài toán tăng độ phân giải ảnh. Mục tiêu của SRGAN là khắc phục hạn chế của các phương pháp nội suy truyền thống và các mô hình tối ưu theo lỗi điểm ảnh như MSE, vốn thường tạo ra ảnh mượt nhưng thiếu chi tiết và không giữ được kết cấu tự nhiên. Thông qua cơ chế huấn luyện đối kháng, SRGAN học cách sinh ra ảnh có độ phân giải cao với chi tiết sắc nét hơn bằng cách sử dụng đồng thời hai thành phần: perceptual loss dựa trên đặc trưng trích xuất từ mạng VGG và adversarial loss từ Discriminator. Sự kết hợp này giúp mô hình tái tạo các hoa văn, kết cấu và đường nét tinh vi thường bị mất đi trong quá trình phóng to ảnh, từ đó tạo ra ảnh đầu ra có chất lượng thị giác chân thực và giàu chi tiết hơn so với các kỹ thuật SR truyền thống. \cite{Ledig2016SRGAN}
 \subsection{Tổng quan kiến trúc}
 SRGAN hoạt động theo cơ chế GAN truyền thống, trong đó có hai mạng nơ-ron đóng vai trò đối kháng nhau: Generator nhận ảnh độ phân giải thấp và sinh ra phiên bản độ phân giải cao, trong khi Discriminator cố gắng phân biệt ảnh thật với ảnh được tạo ra. Quá trình huấn luyện xen kẽ này buộc Generator phải liên tục cải thiện chất lượng ảnh sinh ra để ngày càng giống với ảnh thật hơn. \cite{GeeksforGeeksSRGAN}
@@ -116,7 +306,7 @@ Trong đó:
 \item $10^{-3}$: Hệ số trọng số cân bằng giữa hai thành phần mất mát, đảm bảo Content Loss chiếm ưu thế trong quá trình huấn luyện.
 \end{itemize}
 
-\section{GIỚI THIỆU VỀ ESRGAN VÀ REAL-ESRGAN}
+\section{TỔNG QUAN VỀ ESRGAN VÀ REAL-ESRGAN}
 \subsection{ESRGAN}
 ESRGAN (Enhanced Super-Resolution GAN) là phiên bản cải tiến của SRGAN, tiếp tục khai thác sức mạnh của mô hình GAN trong bài toán tăng độ phân giải ảnh. ESRGAN khắc phục những hạn chế của SRGAN, đồng thời nâng cao chất lượng thị giác bằng cách tái tạo nhiều chi tiết tinh vi và sắc nét hơn. Những cải tiến đáng chú ý của ESRGAN gồm: \cite{XintaoWang2018ESRGAN}
 \begin{itemize}
@@ -144,7 +334,7 @@ Real-ESRGAN (Real-World Enhanced Super-Resolution Generative Adversarial Network
 
 Real-ESRGAN áp dụng kiến trúc RRDB (Residual-in-Residual Dense Block) tương tự ESRGAN nhưng được điều chỉnh để tăng tính ổn định và độ bền khi huấn luyện trên dữ liệu phi chuẩn hóa. Ngoài ra, Real-ESRGAN giới thiệu bộ phân biệt cải tiến (U-shaped discriminator) giúp mô hình học được nhiều mức độ suy giảm khác nhau. Nhờ các cải tiến này, Real-ESRGAN có khả năng tái tạo chi tiết tốt hơn, ổn định hơn trên ảnh chụp thực tế, và cung cấp kết quả nhất quán ngay cả trong điều kiện ảnh đầu vào bị hỏng nghiêm trọng.
 
-\section{GIỚI THIỆU NHẬN DIỆN ĐỐI TƯỢNG}
+\section{TỔNG QUAN VỀ NHẬN DIỆN ĐỐI TƯỢNG}
 Một trong những lĩnh vực trọng tâm của Trí tuệ nhân tạo (Artificial Intelligence) là Thị giác máy tính (Computer Vision). Đây là ngành nghiên cứu các phương pháp thu nhận, xử lý và phân tích ảnh số nhằm mô phỏng khả năng “nhìn” và “hiểu” thế giới trực quan của con người. Computer Vision bao gồm nhiều bài toán quan trọng như phân đoạn ảnh, nhận dạng đối tượng, mô phỏng cảnh, siêu phân giải hình ảnh, tái tạo 3D và nhiều hướng tiếp cận khác. Trong số đó, Object Detection được xem là một trong những bài toán cốt lõi và có tác động lớn nhất nhờ tính ứng dụng rộng rãi trong thực tiễn.
 
 \begin{figure}[H]
@@ -172,7 +362,7 @@ YOLO (You Only Look Once) là một trong những mô hình phát hiện đối 
 
 Tại Việt Nam, các nghiên cứu đã khai thác mô hình YOLO trong các bài toán như nhận dạng biển số xe và giám sát giao thông, cho thấy hiệu quả trong các hệ thống quản lý và kiểm soát thông minh. Đồng thời, nhiều công trình cũng tiến hành so sánh giữa YOLO và các thuật toán khác như SSD nhằm xác định giải pháp tối ưu cho từng nhu cầu ứng dụng cụ thể.
 
-\section{GIỚI THIỆU MÔ HÌNH YOLO}
+\section{TỔNG QUAN VỀ MÔ HÌNH YOLO}
 YOLO (You Only Look Once) là một mô hình phát hiện đối tượng dựa trên mạng nơ-ron tích chập (CNN), được thiết kế để thực hiện nhận dạng, phân loại và định vị đối tượng trong ảnh một cách nhanh chóng và hiệu quả. Không giống như các phương pháp truyền thống chia bài toán thành nhiều giai đoạn (như đề xuất vùng và phân loại), YOLO xử lý toàn bộ ảnh chỉ trong một lần duy nhất, từ đó mang lại tốc độ vượt trội. \cite{VietHoangYOLO}
 Bản chất “nhìn một lần” của YOLO giúp mô hình đạt tốc độ xử lý thời gian thực mà vẫn duy trì độ chính xác cao, khiến nó trở thành một trong những kiến trúc phổ biến nhất trong lĩnh vực phát hiện đối tượng cho các ứng dụng như giám sát thông minh, xe tự hành và phân tích video.
 Về mặt kiến trúc, YOLO được cấu trúc thành ba thành phần chính: Backbone, Neck, và Head, mỗi phần đảm nhiệm một vai trò quan trọng trong quá trình phát hiện đối tượng:
@@ -194,7 +384,7 @@ Nhờ sự phối hợp hiệu quả giữa ba thành phần này, YOLO đạt �
 YOLO hoạt động theo 4 bước chính:
 \begin{itemize}
 \item \textbf{Chia ảnh thành lưới (grid) S x S: } Ảnh đầu vào được chia thành một lưới gồm S hàng × S cột ô (grid-cells). Mỗi ô “chịu trách nhiệm” phát hiện các đối tượng mà “tâm” của hộp giới hạn (bounding box) rơi vào ô đó. Ý tưởng là phân vùng ảnh để mỗi phần nhỏ có thể dự đoán xem có đối tượng hay không, thay vì lặp toàn bộ ảnh nhiều lần.
-\item \textbf{Trích xuất đặc trưng ảnh với mạng CNN (backbone + feature layers): } YOLO sử dụng một mạng nơ-ron tích chập (CNN) để “đọc” toàn bộ ảnh – các lớp convolution + pooling + … trích xuất đặc trưng (features) từ ảnh. Các lớp cuối (fully connected / detection layers) sau khi feature extraction sẽ dùng để dự đoán bounding boxes + nhãn + độ tin cậy.
+\item \textbf{Trích xuất đặc trưng ảnh với mạng CNN (backbone + feature layers): } YOLO sử dụng một mạng nơ-ron tích chập (CNN) để “đọc” toàn bộ ảnh - các lớp convolution + pooling + … trích xuất đặc trưng (features) từ ảnh. Các lớp cuối (fully connected / detection layers) sau khi feature extraction sẽ dùng để dự đoán bounding boxes + nhãn + độ tin cậy.
 \item \textbf{Dự đoán nhiều bounding boxes + xác suất + lớp đối tượng ở mỗi ô lưới: } Mỗi ô (grid cell) dự đoán B hộp giới hạn (bounding boxes). Mỗi hộp gồm các thông số: tâm x, y; chiều rộng w, chiều cao h (thường được chuẩn hóa), + một “điểm tin cậy (confidence score)” biểu thị: khả năng có đối tượng + độ tin cậy vị trí. Ngoài ra, mỗi ô cũng dự đoán xác suất (conditional class probabilities) cho mỗi lớp đối tượng mà ảnh đó có thể chứa. 
 \item \textbf{Kết hợp kết quả và loại bỏ dư thừa (Non-Maximum Suppression – NMS): } Vì nhiều hộp có thể “đụng chồng” nhau (ví dụ cùng dự đoán một đối tượng), sau khi mạng đưa ra tất cả dự đoán, YOLO sử dụng kỹ thuật NMS để giữ lại hộp có “điểm tin cậy tốt nhất” và loại bỏ các hộp dư chồng lặp. Kết quả cuối: một danh sách các hộp (bounding boxes), mỗi hộp có nhãn lớp đối tượng và độ tin cậy — tương ứng với những đối tượng được phát hiện trong ảnh.
 \end{itemize}
@@ -212,8 +402,8 @@ Trong YOLO, hàm mất mát (loss function) được xây dựng từ sự khác
 
 \begin{enumerate}
     \item \textbf{Classification Loss - Sai số phân loại: } Đo mức độ chính xác khi mô hình dự đoán lớp của đối tượng trong mỗi ô lưới. Mục tiêu là đảm bảo mô hình không chỉ phát hiện được vật thể, mà còn nhận diện đúng loại của nó.
-    \item \textbf{Localization Loss – Sai số định vị bounding box: } Đánh giá độ lệch giữa bounding box dự đoán và bounding box thật dựa trên bốn tham số: vị trí tâm (x, y) và kích thước (w, h). Thành phần này giúp mô hình học cách khoanh vùng đối tượng chính xác hơn.
-    \item \textbf{Confidence Loss – Sai số về mức độ tin cậy: } Phản ánh sự khác biệt giữa “mức độ chắc chắn” mà mô hình cho rằng ô lưới chứa một vật thể và giá trị nhãn thực tế. Đây là yếu tố quan trọng giúp YOLO biết được ô nào nên dự đoán và ô nào nên bỏ qua.
+    \item \textbf{Localization Loss - Sai số định vị bounding box: } Đánh giá độ lệch giữa bounding box dự đoán và bounding box thật dựa trên bốn tham số: vị trí tâm (x, y) và kích thước (w, h). Thành phần này giúp mô hình học cách khoanh vùng đối tượng chính xác hơn.
+    \item \textbf{Confidence Loss - Sai số về mức độ tin cậy: } Phản ánh sự khác biệt giữa “mức độ chắc chắn” mà mô hình cho rằng ô lưới chứa một vật thể và giá trị nhãn thực tế. Đây là yếu tố quan trọng giúp YOLO biết được ô nào nên dự đoán và ô nào nên bỏ qua.
 \end{enumerate}
 
 \textbf{Classification Loss: }\\
@@ -373,9 +563,14 @@ Mô phỏng trung mô nằm giữa hai cấp độ vĩ mô và vi mô, trong đ�
 \end{figure}
 
 \subsection{Mô phỏng giao thông theo thời gian và dựa trên dữ liệu}
+Một đặc điểm quan trọng của giao thông đô thị là tính động và biến thiên theo thời gian. Lưu lượng xe, tốc độ và mức độ ùn tắc có thể thay đổi đáng kể theo từng khung giờ trong ngày, theo điều kiện thời tiết hoặc theo các sự kiện bất thường. Do đó, các mô hình mô phỏng giao thông hiện đại thường được xây dựng dưới dạng mô phỏng theo thời gian rời rạc hoặc liên tục, cho phép cập nhật trạng thái của hệ thống tại mỗi bước thời gian.
+
+Bên cạnh đó, xu hướng phát triển của các hệ thống giao thông thông minh đã thúc đẩy việc tích hợp dữ liệu thực vào mô phỏng. Các nguồn dữ liệu như camera giao thông, cảm biến hoặc dữ liệu lịch sử cho phép hiệu chỉnh mô hình mô phỏng sao cho phản ánh sát hơn điều kiện thực tế. Trong nhiều nghiên cứu, dữ liệu hình ảnh từ camera giao thông được xử lý để trích xuất các thông số như lưu lượng xe, mật độ hoặc tốc độ trung bình, sau đó được sử dụng làm đầu vào cho mô phỏng. Cách tiếp cận này giúp thu hẹp khoảng cách giữa mô hình mô phỏng và tình trạng giao thông ngoài thực tế.
 
 \subsection{Ứng dụng của mô phỏng giao thông trong nghiên cứu và thực tiễn}
+Mô phỏng giao thông đô thị được ứng dụng rộng rãi trong nhiều lĩnh vực khác nhau, từ quy hoạch hạ tầng, đánh giá tác động của các dự án giao thông đến hỗ trợ điều hành giao thông hàng ngày. Trong nghiên cứu học thuật, mô phỏng được sử dụng để kiểm chứng các giả thuyết, so sánh hiệu quả của các thuật toán điều khiển tín hiệu hoặc đánh giá các mô hình dự báo giao thông.
 
+Trong thực tiễn, mô phỏng giao thông đóng vai trò như một “phòng thí nghiệm ảo”, nơi các kịch bản điều chỉnh có thể được thử nghiệm trước khi triển khai. Đặc biệt, khi kết hợp với các mô hình học máy và học sâu, mô phỏng không chỉ dừng lại ở việc tái hiện hiện trạng mà còn có khả năng hỗ trợ dự báo ngắn hạn và đánh giá các chiến lược điều chỉnh tín hiệu đèn trong tương lai. Điều này mở ra tiềm năng lớn cho việc xây dựng các hệ thống hỗ trợ ra quyết định trong quản lý giao thông đô thị.
 
 \section{CÔNG CỤ MÔ PHỎNG GIAO THÔNG: SUMO}
 \subsection{Giới thiệu phần mềm SUMO}
@@ -442,15 +637,19 @@ Mô phỏng trong SUMO diễn ra ở mức độ rời rạc theo thời gian: t
 
 \subsection{Điều khiển tín hiệu giao thông trong SUMO}
 Trong mô phỏng giao thông bằng SUMO, tín hiệu đèn giao thông (traffic lights) được xem như một thành phần điều khiển quan trọng tại các nút giao nhằm điều phối lưu lượng phương tiện và giảm thiểu xung đột giữa các hướng di chuyển. SUMO cho phép mô hình hóa chi tiết các chương trình tín hiệu, bao gồm các pha (phases), độ dài chu kỳ, thứ tự chuyển trạng thái và các trạng thái cụ thể của từng tín hiệu (đỏ, vàng, xanh). Những chương trình này có thể được khai báo trực tiếp trong mạng mô phỏng hoặc được cung cấp dưới dạng tệp bổ sung để tùy chỉnh.
-Trong mô phỏng giao thông bằng SUMO, tín hiệu đèn giao thông (traffic lights) được xem như một thành phần điều khiển quan trọng tại các nút giao nhằm điều phối lưu lượng phương tiện và giảm thiểu xung đột giữa các hướng di chuyển. SUMO cho phép mô hình hóa chi tiết các chương trình tín hiệu, bao gồm các pha (phases), độ dài chu kỳ, thứ tự chuyển trạng thái và các trạng thái cụ thể của từng tín hiệu (đỏ, vàng, xanh). Những chương trình này có thể được khai báo trực tiếp trong mạng mô phỏng hoặc được cung cấp dưới dạng tệp bổ sung để tùy chỉnh.
 SUMO hỗ trợ nhiều chế độ điều khiển tín hiệu khác nhau. Ở mức cơ bản, các tín hiệu có thể hoạt động theo chu kỳ cố định (static control), trong đó mỗi pha được định nghĩa rõ ràng với thời lượng cụ thể và tín hiệu sẽ lặp lại tuần hoàn trong suốt quá trình mô phỏng. Đây là dạng điều khiển truyền thống thường dùng trong các bài toán tham chiếu hoặc so sánh đơn giản.
 Ngoài ra, với giao diện điều khiển thời gian chạy TraCI (Traffic Control Interface), SUMO cho phép các chương trình điều khiển bên ngoài (ví dụ script Python) kết nối với mô phỏng để điều chỉnh tín hiệu động theo trạng thái mạng. Qua TraCI, có thể truy vấn trạng thái của mô phỏng và gửi các lệnh như thay đổi pha hiện tại, điều chỉnh thời lượng pha hay chuyển sang chương trình tín hiệu khác. Điều này mở ra khả năng tích hợp với các mô hình dự báo, thuật toán điều khiển máy học hoặc điều khiển thích ứng phức tạp hơn, nơi quyết định điều khiển được đưa ra bởi một bộ điều khiển bên ngoài dựa trên dữ liệu đầu vào thời gian thực mô phỏng.
 
 \subsection{Mô phỏng lưu lượng và tốc độ phương tiện biến thiên theo thời gian}
 None
 
-\section{GIỚI THIỆU VỀ HỌC SÂU}
+\section{Tổng quan về OpenStreetMap}
 
-\section{GIỚI THIỆU VỀ MÔ HÌNH LSTM}
+OpenStreetMap (OSM) là một dự án bản đồ mở, được xây dựng theo mô hình cộng đồng, cho phép người dùng trên toàn thế giới cùng thu thập, chỉnh sửa và chia sẻ dữ liệu bản đồ địa lý một cách tự do. Mục tiêu chính của OpenStreetMap là cung cấp một nguồn dữ liệu không gian mở, miễn phí, có thể sử dụng và tái phân phối cho nhiều mục đích khác nhau, từ nghiên cứu học thuật, phát triển ứng dụng đến các hệ thống thông tin địa lý (GIS) và mô phỏng giao thông.
 
-\section{TỔNG QUAN VỀ MÔ HÌNH LSTM}
+Dữ liệu của OpenStreetMap được tổ chức dưới dạng các đối tượng không gian cơ bản, bao gồm \textit{node} (điểm), \textit{way} (đường hoặc đa giác) và \textit{relation} (mối quan hệ giữa các đối tượng). Mỗi đối tượng được gán các thuộc tính (tag) để mô tả đặc trưng thực tế như loại đường, số làn xe, giới hạn tốc độ, hướng lưu thông hoặc chức năng của công trình. Nhờ cấu trúc linh hoạt này, OSM có khả năng biểu diễn chi tiết mạng lưới giao thông đô thị và các yếu tố hạ tầng liên quan.
+
+Trong lĩnh vực mô phỏng giao thông, OpenStreetMap đóng vai trò là nguồn dữ liệu đầu vào quan trọng để xây dựng và tái hiện mạng lưới đường bộ thực tế. Các phần mềm mô phỏng như SUMO có thể chuyển đổi trực tiếp dữ liệu OSM sang mô hình mạng giao thông, bao gồm các nút giao, đoạn đường, làn xe và tín hiệu đèn giao thông. Việc sử dụng OSM giúp giảm đáng kể công sức xây dựng mạng mô phỏng thủ công, đồng thời nâng cao tính thực tế và khả năng mở rộng của hệ thống mô phỏng.
+
+Với tính mở, độ phủ rộng và khả năng cập nhật liên tục, OpenStreetMap ngày càng được sử dụng phổ biến trong các nghiên cứu về giao thông thông minh, quy hoạch đô thị và hệ thống hỗ trợ ra quyết định. Trong phạm vi đề tài này, OSM được sử dụng như nền tảng dữ liệu không gian để xây dựng mạng lưới giao thông phục vụ cho mô phỏng và phân tích tình trạng giao thông đô thị.
+
