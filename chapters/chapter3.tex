@@ -93,7 +93,7 @@ Như trên hình \ref{fig:file_structure}, dữ liệu được tổ chức theo
         \item \textbf{Results:} 
         Lưu trữ kết quả sau khi xử lý/nhận diện, duy trì cấu trúc tương tự nhánh Raw Images để dễ dàng đối chiếu:
         \begin{itemize}
-            \item \textbf{[Unix\_Timestamp].xml:} Tệp tin chứa nhãn (labels) hoặc metadata tương ứng với ảnh gốc.
+            \item \textbf{[Unix\_Timestamp].csv:} Tệp tin chứa nhãn (labels) hoặc metadata tương ứng với ảnh gốc.
             \item \textbf{[Hour].rar:} Tệp nén toàn bộ dữ liệu của khung giờ đó để tối ưu lưu trữ.
             \item \textbf{[YYYYMMDD\_HHmmss].jpg:} Ảnh kết quả (đã vẽ bounding box...) đặt tên theo định dạng thời gian truyền thống để người dùng dễ đọc bằng mắt thường.
         \end{itemize}
@@ -101,16 +101,16 @@ Như trên hình \ref{fig:file_structure}, dữ liệu được tổ chức theo
 \end{itemize}
 
 \subsection{Thiết kế khối tiền xử lý ảnh}
-Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và đếm phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
+Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và phân tích phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
 \begin{enumerate}
     \item \textbf{Tăng cường độ phân giải và chuẩn hóa kích thước ảnh: } Sử dụng Real-ESRGAN để nâng cao độ phân giải và giảm nhiễu cho các ảnh snapshot, ngoài ra còn tăng kích thước ảnh về chuẩn cố định nhằm đảm bảo tính nhất quán và cải thiện khả năng nhận diện của mô hình học sâu.
-    \item \textbf{Chia đều ảnh thành các phần (Tiling): }Ảnh sau khi được nâng cao chất lượng được chia thành bốn vùng con có kích thước bằng nhau. Việc chia nhỏ ảnh giúp mô hình tập trung tốt hơn vào các đặc trưng cục bộ, từ đó nâng cao độ chính xác trong việc phát hiện phương tiện, đặc biệt trong các tình huống mật độ giao thông cao hoặc khi các đối tượng bị che khuất một phần.
+    \item \textbf{Chia đều ảnh thành các phần: }Ảnh sau khi được nâng cao chất lượng được chia thành bốn vùng con có kích thước bằng nhau. Việc chia nhỏ ảnh giúp mô hình tập trung tốt hơn vào các đặc trưng cục bộ, từ đó nâng cao độ chính xác trong việc phát hiện phương tiện, đặc biệt trong các tình huống mật độ giao thông cao hoặc khi các đối tượng bị che khuất một phần.
 \end{enumerate}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{fig/upscale_image.png}
-    \caption[Lưu đồ chi tiết quá trình tiền xử lý ảnh]{Lưu đồ chi tiết quá trình tiền xử lý ảnh}
+    \caption[Lưu đồ quá trình tiền xử lý ảnh]{Lưu đồ chi tiết quá trình tiền xử lý ảnh}
     \label{fig:upscale_image}
 \end{figure}
 
@@ -121,13 +121,63 @@ Sau khi quá trình nâng cao độ phân giải hoàn tất, chất lượng �
 Nếu giá trị này nhỏ hơn một ngưỡng xác định (cụ thể là 5), ảnh được xem là không hợp lệ do quá tối và có khả năng phát sinh lỗi trong quá trình upscale. 
 Trong trường hợp này, hệ thống tiến hành thực hiện lại bước nâng cao độ phân giải với cấu hình tương tự, nhưng chuyển sang chế độ tính toán toàn chính xác (\textit{fp32}) nhằm tăng độ ổn định và độ chính xác của kết quả.
 
-Ngược lại, nếu ảnh đầu ra đạt yêu cầu về độ sáng, ảnh sẽ được chia thành bốn vùng con có kích thước bằng nhau (tiling). 
+Ngược lại, nếu ảnh đầu ra đạt yêu cầu về độ sáng, ảnh sẽ được chia thành bốn vùng con có kích thước bằng nhau. 
 Quá trình này được thực hiện bằng cách xác định tọa độ trung điểm theo chiều rộng và chiều cao của ảnh, từ đó cắt ảnh thành bốn phần tương ứng với các góc \textit{Top-Left}, \textit{Top-Right}, \textit{Bottom-Left} và \textit{Bottom-Right}.
 
-Cuối cùng, các ảnh con sau khi chia không được lưu dưới dạng các tệp ảnh riêng lẻ, mà được lưu trữ dưới dạng các giá trị trong bộ nhớ. 
-Cách tiếp cận này giúp giảm dung lượng lưu trữ và tối ưu thời gian xử lý của toàn bộ hệ thống.
+Cuối cùng, các ảnh con sau khi chia không được lưu dưới dạng các tệp ảnh riêng lẻ, mà được lưu trữ dưới dạng các giá trị trong bộ nhớ cùng với các id để nhận biết được các phần ảnh để phục vụ cho quá trình nhận diện và phân tích phuwogn tiện ở khối tiếp theo.
 
-\section{Thiết kế khối nhận diện và phân tích phương tiện}
+\subsection{Thiết kế khối nhận diện và phân tích phương tiện}
+Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 đã được huấn luyện trước trên dataset COCO (pre-trained model) để phát hiện và phân loại các phương tiện giao thông trong từng ảnh snapshot. Tuy nhiên, bởi vì dữ liệu đầu vào có chất lượng không tốt, góc quay không tối ưu và mật độ giao thông cao, việc nhận diện chính xác các phương tiện, đặc biệt là xe máy trở nên khó khăn. Do đó, ngoài việc sử dụng mô hình YOLOv11 để phát hiện và phân loại phương tiện thì cần có thêm các bước xử lý ảnh bổ sung nhằm nâng nâng cao độ chính xác trong việc đếm xe máy, tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm (ROI - Region of Interest).
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/vehicle_detector.png}
+    \caption[Lưu đồ quá trình nhận diện và đếm phương tiện]{Lưu đồ quá trình nhận diện và đếm phương tiện}
+    \label{fig:vehicle_detector}
+\end{figure}
+
+Giải thích lưu đồ nhận diện và đếm phương tiện ở hình \ref{fig:vehicle_detector}: \\
+\hspace*{1cm} Khối này bắt đầu bằng việc tiếp nhận chính xác bốn ảnh con đã được tiền xử lý từ khối trước và tiến hành xử lý lần lượt từng ảnh. Trước hết, hệ thống kiểm tra xem ảnh con đầu vào có thuộc danh sách các Tile ID được cấu hình phân vùng ROI (Region of Interest) hay không. Nếu ảnh không nằm trong danh sách này, ảnh sẽ được đưa trực tiếp vào mô hình YOLOv11 để thực hiện phát hiện và phân loại các phương tiện, bao gồm xe hai bánh và xe bốn bánh. Ngược lại, nếu ảnh con thuộc một Tile ID có cấu hình phân vùng ROI, ảnh sẽ được xử lý bổ sung bằng các thuật toán xử lý ảnh nhằm ước lượng số lượng xe máy trong vùng quan tâm, đồng thời vẫn thực hiện nhận diện phương tiện bằng mô hình YOLOv11.
+Sau khi hoàn tất quá trình xử lý đối với cả bốn ảnh con, các kết quả đếm phương tiện theo từng phần ảnh được tổng hợp lại.
+Hệ thống tiếp tục kiểm tra sự trùng lặp của các phương tiện xuất hiện tại vùng rìa giữa các ảnh con và loại bỏ các trường hợp bị đếm trùng. Cuối cùng, kết quả tổng hợp được lưu trữ dưới dạng tệp csv. Đồng thời, các ảnh con được ghép lại để tạo thành ảnh kết quả, trong đó các phương tiện được phát hiện được biểu diễn bằng các bounding box, kèm theo phần che phủ của xe máy trong các vùng phân đoạn (nếu có).
+
+Đối với việc chọn vùng quan tâm (ROI) để ước lượng số lượng xe máy thì trong đề tài này chỉ lựa chọn các vùng có mật độ xe máy cao và thường bị che khuất trong ảnh snapshot gốc. Các vùng phân đoạn được xác định thông qua một công cụ hỗ trợ được xây dựng riêng bằng Python. Công cụ này cho phép người vận hành khoanh vùng các khu vực cần khai thác trên ảnh,sau đó xuất ra tọa độ các điểm biên của vùng ROI theo hệ tọa độ pixel của ảnh. Các tọa độ ROI được biểu diễn dưới dạng các cặp điểm $(x, y)$ trong hệ tọa độ ảnh, tuân theo quy ước của thư viện OpenCV, với gốc tọa độ nằm tại góc trên bên trái ảnh. Những thông tin này được lưu trữ trong tệp cấu hình YAML tương ứng với từng địa điểm và được hệ thống sử dụng trong quá trình xử lý và phân tích ảnh như hình \ref{fig:segment_config}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/segment_config.png}
+    \caption[Cấu trúc file YAML cấu hình vùng quan tâm (ROI)]{Cấu trúc file YAML cấu hình vùng quan tâm (ROI)}
+    \label{fig:segment_config}
+\end{figure}
+
+Ngoài ra đối với các vùng có vật cản hoặc có yếu tố gây nhiễu trong vùng segment như bóng cây, biển quảng cáo, cột đèn... thì trong đề tài này còn cấu hình thêm các ROI để loại bỏ các yếu tố nhiễu này nhằm tránh ảnh hưởng đến kết quả đếm phương tiện như \textit{exclusion\_zones} trên hình \ref{fig:segment_config}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{fig/process_quadrant_1.png}
+    \caption[Lưu đồ xử lý từng ảnh con]{Lưu đồ xử lý từng ảnh con}
+    \label{fig:process_quadrant}
+\end{figure}
+
+Giải thích lưu đồ xử lý từng ảnh con ở hình \ref{fig:process_quadrant}: \\
+\hspace*{1cm}Trước hết, hệ thống nạp cấu hình phân vùng ROI (Region of Interest) từ tệp YAML đã được trình bày ở phần trước. Tiếp theo, mỗi ảnh con đầu vào được kiểm tra xem ID của phần ảnh đó có nằm trong danh sách các vùng được cấu hình ROI hay không.
+
+Trong trường hợp ảnh con không thuộc danh sách ROI, ảnh sẽ được đưa trực tiếp vào mô hình YOLOv11 để thực hiện phát hiện và phân loại phương tiện. Ngược lại, nếu ảnh con thuộc vùng có cấu hình ROI, các tham số tương ứng như ngưỡng tin cậy (confidence threshold), ngưỡng IOU và tọa độ vùng quan tâm sẽ được trích xuất từ cấu hình để phục vụ cho các bước xử lý tiếp theo.
+
+Tại giai đoạn này, mô hình YOLOv11 chỉ được sử dụng để phát hiện phương tiện bốn bánh. Đối với phương tiện hai bánh, hệ thống không áp dụng trực tiếp phương pháp phát hiện dựa trên bounding box do đặc thù kích thước nhỏ, mật độ cao và hiện tượng che khuất phổ biến, dẫn đến độ chính xác thấp, số lượng phát hiện không ổn định và kết quả trực quan không phản ánh đúng mật độ thực tế trong vùng quan tâm.
+
+Thay vào đó, số lượng xe hai bánh được ước lượng gián tiếp thông qua tỷ lệ che phủ trong vùng ROI. Cụ thể, hệ thống áp dụng một số kỹ thuật xử lý ảnh bao gồm: Polygon Fill, Rectangle Fill, các phép toán logic theo pixel và đếm số pixel khác không (Non-zero Pixel Count) nhằm xác định tỷ lệ diện tích bị che phủ bởi xe máy trong vùng quan tâm. Trên cơ sở tỷ lệ che phủ này, số lượng xe hai bánh được ước lượng tương ứng.
+
+Cuối cùng, kết quả đếm phương tiện hai bánh và bốn bánh, tỷ lệ che phủ của xe máy, cùng với ảnh trực quan hóa được lưu trữ trong bộ nhớ sẽ được tổng hợp và trả về cho khối xử lý chính của hệ thống.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{fig/segment_detection.png}
+    \caption[Lưu đồ nhận diện phương tiện 4 bánh có trong vùng ROI]{Lưu đồ nhận diện phương tiện 4 bánh có trong vùng ROI}
+    \label{fig:segment_detection}
+\end{figure}
+
+Giải thích lưu đồ nhận diện phương tiện 4 bánh có trong vùng ROI ở hình \ref{fig:segment_detection}: \\
+\hspace*{1cm} Đầu tiên, hệ thống sẽ tạo mặt nạ nhị phân cho vùng ROI dạng đa giác từ các tọa độ được lấy từ tệp cấu hình YAML. 
 
 
