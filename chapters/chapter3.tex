@@ -20,7 +20,9 @@ Về giai đoạn tiền xử lý dữ liệu, nhận diện và đếm phương
 
 Tiếp đến là yêu cầu về mô phỏng giao thông:
 \begin{itemize}
-    \item None
+    \item Khả năng xây dựng mạng lưới giao thông mô phỏng tương ứng với khu vực thực tế từ dữ liệu OpenStreetMap (OSM).
+    \item Tái hiện luồng phương tiện (xe hai bánh và xe bốn bánh) với lưu lượng biến thiên theo thời gian dựa trên các giá trị thực tế và dự báo.
+    \item Hỗ trợ lập trình điều khiển tín hiệu đèn giao thông thông qua giao diện TraCI của SUMO.
 \end{itemize}
 
 Đối với giai đoạn xây dựng chuỗi thời gian và dự báo lưu lượng giao thông, hệ thống cần thỏa mãn các yêu cầu sau:
@@ -30,7 +32,6 @@ Tiếp đến là yêu cầu về mô phỏng giao thông:
 
 Đối với giai đoạn tích hợp và điều khiển luồng giao thông, hệ thống cần đáp ứng các yêu cầu sau:
 \begin{itemize}
-    \item Hệ thống tích hợp các giá trị dự báo từ LSTM vào môi trường mô phỏng giao thông SUMO, trong đó lưu lượng phương tiện, tốc độ dòng xe hoặc phân bố phương tiện tại các nút giao được điều chỉnh tương ứng với trạng thái giao thông dự kiến.
     \item None
 \end{itemize}
 
@@ -57,12 +58,13 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
     \item \textbf{Khối tiền xử lý ảnh: } Khối tiền xử lý ảnh đảm nhiệm việc thực hiện các phép biến đổi cần thiết nhằm cải thiện chất lượng dữ liệu hình ảnh trước khi đưa vào mô hình nhận diện. Nguyên nhân là do các ảnh snapshot thu thập từ camera giao thông công khai trên mạng thường có chất lượng không đồng đều, chịu ảnh hưởng bởi nhiều yếu tố như độ phân giải thấp, nhiễu ảnh, điều kiện ánh sáng không ổn định và góc chụp chưa tối ưu. Do đó, khối này áp dụng một số kỹ thuật xử lý ảnh cơ bản, bao gồm tăng cường độ phân giải (super-resolution), lọc nhiễu (denoising), chuẩn hóa kích thước ảnh (resizing) và chia nhỏ ảnh nhằm đảm bảo dữ liệu đầu vào cho mô hình nhận diện đạt chất lượng tốt hơn và có tính nhất quán, dễ dàng nhận diện.
     \item \textbf{Khối nhận diện và phân tích phương tiện: } Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 để thực hiện phát hiện và phân loại các phương tiện giao thông xuất hiện trong từng ảnh snapshot. Mô hình được khởi tạo từ trọng số huấn luyện sẵn (pre-trained) trên các tập dữ liệu lớn và đa dạng, nhờ đó có khả năng nhận diện hiệu quả các loại phương tiện phổ biến. Tuy nhiên, nhằm đơn giản hóa bài toán và phù hợp với mục tiêu nghiên cứu, các phương tiện được quy ước và gom nhóm thành hai lớp chính, bao gồm xe hai bánh (đại diện cho xe máy) và xe bốn bánh (đại diện cho xe hơi). Bên cạnh đó, do chất lượng hình ảnh thu thập từ camera giao thông còn hạn chế và các bước tiền xử lý không thể khắc phục hoàn toàn các yếu tố bất lợi như góc quay cao, góc quay xiên hoặc mật độ giao thông lớn, một số phương tiện đặc biệt là xe máy có thể bị che khuất hoặc chồng chéo, dẫn đến độ chính xác nhận diện suy giảm. Để khắc phục vấn đề này, khối xử lý còn tích hợp các thuật toán xử lý ảnh bổ sung như Polygon Fill, Rectangle Fill, Pixel-wise Logic và Non-zero Pixel Count nhằm tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm. Trên cơ sở đó, số lượng xe máy trong từng vùng được ước lượng, góp phần nâng cao độ chính xác tổng thể của quá trình đếm phương tiện.
     \item \textbf{Khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông: } None
-    \item \textbf{Khối mô phỏng: } None
-    \item \textbf{Khối hiển thị và đánh giá kết quả: } None
+    \item \textbf{Khối mô phỏng: } Sử dụng phần mềm SUMO để tái hiện mạng lưới giao thông thực tế. Khối này tiếp nhận hạ tầng từ OSM và luồng phương tiện từ khối dự báo để thực hiện các kịch bản mô phỏng giao thông vi mô, phục vụ việc đánh giá chiến lược điều phối.
+    \item \textbf{Khối hiển thị và đánh giá kết quả: } Cung cấp giao diện đồ họa (Dashboard) để người dùng theo dõi trạng thái giao thông thời gian thực, quản lý các kịch bản mô phỏng thông qua Scenario Explorer và xuất ra các biểu đồ đánh giá hiệu quả (Waiting Time, Mean Speed).
 \end{itemize}
 
 \subsection{Thiết kế khối thu thập dữ liệu}
 None
+
 \subsection{Thiết kế khối lưu trữ}
 Khối lưu trữ dữ liệu đóng vai trò tiếp nhận, tổ chức và quản lý toàn bộ dữ liệu trong hệ thống, bao gồm ảnh snapshot thu thập từ camera giao thông, dữ liệu sau tiền xử lý, kết quả nhận diện - đếm phương tiện, cũng như các tập dữ liệu đầu vào/đầu ra phục vụ mô phỏng và dự báo. Trong đề tài này, Google Drive được sử dụng như một nền tảng lưu trữ đám mây, đáp ứng yêu cầu về dung lượng, khả năng truy cập linh hoạt và thuận tiện cho việc chia sẻ, sao lưu dữ liệu trong quá trình nghiên cứu.
 
@@ -205,4 +207,57 @@ Trong giai đoạn phát hiện xe máy, hệ thống áp dụng mask phân tíc
 Trước khi tính toán diện tích, hệ thống kiểm tra xem có vùng loại trừ từ cấu hình hay không (ví dụ: vùng vỉa hè, cột đèn, hoặc các đối tượng cố định khác). Nếu có, các vùng này sẽ được loại bỏ khỏi kết quả phát hiện xe máy để đảm bảo độ chính xác.
 
 Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe máy và tính tỷ lệ che phủ theo công thức: (Diện tích xe máy / Diện tích ROI) x 100\%. Kết quả được trực quan hóa trên ảnh đầu ra với đường viền vùng ROI, vùng xe máy được tô màu đỏ, và thông tin tỷ lệ che phủ được hiển thị trực tiếp trên ảnh.
+
+\subsection{Thiết kế khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông}
+None
+
+\subsection{Thiết kế khối mô phỏng giao thông (SUMO)}
+Khối mô phỏng được thiết kế dựa trên một quy trình tự động hóa (Pipeline) tích hợp giữa dữ liệu địa không gian thực tế và các công cụ mô phỏng vi mô. Quy trình xây dựng môi trường mô phỏng bao gồm 5 giai đoạn chính:
+
+\begin{enumerate}
+    \item \textbf{Lựa chọn vùng (Location Selection):} Người dùng xác định khu vực nghiên cứu thông qua việc vẽ đa giác (Polygon) trên bản đồ tương tác. Tọa độ của đa giác này là dữ liệu đầu vào để truy xuất hạ tầng từ OpenStreetMap.
+    \item \textbf{Xử lý dữ liệu OSM (OSM Processing):} Hệ thống sử dụng thư viện OSMnx để tải dữ liệu mạng lưới đường bộ. Tại giai đoạn này, một bước quan trọng là làm sạch dữ liệu (Network Cleanup) bằng cách loại bỏ các đoạn đường không phục vụ mô phỏng chính như đường hẻm nhỏ, đường cụt hoặc lối đi bộ để giảm tải tính toán (như hình \ref{fig:fig_I3_network_cleanup}).
+    \item \textbf{Biên dịch mạng lưới (Network Compilation):} Dữ liệu OSM được công cụ \textit{netconvert} của SUMO biên dịch sang định dạng \texttt{.net.xml}. Giai đoạn này cũng thực hiện việc gộp các nút giao gần nhau và cấu hình hệ thống đèn tín hiệu mặc định.
+    \item \textbf{Tạo luồng phương tiện (Flow Generation):} Hệ thống xác định các cạnh biên (\textit{fringe edges}) của mạng lưới để làm điểm phát sinh và điểm kết thúc của phương tiện. Luồng xe được tạo ra dựa trên tỷ lệ phân bổ phương tiện (xe máy, xe hơi) thu thập từ thực tế.
+    \item \textbf{Cấu hình mô phỏng (SUMO Config):} Tổng hợp tất cả các tệp hạ tầng, lộ trình và tín hiệu vào một tệp cấu hình duy nhất (\texttt{.sumocfg}) để khởi chạy môi trường mô phỏng.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/fig_I3_network_cleanup.png}
+        \caption[Xử lý làm sạch mạng lưới]{Xóa đường hẻm, cụt để giảm tải mô phỏng}
+        \label{fig:fig_I3_network_cleanup}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/fig_I4_osm_export_sumo.png}
+        \caption[Quy trình biên dịch mạng lưới]{Xuất dữ liệu OSM và biên dịch sang SUMO}
+        \label{fig:fig_I4_osm_export_sumo}
+    \end{minipage}
+\end{figure}
+
+\subsection{Thiết kế khối hiển thị và đánh giá kết quả}
+Khối hiển thị được thiết kế là một ứng dụng web dashboard, tích hợp các công cụ hỗ trợ người dùng phân tích kịch bản giao thông:
+\begin{itemize}
+    \item \textbf{Scenario Explorer:} Công cụ cho phép người dùng tùy chỉnh các tham số đầu vào của mô phỏng như lưu lượng xe, tỷ lệ phương tiện và cấu hình luồng. Người dùng có thể quan sát trực quan các tuyến đường (routes) di chuyển trong mạng lưới.
+    \item \textbf{SUMO Control Interface:} Giao diện điều khiển thời gian thực kết nối với lõi mô phỏng qua TraCI. Giao diện này hiển thị các thông số vận hành của nút giao (trạng thái đèn, độ trễ) và cho phép can thiệp thủ công vào quá trình điều tiết nếu cần thiết.
+    \item \textbf{Công cụ đánh giá:} Sau khi kết thúc mô phỏng, hệ thống tự động trích xuất dữ liệu từ các tệp \texttt{tripinfo.xml} và \texttt{summary.xml} để tính toán các chỉ số: thời gian di chuyển trung bình (Mean Travel Time), tốc độ trung bình (Mean Speed) và tổng lượng khí thải.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/fig_II4_scenario_explorer.png}
+    \caption[Giao diện Scenario Explorer]{Giao diện Scenario Explorer giúp quản lý và tùy chỉnh kịch bản}
+    \label{fig:fig_II4_scenario_explorer}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/fig_II4_sumo_control.png}
+    \caption[Giao diện SUMO Control]{Giao diện điều khiển và giám sát quá trình mô phỏng thực tế}
+    \label{fig:fig_II4_sumo_control}
+\end{figure}
 
