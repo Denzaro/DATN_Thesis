@@ -34,6 +34,11 @@ echo =================================
 echo Compilation completed!
 echo =================================
 
+
+if exist main.pdf (
+    del main.pdf
+)
+
 if exist build\main.pdf (
     echo SUCCESS: build\main.pdf has been generated!
     echo Opening PDF...

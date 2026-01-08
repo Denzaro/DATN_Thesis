@@ -20,7 +20,7 @@ Cụ thể, đề tài tập trung vào các mục tiêu sau:
 
     \item Phát triển mô hình dự báo ngắn hạn lưu lượng phương tiện dựa trên chuỗi dữ liệu thời gian thu được từ camera và kết quả mô phỏng, với mục tiêu ước lượng xu hướng biến động giao thông trong các khoảng thời gian kế tiếp.
 
-    \item Thiết kế và đánh giá chiến lược điều chỉnh tín hiệu đèn giao thông dựa trên kết quả dự báo lưu lượng, nhằm tối ưu hóa các chỉ tiêu vận hành như thời gian chờ trung bình tại nút giao, số lần dừng xe và mức độ ùn tắc.
+    \item Thiết kế và đánh giá chiến lược điều chỉnh tín hiệu đèn giao thông dựa só lượng phương tiện hiện tại, nhằm tối ưu hóa các chỉ tiêu vận hành như thời gian chờ trung bình tại nút giao, số lần dừng xe và mức độ ùn tắc.
 
     \item Đánh giá hiệu quả của hệ thống thông qua các thước đo như sai số dự báo lưu lượng, thời gian chờ trung bình, chiều dài hàng đợi và khả năng áp dụng trong thực tế, từ đó đề xuất hướng cải tiến và mở rộng cho các hệ thống điều khiển tín hiệu giao thông thông minh.
 \end{itemize}
@@ -41,17 +41,17 @@ Bên cạnh đó, đề tài tổng hợp các nghiên cứu liên quan đến m
 
 Phương pháp thực nghiệm mô phỏng:
 \begin{itemize}
-    \item \textbf{Thu thập dữ liệu snapshot camera và xử lý bằng học sâu:} Sử dụng mô hình YOLOv11 để phát hiện và đếm phương tiện từ ảnh hoặc video snapshot thu được từ camera giao thông. Từ kết quả đếm được xác định các thông số như lưu lượng xe, mật độ theo từng mốc thời gian và từng điểm giao thông. Đây chính là bước chuyển dữ liệu hình ảnh thô thành dạng dữ liệu có cấu trúc để sử dụng tiếp. Việc này tận dụng các thư viện, công cụ thực nghiệm đã có (ví dụ từ thực tế/nguồn mở) như một số nghiên cứu đã thực hiện.
+    \item Thu thập dữ liệu snapshot camera và xử lý bằng học sâu: Sử dụng mô hình YOLOv11 để phát hiện và đếm phương tiện từ ảnh hoặc video snapshot thu được từ camera giao thông. Từ kết quả đếm được xác định các thông số như lưu lượng xe, mật độ theo từng mốc thời gian và từng điểm giao thông. Đây chính là bước chuyển dữ liệu hình ảnh thô thành dạng dữ liệu có cấu trúc để sử dụng tiếp. Việc này tận dụng các thư viện, công cụ thực nghiệm đã có (ví dụ từ thực tế/nguồn mở) như một số nghiên cứu đã thực hiện.
     
-    \item \textbf{Xây dựng mô hình dự báo mật độ giao thông:} Từ chuỗi dữ liệu mật độ theo mốc thời gian thu được, tiến hành huấn luyện mô hình LSTM để dự báo mật độ giao thông cho 15 phút tiếp theo. Việc này gồm tiền xử lý dữ liệu (chuỗi thời gian, tạo các đặc trưng như thời gian, ngày, giờ, điểm giao thông, loại phương tiện nếu có), chia train/validation/test, lựa chọn cấu trúc mạng LSTM (số lớp, số đơn vị, dropout, epochs…), và kiểm định mô hình qua các chỉ tiêu như RMSE, MAE, MAPE. (?)
+    \item Xây dựng mô hình dự báo mật độ giao thông: None
     
-    \item \textbf{Tích hợp mô phỏng giao thông với SUMO:} Sử dụng môi trường SUMO để tái hiện mạng lưới giao thông nghiên cứu, cấu hình các tham số như làn đường, tín hiệu giao thông, các điểm camera/tuyến đường tương ứng với dữ liệu thực tế. Sau đó, nhập dữ liệu mật độ xe thực tế (hoặc dữ liệu từ mô hình đếm) để khớp mô phỏng sao cho trạng thái mô phỏng càng sát thực càng tốt. Đây là bước “đồng bộ” giữa dữ liệu thực và mô phỏng.
+    \item Tích hợp mô phỏng giao thông với SUMO: None
     
-    \item \textbf{Tích hợp module điều khiển giao thông:} Xây dựng thuật toán điều tiết giao thông (ví dụ: điều chỉnh tín hiệu, phân luồng, ưu tiên làn) dựa trên dự báo mật độ từ LSTM và kết quả mô phỏng. Thử chạy hai kịch bản: kịch bản không điều tiết (tín hiệu cố định hoặc theo chế độ hiện hữu) và kịch bản có điều tiết (tín hiệu và phân luồng thay đổi dựa trên dự báo và mô phỏng). Chạy mô phỏng SUMO cho cả hai kịch bản và thu thập dữ liệu kết quả.
+    \item Tích hợp module điều khiển giao thông: None
     
-    \item \textbf{Xây dựng dashboard trực quan:} Triển khai giao diện hiển thị gồm luồng xe chạy như mô phỏng (trong SUMO), biểu đồ mật độ theo thời gian, kết quả dự báo LSTM, và so sánh hiệu quả giữa hai kịch bản (có/không điều tiết). Dashboard sẽ giúp trực quan hóa kết quả và hỗ trợ phân tích.
+    \item Xây dựng dashboard trực quan: Triển khai giao diện hiển thị gồm luồng xe chạy như mô phỏng (trong SUMO), biểu đồ mật độ theo thời gian, kết quả dự báo LSTM, và so sánh hiệu quả giữa hai kịch bản (có/không điều tiết). Dashboard sẽ giúp trực quan hóa kết quả và hỗ trợ phân tích.
     
-    \item \textbf{Rút ra kết luận, đề xuất cải tiến và kiến nghị ứng dụng thực tiễn:} từ kết quả thực nghiệm và mô phỏng, chỉ rõ giới hạn của nghiên cứu, gợi ý mở rộng (ví dụ mở rộng mạng lưới, loại phương tiện đa dạng, tích hợp dữ liệu thời tiết, sự cố…).
+    \item Rút ra kết luận, đề xuất cải tiến và kiến nghị ứng dụng thực tiễn: từ kết quả thực nghiệm và mô phỏng, chỉ rõ giới hạn của nghiên cứu, gợi ý mở rộng (ví dụ mở rộng mạng lưới, loại phương tiện đa dạng, tích hợp dữ liệu thời tiết, sự cố…).
 \end{itemize}
 
 Phương pháp phân tích đánh giá:
@@ -62,7 +62,7 @@ Phương pháp phân tích đánh giá:
     
     \item \textbf{Phân tích kết quả mô phỏng giao thông bằng SUMO: } None
     
-    \item \textbf{Đánh giá tổng thể hệ thống: } Phân tích mức độ tích hợp và phối hợp giữa các thành phần của hệ thống (phát hiện–đếm phương tiện, dự báo lưu lượng, mô phỏng giao thông và điều chỉnh đèn tín hiệu), đồng thời xem xét tính khả thi khi triển khai trong thực tế và khả năng thích ứng trước các biến động giao thông như giờ cao điểm hoặc sự cố bất thường.
+    \item \textbf{Đánh giá tổng thể hệ thống: } None.
 
     \item \textbf{Trực quan hóa và phân tích kết quả trên dashboard: } Trình bày và so sánh các biểu đồ, luồng giao thông và chỉ số vận hành trước và sau điều chỉnh đèn tín hiệu, từ đó rút ra nhận xét về hiệu quả điều tiết và lợi ích mang lại cho công tác quản lý giao thông đô thị.
 \end{itemize}
