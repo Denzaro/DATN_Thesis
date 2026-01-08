@@ -188,3 +188,21 @@ Tiếp theo, hệ thống thực hiện loại bỏ các phát hiện trùng l�
 
 Cuối cùng, số lượng phương tiện bốn bánh hợp lệ còn lại được cộng dồn vào biến đếm tổng. Đồng thời, thông tin vị trí của các bounding box này được lưu lại để phục vụ cho việc tính toán tỷ lệ che phủ của xe hai bánh cũng như trực quan hóa kết quả trong các bước xử lý tiếp theo.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{fig/motorbike_coverage.png}
+    \caption[Lưu đồ ước lượng số lượng xe máy trong vùng ROI]{Lưu đồ ước lượng số lượng xe máy trong vùng ROI}
+    \label{fig:motorbike_coverage}
+\end{figure}
+
+Giải thích lưu đồ ước lượng số lượng xe máy trong vùng ROI ở hình \ref{fig:motorbike_coverage}: \\
+\hspace*{1cm} Quy trình tính tỷ lệ che phủ của xe máy trên ảnh bắt đầu bằng việc thu thập vị trí các ô tô đã được phát hiện trong vùng quan tâm (ROI). Sau đó, hệ thống tạo mask cho vùng ROI dựa trên tọa độ các đỉnh đã được cấu hình sẵn, đồng thời tạo mask phân tích bằng cách loại trừ các vùng bị ô tô chiếm giữ ra khỏi mask ROI. Điều này đảm bảo rằng chỉ những vùng không có ô tô mới được đưa vào phân tích xe máy.
+
+Tiếp theo, hệ thống kiểm tra diện tích vùng phân tích có lớn hơn 0 hay không. Nếu diện tích bằng 0 (tức là toàn bộ ROI đã bị ô tô che phủ hoặc ROI không hợp lệ), hệ thống sẽ gán tỷ lệ che phủ xe máy bằng 0\% và chuyển thẳng đến bước tạo ảnh trực quan hóa. Ngược lại, nếu diện tích lớn hơn 0, quy trình sẽ tiếp tục với các bước phát hiện xe máy.
+
+Trong giai đoạn phát hiện xe máy, hệ thống áp dụng mask phân tích lên ảnh gốc và chuyển đổi sang không gian màu HSV để dễ dàng nhận diện màu sắc. Sau đó, hai phương pháp phát hiện được thực hiện song song: phát hiện các vùng có màu sắc đặc trưng của xe máy (như màu đen, xám của yên xe, khung xe) và phát hiện các cạnh đặc trưng như bánh xe, khung xe. Kết quả từ hai phương pháp này được kết hợp lại để tạo ra mask tổng hợp thể hiện vùng ước lượng là xe máy.
+
+Trước khi tính toán diện tích, hệ thống kiểm tra xem có vùng loại trừ từ cấu hình hay không (ví dụ: vùng vỉa hè, cột đèn, hoặc các đối tượng cố định khác). Nếu có, các vùng này sẽ được loại bỏ khỏi kết quả phát hiện xe máy để đảm bảo độ chính xác.
+
+Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe máy và tính tỷ lệ che phủ theo công thức: (Diện tích xe máy / Diện tích ROI) x 100\%. Kết quả được trực quan hóa trên ảnh đầu ra với đường viền vùng ROI, vùng xe máy được tô màu đỏ, và thông tin tỷ lệ che phủ được hiển thị trực tiếp trên ảnh.
+
