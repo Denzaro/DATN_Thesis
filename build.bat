@@ -27,6 +27,8 @@ echo.
 echo Step 4: Final LaTeX compilation...
 pdflatex -output-directory=build -interaction=nonstopmode main.tex
 
+
+
 echo.
 echo =================================
 echo Compilation completed!
