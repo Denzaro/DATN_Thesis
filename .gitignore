@@ -16,10 +16,8 @@
 *.bcf
 *.run.xml
 
-# Build folder - keep only main.pdf
-build/*
-# !build/main.pdf
-# !build/.gitkeep
+# Build folder
+build/
 
 # Index files
 *.idx
