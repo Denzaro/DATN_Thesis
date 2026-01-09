@@ -1,2 +1,76 @@
 \chapter{KẾT QUẢ VÀ THẢO LUẬN}
+\section{KẾT QUẢ CỦA TIỀN XỬ LÝ VÀ TĂNG CƯỜNG CHẤT LƯỢNG ẢNH}
+Đề tài sử dụng mô hình Real ESRGAN với các thông số cơ bản để tăng cường chất lượng ảnh:
+\begin{itemize}
+    \item \textbf{Mô hình: } RealESRGAN\_x2plus
+    \item \textbf{Hệ số phóng đại: } 2 
+    \item \textbf{Định dạng ảnh đầu ra: } png
+    \item \textbf{Thiết bị: } CUDA (Sử dụng GPU để tăng tốc quá trình xử lý)
+    \item \textbf{Độ chính xác số học: } FP32
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/raw_image.jpg}
+        \caption{Ảnh giao thông trước khi tiền xử lý}
+        \label{fig:raw_image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/upscaled_image.png}
+        \caption{Ảnh giao thông sau khi qua tiền xử lý}
+        \label{fig:upscaled_image}
+    \end{subfigure}
+    \caption[Hình ảnh trước và sau khi qua bước tiền xử lý]{Hình ảnh trước và sau khi qua bước tiền xử lý }
+    \label{fig:comparison_images}
+\end{figure}
+
+Kết quả trong hình \ref{fig:comparison_images} cho thấy sự khác biệt rõ rệt giữa ảnh gốc và ảnh đã qua bước tiền xử lý. Ảnh sau khi được tăng cường chất lượng có độ nét cao hơn, chi tiết rõ ràng hơn, giúp cải thiện khả năng nhận diện các đối tượng trong ảnh. Ảnh đầu vào ban đầu chỉ có kích thước 640x360 pixel, trong khi ảnh sau khi qua bước tiền xử lý đã được nâng cấp lên kích thước 1280x720 pixel, giúp tăng cường độ phân giải và chi tiết của ảnh.
+
+Sau khi hoàn thành bước tăng cường chất lượng ảnh, đề tài tiến hành chia nhỏ ảnh thành 4 phần bằng nhau với kích thước mỗi ảnh nhỏ là 640x360 pixel để phù hợp với kích thước đầu vào của mô hình YOLOv11. Việc chia nhỏ ảnh giúp mô hình có thể xử lý hiệu quả hơn và tăng khả năng nhận diện các đối tượng trong ảnh. Dưới đây là kết quả sau khi chia nhỏ ảnh:
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/upscale_q1_tl.png}
+        \caption{Ảnh giao thông sau khi qua tiền xử lý - Phần trên bên trái}
+        \label{fig:q1_tl}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/upscale_q2_tr.png}
+        \caption{Ảnh giao thông sau khi qua tiền xử lý - Phần trên bên phải}
+        \label{fig:q2_tr}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/upscale_q3_bl.png}
+        \caption{Ảnh giao thông sau khi qua tiền xử lý - Phần dưới bên trái}
+        \label{fig:q3_bl}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/upscale_q4_br.png}
+        \caption{Ảnh giao thông sau khi qua tiền xử lý - Phần dưới bên phải}
+        \label{fig:q4_br}
+    \end{subfigure}
+    \caption[Ảnh giao thông sau khi qua tiền xử lý và được chia nhỏ]{Ảnh giao thông sau khi qua tiền xử lý và được chia nhỏ}
+    \label{fig:4_quadrants}
+\end{figure}
+
+\section{KẾT QUẢ NHẬN DIỆN VÀ PHÂN TÍCH ĐỐI TƯỢNG}
+Sau khi hoàn thành bước tiền xử lý ảnh, đề tài tiến hành sử dụng mô hình YOLOv11 để nhận diện, phân loại và đếm số lượng các phương tiện giao thông có trong ảnh vừa được tăng cường chất lượng. Với các thông số cấu hình của mô hình học sâu YOLOv11 được thiết lập như sau:
+\begin{itemize}
+    \item \textbf{Mô hình: } YOLOv11n
+    \item \textbf{Kích thước ảnh đầu vào: } 640x640 pixel
+    \item \textbf{Ngưỡng tin cậy (confidence threshold): } 0.2
+    \item \textbf{Ngưỡng IoU (IoU threshold): } 0.45
+    \item \textbf{Thiết bị: } CUDA (Sử dụng GPU để tăng tốc quá trình xử lý)
+    \item \textbf{Định dạng ảnh đầu ra: } png
+\end{itemize}
 
