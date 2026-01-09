@@ -40,3 +40,4 @@ build/
 *.swo
 *.bkp
 .github/
+.vscode/
