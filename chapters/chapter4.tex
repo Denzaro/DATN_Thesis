@@ -27,7 +27,7 @@
     \label{fig:comparison_images}
 \end{figure}
 
-Kết quả trong hình \ref{fig:comparison_images} cho thấy sự khác biệt rõ rệt giữa ảnh gốc và ảnh đã qua bước tiền xử lý. Ảnh sau khi được tăng cường chất lượng có độ nét cao hơn, chi tiết rõ ràng hơn, giúp cải thiện khả năng nhận diện các đối tượng trong ảnh. Ảnh đầu vào ban đầu chỉ có kích thước 640x360 pixel, trong khi ảnh sau khi qua bước tiền xử lý đã được nâng cấp lên kích thước 1280x720 pixel, giúp tăng cường độ phân giải và chi tiết của ảnh.
+Lấy một ảnh từ một địa điểm là ở nút giao Đinh Bộ Lĩnh - Bạch Đằng, vào ngày 23-09-2025 lúc 15:44:45.Kết quả trong hình \ref{fig:comparison_images} cho thấy sự khác biệt rõ rệt giữa ảnh gốc và ảnh đã qua bước tiền xử lý. Ảnh sau khi được tăng cường chất lượng có độ nét cao hơn, chi tiết rõ ràng hơn, giúp cải thiện khả năng nhận diện các đối tượng trong ảnh. Ảnh đầu vào ban đầu chỉ có kích thước 640x360 pixel, trong khi ảnh sau khi qua bước tiền xử lý đã được nâng cấp lên kích thước 1280x720 pixel, giúp tăng cường độ phân giải và chi tiết của ảnh.
 
 Sau khi hoàn thành bước tăng cường chất lượng ảnh, đề tài tiến hành chia nhỏ ảnh thành 4 phần bằng nhau với kích thước mỗi ảnh nhỏ là 640x360 pixel để phù hợp với kích thước đầu vào của mô hình YOLOv11. Việc chia nhỏ ảnh giúp mô hình có thể xử lý hiệu quả hơn và tăng khả năng nhận diện các đối tượng trong ảnh. Dưới đây là kết quả sau khi chia nhỏ ảnh:
 \begin{figure}[H]
@@ -64,6 +64,7 @@ Sau khi hoàn thành bước tăng cường chất lượng ảnh, đề tài ti
 \end{figure}
 
 \section{KẾT QUẢ NHẬN DIỆN VÀ PHÂN TÍCH ĐỐI TƯỢNG}
+\subsection{Kết quả nhận diện, phân loại và đếm phương tiện giao thông}
 Sau khi hoàn thành bước tiền xử lý ảnh, đề tài tiến hành sử dụng mô hình YOLOv11 để nhận diện, phân loại và đếm số lượng các phương tiện giao thông có trong ảnh vừa được tăng cường chất lượng. Với các thông số cấu hình của mô hình học sâu YOLOv11 được thiết lập như sau:
 \begin{itemize}
     \item \textbf{Mô hình: } YOLOv11n
@@ -79,7 +80,7 @@ Sau khi hoàn thành bước tiền xử lý ảnh, đề tài tiến hành sử
     \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{fig/detect_q1_tl.png}
-        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 4 bánh kết hợp với tính toán \% che phủ - Phần trên bên trái}
+        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 4 bánh kết hợp với tính toán phần trăm che phủ - Phần trên bên trái}
         \label{fig:detect_q1_tl}
     \end{subfigure}
     \hfill
@@ -107,7 +108,7 @@ Sau khi hoàn thành bước tiền xử lý ảnh, đề tài tiến hành sử
     \label{fig:4_detect_quadrants}
 \end{figure}
 
-Nhìn vào hình \ref{fig:4_detect_quadrants} có thể thấy kết quả nhận diện các phương tiện giao thông trong từng phần của ảnh sau khi đã qua bước tiền xử lý. Ở phần ảnh trên bên trái \ref{fig:detect_q1_tl}, ở địa điểm này và ở khung hình này đã có sẵn cấu hình cho segment để có thể tính \% che phủ của xe 2 bánh. Nguyên nhân là do trong phần ảnh này có quá nhiều xe 2 bánh kèm đến chất lượng hình ảnh kém và góc quay không thuận lợi, dẫn đến việc nếu chỉ nhận diện bằng mô hình YOLOv11 thì sẽ không thể nhận diện và phân loại được đa số xe 2 bánh có trong ảnh. Độ che phủ của xe máy được tô đỏ và tính ra \% hiển thị trên ảnh, các xe 4 bánh thì vẫn được nhận diện bình thường. Còn các phần ảnh còn lại, do chất lượng khung hình vẫn còn tốt để model có thể nhận diện và phân loại nên không cần phân đoạn và tính \% che phủ nữa. Ảnh mask của phần ảnh bên trái \ref{fig:detect_q1_tl} được hiển thị thông qua hình dưới đây:
+Nhìn vào hình \ref{fig:4_detect_quadrants} có thể thấy kết quả nhận diện các phương tiện giao thông trong từng phần của ảnh sau khi đã qua bước tiền xử lý. Ở phần ảnh trên bên trái \ref{fig:detect_q1_tl}, ở địa điểm này và ở khung hình này đã có sẵn cấu hình cho segment để có thể tính phần trăm che phủ của xe 2 bánh. Nguyên nhân là do trong phần ảnh này có quá nhiều xe 2 bánh kèm đến chất lượng hình ảnh kém và góc quay không thuận lợi, dẫn đến việc nếu chỉ nhận diện bằng mô hình YOLOv11 thì sẽ không thể nhận diện và phân loại được đa số xe 2 bánh có trong ảnh. Độ che phủ của xe hai bánh được tô đỏ và tính ra \% hiển thị trên ảnh, các xe 4 bánh thì vẫn được nhận diện bình thường. Còn các phần ảnh còn lại, do chất lượng khung hình vẫn còn tốt để model có thể nhận diện và phân loại nên không cần phân đoạn và tính phần trăm che phủ nữa. Ảnh mask của phần ảnh bên trái \ref{fig:detect_q1_tl} được hiển thị thông qua hình dưới đây:
 
 \begin{figure}[H]
     \centering
@@ -116,19 +117,45 @@ Nhìn vào hình \ref{fig:4_detect_quadrants} có thể thấy kết quả nhậ
     \label{fig:mask_xe_may}
 \end{figure}
 
-Có thể thấy trong hình \ref{fig:mask_xe_may} là ảnh mask được sử dụng để tính toán \% che phủ của xe máy trong phần ảnh trên bên trái. Mặc dù ảnh mask có chất lượng không cao do vẫn bị nhiễu bởi các yếu tố môi trường như bóng cây, bóng người, vạch kẻ đường,... nhưng con số nhiễu ở ảnh này là không đáng kể so với tổng diện tích của segment. Ngoài ra, nếu có đoạn ảnh bị nhiễu quá cao do vạch kẻ đường lớn thì trong đề tài này phải tự động cấu hình để loại bỏ vùng nhiễu đó ra, không tính vào diện tích che phủ của xe máy trong segment. Trường hợp đó được thể hiện dưới đây:
-
+Có thể thấy trong hình \ref{fig:mask_xe_may} là ảnh mask được sử dụng để tính toán phần trăm che phủ của xe bánh trong phần ảnh trên bên trái. Mặc dù ảnh mask có chất lượng không cao do vẫn bị nhiễu bởi các yếu tố môi trường như bóng cây, bóng người, vạch kẻ đường,... nhưng con số nhiễu ở ảnh này là không đáng kể so với tổng diện tích của segment.
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{1\textwidth}
+    \includegraphics[width=\textwidth]{fig/result_segment.jpg}
+    \caption[Hình trực quan cuối cùng sau khi ghép 4 hình con lại]{Hình trực quan cuối cùng sau khi ghép 4 hình con lại}
+    \label{fig:result_segment}
+\end{figure}
+
+Dựa vào hình \ref{fig:result_segment} có thể thấy ảnh cuối cùng sau khi ghép 4 phần ảnh con lại với nhau. Ở phần ảnh trên bên trái đã hiển thị được phần trăm che phủ của xe hai bánh trong segment, còn các phần ảnh khác vẫn giữ nguyên kết quả nhận diện và phân loại phương tiện giao thông bằng mô hình YOLOv11. Phần kết quả cuối cùng là phần được ghi vào tệp CSV, được thể hiện timestamp, số lượng xe 2 bánh, số lượng xe 4 bánh và phần trăm che phủ của xe hai bánh trong segment của mỗi phần ảnh. Kết quả được thể hiện trong hình \ref{fig:csv_final}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/csv_final.png}
+    \caption[Ảnh kết quả ghi vào tệp CSV]{Ảnh kết quả ghi vào tệp CSV}
+    \label{fig:csv_final} 
+\end{figure}
+
+Sau đó phần trăm che phủ của xe hai bánh trong segment sẽ được đưa qua thêm một bước chia với phần trăm che phủ trung bình của một xe để có thể ước lượng được số xe hai bánh có trong vùng đó. Kết quả của lượng xe hai bánh được ước lượng sẽ được tính chung trong quá trình tính số lượng phương tiện trung bình có trong một ngày mỗi năm phút, kết quả có thể được ví dụ như hình \ref{fig:csv_static}:
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{fig/csv_static.png}
+        \caption[Ảnh kết quả số lượng phương tiện được quy về mỗi 5 phút]{Ảnh kết quả số lượng phương tiện được quy về mỗi 5 phút}
+    \label{fig:csv_static} 
+\end{figure}
+
+Ngoài ra, nếu có đoạn ảnh bị nhiễu quá cao do vạch kẻ đường lớn thì trong đề tài này phải tự động cấu hình để loại bỏ vùng nhiễu đó ra, không tính vào diện tích che phủ của xe hai bánh trong segment. Trường hợp đó được thể hiện dưới đây:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{fig/no_exclusion_image.png}
         \caption{Vạch kẻ đường gây nhiễu trong ảnh giao thông}
         \label{fig:no_exclusion_image}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{1\textwidth}
+    \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{fig/no_exclusion_mask.png}
         \caption{Vạch kẻ đường được loại bỏ trong ảnh mask}
@@ -138,18 +165,18 @@ Có thể thấy trong hình \ref{fig:mask_xe_may} là ảnh mask được sử 
     \label{fig:no_exclusion_image_zone}
 \end{figure}
 
-Trong hình \ref{fig:no_exclusion_image_zone} cho thấy rằng những vạch kẻ đường đã làm nhiễu lớn trong quá trình tính toán \% che phủ của xe máy. Do đó, để đảm bảo tính chính xác của kết quả, đề tài đã thực hiện loại bỏ vùng nhiễu này ra khỏi quá trình tính toán. Kết quả sau khi loại bỏ vùng nhiễu được thể hiện bằng cách loại bỏ các vùng nhiễu đi, như hình dưới đây:
+Trong hình \ref{fig:no_exclusion_image_zone} cho thấy rằng những vạch kẻ đường đã làm nhiễu lớn trong quá trình tính toán phần trăm che phủ của xe hai bánh. Do đó, để đảm bảo tính chính xác của kết quả, đề tài đã thực hiện loại bỏ vùng nhiễu này ra khỏi quá trình tính toán. Kết quả sau khi loại bỏ vùng nhiễu được thể hiện bằng cách loại bỏ các vùng nhiễu đi, như hình \ref{fig:exclusion_image_zone} dưới đây:
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{1\textwidth}
+    \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{fig/exclusion_image.png}
         \caption{Loại bỏ vạch kẻ đường gây nhiễu trong ảnh giao thông}
         \label{fig:exclusion_image}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{1\textwidth}
+    \begin{subfigure}{0.45\textwidth}
         \centering
         \includegraphics[width=\textwidth]{fig/exclusion_mask.png}
         \caption{Vạch kẻ đường được loại bỏ trong ảnh mask}
@@ -159,7 +186,40 @@ Trong hình \ref{fig:no_exclusion_image_zone} cho thấy rằng những vạch k
     \label{fig:exclusion_image_zone}
 \end{figure}
 
-Như vậy, sau khi loại bỏ vùng nhiễu, kết quả tính toán \% che phủ của xe máy sẽ chính xác hơn, giúp cải thiện hiệu quả nhận diện và phân loại các phương tiện giao thông trong ảnh. Việc này đặc biệt quan trọng trong các tình huống có nhiều yếu tố gây nhiễu, đảm bảo rằng hệ thống nhận diện hoạt động một cách hiệu quả và chính xác nhất có thể.
+Như vậy, sau khi loại bỏ vùng nhiễu, kết quả tính toán phần trăm che phủ của xe hai bánh sẽ chính xác hơn, giúp cải thiện hiệu quả nhận diện và phân loại các phương tiện giao thông trong ảnh. Việc này đặc biệt quan trọng trong các tình huống có nhiều yếu tố gây nhiễu, đảm bảo rằng hệ thống nhận diện hoạt động một cách hiệu quả và chính xác nhất có thể.
+
+\subsection{So sánh kết quả nhận diện phương tiện giao thông giữa sử dụng thuần mô hình YOLOv11 và kết hợp mô hình YOLOv11 với phân đoạn và tính phần trăm che phủ}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.75\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{fig/result_no_segment.jpg}
+        \caption{Kết quả nhận diện phương tiện giao thông sử dụng thuần mô hình YOLOv11}
+        \label{fig:result_no_segment}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.75\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{fig/result_segment.jpg}
+        \caption{Kết quả nhận diện phương tiện giao thông sử dụng mô hình YOLOv11 kết hợp phân đoạn và tính phần trăm che phủ}
+        \label{fig:result_segment_1}
+    \end{subfigure}
+    \caption[So sánh kết quả nhận diện phương tiện giao thông]{So sánh kết quả nhận diện phương tiện giao thông giữa sử dụng thuần mô hình YOLOv11 và kết hợp mô hình YOLOv11 với phân đoạn và tính phần trăm che phủ}
+    \label{fig:result_comparison}
+\end{figure}
+
+Nhìn vào hình \ref{fig:result_comparison} có thể thấy rõ sự khác biệt trong kết quả nhận diện phương tiện giao thông giữa hai phương pháp. Ở hình \ref{fig:result_no_segment}, khi sử dụng thuần mô hình YOLOv11, nhiều xe hai bánh đã không được nhận diện do chất lượng ảnh kém và góc quay không thuận lợi. Trong khi đó, ở hình \ref{fig:result_segment_1}, khi kết hợp mô hình YOLOv11 với phân đoạn và tính phần trăm che phủ, hệ thống đã có thể ước lượng chính xác số lượng xe hai bánh trong vùng, ngay cả khi chúng không thể được nhận diện trực tiếp. Ta có thể dựa vào phần trăm che phủ của một xe hai bánh trung bình để ước lượng số lượng xe hai bánh có trong segment, như hình \ref{fig:dbl_convention} dưới đây:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/dbl_convention.png}
+    \caption[Phần trăm che phủ trung bình của một xe hai bánh]{Phần trăm che phủ trung bình của một xe hai bánh theo từng vùng segment tại địa điểm Đinh Bộ Lĩnh - Bạch Đằng 3}
+    \label{fig:dbl_convention}
+\end{figure}
+
+Dựa vào quy ước chuyển đổi số lượng xe hai bánh ở hình \ref{fig:dbl_convention} cho phần ảnh trên cùng bên trái cùng với phần trăm che phủ của xe hai bánh của segment ở hình \ref{fig:result_segment_1}, ta có thể ước lượng được số lượng xe hai bánh trong vùng đầu tiên là: $40.6\% \div 1\% \approx 41$ xe hai bánh và vùng thứ hai là: $4.4\% \div 0.75\% \approx 6$ xe hai bánh. Như vậy so với việc chỉ sử dụng thuần mô hình YOLOv11 thì ta đã có thể nhận diện và ước lượng được thêm 47 xe hai bánh nữa trong ảnh, giúp cải thiện đáng kể hiệu quả nhận diện và phân loại phương tiện giao thông trong các tình huống có nhiều xe hai bánh và chất lượng ảnh kém.
+
 
 
 
