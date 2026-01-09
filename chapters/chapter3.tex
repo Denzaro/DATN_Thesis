@@ -206,7 +206,18 @@ Trong giai đoạn phát hiện xe máy, hệ thống áp dụng mask phân tíc
 
 Trước khi tính toán diện tích, hệ thống kiểm tra xem có vùng loại trừ từ cấu hình hay không (ví dụ: vùng vỉa hè, cột đèn, hoặc các đối tượng cố định khác). Nếu có, các vùng này sẽ được loại bỏ khỏi kết quả phát hiện xe máy để đảm bảo độ chính xác.
 
-Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe máy và tính tỷ lệ che phủ theo công thức: (Diện tích xe máy / Diện tích ROI) x 100\%. Kết quả được trực quan hóa trên ảnh đầu ra với đường viền vùng ROI, vùng xe máy được tô màu đỏ, và thông tin tỷ lệ che phủ được hiển thị trực tiếp trên ảnh.
+Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe máy và tính tỷ lệ che phủ theo công thức: (Diện tích xe hai bánh / Diện tích ROI) x 100\%. Kết quả được trực quan hóa trên ảnh đầu ra với đường viền vùng ROI, vùng xe máy được tô màu đỏ, và thông tin tỷ lệ che phủ được hiển thị trực tiếp trên ảnh.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/result_static_config.png}
+    \caption[Cấu hình quy đổi diện tích che phủ sang số lượng xe hai bánh]{Cấu hình quy đổi diện tích che phủ sang số lượng xe hai bánh}
+    \label{fig:result_static_config}
+\end{figure}
+
+Như hình \ref{fig:result_static_config}, hệ thống sử dụng hệ số quy đổi từ tỷ lệ che phủ sang số lượng xe hai bánh được cấu hình trong tệp YAML để ước lượng số lượng xe hai bánh trong vùng ROI. Hệ số này được xác định dựa trên việc tính toán phần trăm che phủ trung bình của một xe hai bánh trong vùng quan tâm, từ đó suy ra số lượng xe hai bánh tương ứng với tỷ lệ che phủ đo được. Kết quả khi quy đổi ra sẽ được cộng vào số lượng xe hai bánh của thời điểm đó và lưu trữ cùng với số lượng xe ô tô đã được phát hiện bởi mô hình YOLOv11.
+
+Bước cuối cùng nhưng cũng không kém phần quan trọng, hệ thống sẽ tổng hợp các khung thời điểm về mỗi 5 phút để tạo thành chuỗi thời gian lưu lượng giao thông đồng nhất. Quá trình này bao gồm việc nhóm các bản ghi theo khoảng thời gian 5 phút, sau đó tính lượng trung bình phương tiện có trong khoảng thời gian đó. 
 
 \subsection{Thiết kế khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông}
 None
