@@ -17,6 +17,10 @@ echo.
 echo Step 2: Running BibTeX...
 cd build
 bibtex main
+if not exist main.bbl (
+    echo WARNING: BibTeX did not generate main.bbl file
+    echo This usually means references.bib was not found
+)
 cd ..
 
 echo.

@@ -74,3 +74,94 @@ Sau khi hoàn thành bước tiền xử lý ảnh, đề tài tiến hành sử
     \item \textbf{Định dạng ảnh đầu ra: } png
 \end{itemize}
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/detect_q1_tl.png}
+        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 4 bánh kết hợp với tính toán \% che phủ - Phần trên bên trái}
+        \label{fig:detect_q1_tl}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/detect_q2_tr.png}
+        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 2 bánh và 4 bánh - Phần trên bên phải}
+        \label{fig:detect_q2_tr}
+    \end{subfigure}
+    
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/detect_q3_bl.png}
+        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 2 bánh và 4 bánh - Phần dưới bên trái}
+        \label{fig:detect_q3_bl}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/detect_q4_br.png}
+        \caption{Ảnh giao thông sau khi qua nhận diện phương tiện 2 bánh và 4 bánh - Phần dưới bên phải}
+        \label{fig:detect_q4_br}
+    \end{subfigure}
+    \caption[Ảnh giao thông sau khi qua nhận diện và được chia nhỏ]{Ảnh giao thông sau khi qua nhận diện và được chia nhỏ}
+    \label{fig:4_detect_quadrants}
+\end{figure}
+
+Nhìn vào hình \ref{fig:4_detect_quadrants} có thể thấy kết quả nhận diện các phương tiện giao thông trong từng phần của ảnh sau khi đã qua bước tiền xử lý. Ở phần ảnh trên bên trái \ref{fig:detect_q1_tl}, ở địa điểm này và ở khung hình này đã có sẵn cấu hình cho segment để có thể tính \% che phủ của xe 2 bánh. Nguyên nhân là do trong phần ảnh này có quá nhiều xe 2 bánh kèm đến chất lượng hình ảnh kém và góc quay không thuận lợi, dẫn đến việc nếu chỉ nhận diện bằng mô hình YOLOv11 thì sẽ không thể nhận diện và phân loại được đa số xe 2 bánh có trong ảnh. Độ che phủ của xe máy được tô đỏ và tính ra \% hiển thị trên ảnh, các xe 4 bánh thì vẫn được nhận diện bình thường. Còn các phần ảnh còn lại, do chất lượng khung hình vẫn còn tốt để model có thể nhận diện và phân loại nên không cần phân đoạn và tính \% che phủ nữa. Ảnh mask của phần ảnh bên trái \ref{fig:detect_q1_tl} được hiển thị thông qua hình dưới đây:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/mask_xe_may.png}
+    \caption[Ảnh mask của phần ảnh trên bên trái ]{Ảnh mask của phần ảnh trên bên trái}
+    \label{fig:mask_xe_may}
+\end{figure}
+
+Có thể thấy trong hình \ref{fig:mask_xe_may} là ảnh mask được sử dụng để tính toán \% che phủ của xe máy trong phần ảnh trên bên trái. Mặc dù ảnh mask có chất lượng không cao do vẫn bị nhiễu bởi các yếu tố môi trường như bóng cây, bóng người, vạch kẻ đường,... nhưng con số nhiễu ở ảnh này là không đáng kể so với tổng diện tích của segment. Ngoài ra, nếu có đoạn ảnh bị nhiễu quá cao do vạch kẻ đường lớn thì trong đề tài này phải tự động cấu hình để loại bỏ vùng nhiễu đó ra, không tính vào diện tích che phủ của xe máy trong segment. Trường hợp đó được thể hiện dưới đây:
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/no_exclusion_image.png}
+        \caption{Vạch kẻ đường gây nhiễu trong ảnh giao thông}
+        \label{fig:no_exclusion_image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/no_exclusion_mask.png}
+        \caption{Vạch kẻ đường được loại bỏ trong ảnh mask}
+        \label{fig:no_exclusion_mask}
+    \end{subfigure}
+    \caption[Hình ảnh vạch kẻ đường gây nhiễu]{Hình ảnh vạch kẻ đường gây nhiễu}
+    \label{fig:no_exclusion_image_zone}
+\end{figure}
+
+Trong hình \ref{fig:no_exclusion_image_zone} cho thấy rằng những vạch kẻ đường đã làm nhiễu lớn trong quá trình tính toán \% che phủ của xe máy. Do đó, để đảm bảo tính chính xác của kết quả, đề tài đã thực hiện loại bỏ vùng nhiễu này ra khỏi quá trình tính toán. Kết quả sau khi loại bỏ vùng nhiễu được thể hiện bằng cách loại bỏ các vùng nhiễu đi, như hình dưới đây:
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/exclusion_image.png}
+        \caption{Loại bỏ vạch kẻ đường gây nhiễu trong ảnh giao thông}
+        \label{fig:exclusion_image}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{1\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/exclusion_mask.png}
+        \caption{Vạch kẻ đường được loại bỏ trong ảnh mask}
+        \label{fig:exclusion_mask}
+    \end{subfigure}
+    \caption[Hình ảnh vạch kẻ đường được loại bỏ]{Hình ảnh vạch kẻ đường được loại bỏ}
+    \label{fig:exclusion_image_zone}
+\end{figure}
+
+Như vậy, sau khi loại bỏ vùng nhiễu, kết quả tính toán \% che phủ của xe máy sẽ chính xác hơn, giúp cải thiện hiệu quả nhận diện và phân loại các phương tiện giao thông trong ảnh. Việc này đặc biệt quan trọng trong các tình huống có nhiều yếu tố gây nhiễu, đảm bảo rằng hệ thống nhận diện hoạt động một cách hiệu quả và chính xác nhất có thể.
+
+
+
+
+
