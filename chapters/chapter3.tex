@@ -63,7 +63,23 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
 \end{itemize}
 
 \subsection{Thiết kế khối thu thập dữ liệu}
-None
+Khối thu thập dữ liệu đảm nhiện việc tự động truy suất và tải về các hình ảnh snapshot từ website camera giao thông công khai của thành phố Hồ Chí Minh (giaothong.hochiminhcity.gov.vn) rồi sau đó đẩy dữ liệu thu thập được lên khối lưu trữ đám mây Google Drive để phục vụ cho các bước xử lý tiếp theo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{fig/upload_raw_images.png}
+    \caption[Lưu đồ chính cho quá trình thu thập dữ liệu]{Lưu đồ chính quá trình thu thập dữ liệu}
+    \label{fig:upload_raw_images}
+\end{figure}
+
+Giải thích lưu đồ thu thập dữ liệu ở hình \ref{fig:upload_raw_images}: \\
+\hspace*{1cm} Quá trình thu thập dữ liệu bắt đầu bằng việc khởi tạo Google Drive API để kết nối và thao tác với hệ thống lữu trữ đám mây. Tiếp theo, hệ thống sẽ khởi tạo một hàng đợi dùng để tải ảnh lên Drive (drive_queue) và một bộ nhớ đệm để lưu trữ mã SHA của ảnh được lưu gần nhất của mỗi camera. Sau đó, hệ thống sẽ tiến hành chạy đa luồng để thực hiện các tác vụ sau:
+\begin{itemize}
+    \item \textbf{Nhóm luồng giám sát camera: } Ở nhóm luồng này tùy theo số lượng camera cần giám sát là 13 camera ứng với 13 địa điểm mà hệ thống sẽ khởi tạo tương ứng số luồng. Mỗi luồng sẽ chịu trách nhiệm truy suất ảnh từ một camera cụ thể. Sau đó, cứ mỗi khoảng thời gian nhất định là khoảng 5 phút thì ảnh sẽ được gom lại và gửi vào hàng đợi drive\_queue để chờ được tải lên Google Drive.
+    \item \textbf{Luồng chính: } Luồng này có đóng vai trò như một bộ điều phối, chịu trách nhiệm phân loại và giao task cho nhóm luồng upload ảnh lên Drive.
+    \item \textbf{Nhóm luồng upload dữ liệu lên Drive: } Nhóm luồng này bao gồm 2 luồng chạy song song, chịu trách nhiệm nhận task để đẩy ảnh từ hàng đợi lên Google Drive.
+\end{itemize}
+
 
 \subsection{Thiết kế khối lưu trữ}
 Khối lưu trữ dữ liệu đóng vai trò tiếp nhận, tổ chức và quản lý toàn bộ dữ liệu trong hệ thống, bao gồm ảnh snapshot thu thập từ camera giao thông, dữ liệu sau tiền xử lý, kết quả nhận diện - đếm phương tiện, cũng như các tập dữ liệu đầu vào/đầu ra phục vụ mô phỏng và dự báo. Trong đề tài này, Google Drive được sử dụng như một nền tảng lưu trữ đám mây, đáp ứng yêu cầu về dung lượng, khả năng truy cập linh hoạt và thuận tiện cho việc chia sẻ, sao lưu dữ liệu trong quá trình nghiên cứu.
