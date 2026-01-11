@@ -79,7 +79,7 @@
         <mxCell id="HmHpNYxQFClwAh3H0_h7-47" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Ngắt do người dùng" vertex="1">
           <mxGeometry height="30" width="110" x="420" y="720" as="geometry" />
         </mxCell>
-        <mxCell id="KNWws01IUkwvF5DNUCol-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=17;" value="Vòng lặp&amp;nbsp;" vertex="1">
+        <mxCell id="KNWws01IUkwvF5DNUCol-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=17;" value="Vòng lặp&amp;nbsp;&lt;br&gt;While True" vertex="1">
           <mxGeometry height="40" width="115" x="55" y="390" as="geometry" />
         </mxCell>
       </root>
