@@ -27,12 +27,19 @@ Tiếp đến là yêu cầu về mô phỏng giao thông:
 
 Đối với giai đoạn xây dựng chuỗi thời gian và dự báo lưu lượng giao thông, hệ thống cần thỏa mãn các yêu cầu sau:
 \begin{itemize}
-    \item None
+    \item Phát hiện và gán nhãn tắc nghẽn từ dữ liệu lưu lượng giao thông thu thập.
+    \item Chuẩn hóa dữ liệu đầu vào để phù hợp với các mô hình học máy.
+    \item Xây dựng chuỗi thời gian từ dữ liệu gốc bằng phương pháp cửa sổ trượt.
+    \item Huấn luyện mô hình dự báo có khả năng phát hiện xu hướng tắc nghẽn trong tương lai.
+    \item Đảm bảo sai số dự báo nằm trong ngưỡng chấp nhận được.
 \end{itemize}
 
 Đối với giai đoạn tích hợp và điều khiển luồng giao thông, hệ thống cần đáp ứng các yêu cầu sau:
 \begin{itemize}
-    \item None
+    \item Tích hợp kết quả dự báo vào môi trường mô phỏng SUMO.
+    \item Hỗ trợ điều chỉnh chương trình đèn tín hiệu dựa trên dữ liệu dự báo.
+    \item Cung cấp giao diện để giao tiếp giữa mô hình dự báo và công cụ mô phỏng (TraCI).
+    \item Cho phép so sánh hiệu quả giữa chiến lược điều khiển thích ứng và chiến lược cố định.
 \end{itemize}
 
 Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống cần:
@@ -57,7 +64,7 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
     \item \textbf{Khối lưu trữ: } Khối lưu trữ đóng vai trò quản lý và tổ chức toàn bộ dữ liệu hình ảnh thu thập được cũng như các dữ liệu trung gian phát sinh trong quá trình xử lý. Các ảnh snapshot thu thập từ camera phía OSM được lưu trữ dưới dạng cấu trúc thư mục phân cấp trên hệ thống lưu trữ tệp tin đám mây Google Drive. Mỗi ảnh được gắn nhãn thời gian rõ ràng và sắp xếp theo từng thư mục tương ứng với địa điểm giám sát, nhằm đảm bảo tính nhất quán và thuận tiện cho việc truy xuất, xử lý và phân tích về sau. Bên cạnh đó, các ảnh kết quả sau khi nhận diện và đếm phương tiện, dữ liệu thống kê mật độ giao thông theo thời gian, cũng như dữ liệu đầu vào và đầu ra của mô hình LSTM đều được lưu trữ tập trung tại khối này.
     \item \textbf{Khối tiền xử lý ảnh: } Khối tiền xử lý ảnh đảm nhiệm việc thực hiện các phép biến đổi cần thiết nhằm cải thiện chất lượng dữ liệu hình ảnh trước khi đưa vào mô hình nhận diện. Nguyên nhân là do các ảnh snapshot thu thập từ camera giao thông công khai trên mạng thường có chất lượng không đồng đều, chịu ảnh hưởng bởi nhiều yếu tố như độ phân giải thấp, nhiễu ảnh, điều kiện ánh sáng không ổn định và góc chụp chưa tối ưu. Do đó, khối này áp dụng một số kỹ thuật xử lý ảnh cơ bản, bao gồm tăng cường độ phân giải (super-resolution), lọc nhiễu (denoising), chuẩn hóa kích thước ảnh (resizing) và chia nhỏ ảnh nhằm đảm bảo dữ liệu đầu vào cho mô hình nhận diện đạt chất lượng tốt hơn và có tính nhất quán, dễ dàng nhận diện.
     \item \textbf{Khối nhận diện và phân tích phương tiện: } Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 để thực hiện phát hiện và phân loại các phương tiện giao thông xuất hiện trong từng ảnh snapshot. Mô hình được khởi tạo từ trọng số huấn luyện sẵn (pre-trained) trên các tập dữ liệu lớn và đa dạng, nhờ đó có khả năng nhận diện hiệu quả các loại phương tiện phổ biến. Tuy nhiên, nhằm đơn giản hóa bài toán và phù hợp với mục tiêu nghiên cứu, các phương tiện được quy ước và gom nhóm thành hai lớp chính, bao gồm xe hai bánh (đại diện cho xe máy) và xe bốn bánh (đại diện cho xe hơi). Bên cạnh đó, do chất lượng hình ảnh thu thập từ camera giao thông còn hạn chế và các bước tiền xử lý không thể khắc phục hoàn toàn các yếu tố bất lợi như góc quay cao, góc quay xiên hoặc mật độ giao thông lớn, một số phương tiện đặc biệt là xe máy có thể bị che khuất hoặc chồng chéo, dẫn đến độ chính xác nhận diện suy giảm. Để khắc phục vấn đề này, khối xử lý còn tích hợp các thuật toán xử lý ảnh bổ sung như Polygon Fill, Rectangle Fill, Pixel-wise Logic và Non-zero Pixel Count nhằm tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm. Trên cơ sở đó, số lượng xe máy trong từng vùng được ước lượng, góp phần nâng cao độ chính xác tổng thể của quá trình đếm phương tiện.
-    \item \textbf{Khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông: } None
+    \item \textbf{Khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông: } Khối này chịu trách nhiệm dự báo lưu lượng giao thông trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện. Dữ liệu đếm phương tiện được chuyển đổi thành chuỗi thời gian và đưa vào mô hình LSTM (Long Short-Term Memory) để học các quy luật biến thiên của luồng giao thông. Trên cơ sở kết quả dự báo, khối này tính toán các thông số điều khiển tín hiệu tối ưu và gửi lệnh thông qua giao diện TraCI (Traffic Control Interface) để điều chỉnh chương trình đèn giao thông trong mô phỏng SUMO, nhằm tối ưu hóa khả năng thông hành của mạng lưới giao thông.
     \item \textbf{Khối mô phỏng: } Sử dụng phần mềm SUMO để tái hiện mạng lưới giao thông thực tế. Khối này tiếp nhận hạ tầng từ OSM và luồng phương tiện từ khối dự báo để thực hiện các kịch bản mô phỏng giao thông vi mô, phục vụ việc đánh giá chiến lược điều phối.
     \item \textbf{Khối hiển thị và đánh giá kết quả: } Cung cấp giao diện đồ họa (Dashboard) để người dùng theo dõi trạng thái giao thông thời gian thực, quản lý các kịch bản mô phỏng thông qua Scenario Explorer và xuất ra các biểu đồ đánh giá hiệu quả (Waiting Time, Mean Speed).
 \end{itemize}
@@ -235,8 +242,398 @@ Như hình \ref{fig:result_static_config}, hệ thống sử dụng hệ số qu
 
 Bước cuối cùng nhưng cũng không kém phần quan trọng, hệ thống sẽ tổng hợp các khung thời điểm về mỗi 5 phút để tạo thành chuỗi thời gian lưu lượng giao thông đồng nhất. Quá trình này bao gồm việc nhóm các bản ghi theo khoảng thời gian 5 phút, sau đó tính lượng trung bình phương tiện có trong khoảng thời gian đó. 
 
+\subsection{Thiết kế và thực hiện các agent điều khiển giao thông}
+
+Hệ thống điều khiển giao thông thông minh được xây dựng theo kiến trúc phân cấp với hai agent độc lập chuyên biệt: DurationAgent dùng LSTM để dự báo thời lượng xanh của tín hiệu, và LaneRatioAgent sử dụng Policy Gradient với Beta Distribution để phân bổ tỷ lệ làn đường.
+
+\subsubsection{DurationAgent: Dự báo Thời Lượng Xanh}
+
+DurationAgent được triển khai dựa trên mô hình LSTM (Long Short-Term Memory) như được trình bày trong Chương 2, Mục 2.1.1. Mục đích của agent này là dự báo thời lượng xanh tối ưu cho từng pha tín hiệu giao thông.
+
+\textbf{Kiến trúc mạng:}
+
+DurationAgent bao gồm các thành phần chính:
+\begin{itemize}
+    \item \textbf{Lớp LSTM}: Một lớp LSTM với 64 units ẩn để xử lý chuỗi thời gian dữ liệu giao thông, cho phép agent ghi nhớ các mẫu lưu lượng dài hạn.
+    \item \textbf{Lớp Linear}: Một lớp tuyến tính để chuyển đổi hidden state thành giá trị dự báo thời lượng xanh.
+    \item \textbf{Hàm Kích Hoạt}: Sigmoid activation để đảm bảo output nằm trong khoảng $[0, 1]$, sau đó scale để có giá trị thực tế theo giây.
+\end{itemize}
+
+\textbf{Quá trình xử lý đầu vào:}
+
+Tại mỗi time step $t$, DurationAgent nhận vào một vector đặc trưng 3 chiều:
+
+\begin{equation}
+x_t = [\text{flow}_t, \text{density}_t, \text{waiting\_time}_t]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\text{flow}_t$: Lưu lượng xe qua detector E1 tại time step $t$ (vehicles/phút).
+    \item $\text{density}_t$: Mật độ phương tiện được đo bằng phần trăm chiếm dụng của detector (0-100\%).
+    \item $\text{waiting\_time}_t$: Thời gian chờ trung bình của các phương tiện (giây).
+\end{itemize}
+
+Dữ liệu được chuẩn hóa về $[0, 1]$ sử dụng min-max normalization để đảm bảo ổn định số học khi xử lý LSTM:
+
+\begin{equation}
+x_t^{\text{norm}} = \frac{x_t - x_{\min}}{x_{\max} - x_{\min}}
+\end{equation}
+
+\textbf{Quá trình xử lý LSTM:}
+
+Tại mỗi time step, input $x_t^{\text{norm}}$ cùng với hidden state trước đó $h_{t-1}$ và cell state $c_{t-1}$ được đưa vào khối LSTM. Theo lý thuyết trong Chương 2, Mục 2.1.1, khối LSTM thực hiện quá trình với ba cổng điều khiển:
+
+\begin{enumerate}
+    \item \textbf{Cổng Quên}: $f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$ - Quyết định thông tin nào từ cell state trước được giữ lại để ghi nhớ các mẫu lưu lượng dài hạn.
+    
+    \item \textbf{Cổng Đầu Vào}: $i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)$ và $\tilde{c}_t = \tanh(W_c \cdot [h_{t-1}, x_t] + b_c)$ - Cập nhật thông tin mới về lưu lượng hiện tại vào cell state.
+    
+    \item \textbf{Cập Nhật Cell State}: $c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t$ - Kết hợp thông tin cũ (mẫu lịch sử) và thông tin mới (tình trạng hiện tại).
+    
+    \item \textbf{Cổng Đầu Ra}: $o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)$ - Lọc thông tin cần thiết từ cell state để sinh ra hidden state.
+    
+    \item \textbf{Hidden State}: $h_t = o_t \odot \tanh(c_t)$ - Đầu ra của khối LSTM chứa đặc trưng đã trích xuất.
+\end{enumerate}
+
+Cơ chế này cho phép LSTM tránh vấn đề vanishing/exploding gradient (Chương 2) và xử lý hiệu quả các chuỗi thời gian dài 3600 timesteps (1 giờ mô phỏng).
+
+\textbf{Dự báo thời lượng xanh:}
+
+Hidden state $h_t$ được đưa qua lớp Linear rồi Sigmoid activation:
+
+\begin{equation}
+\text{duration}_t = \sigma(W_{\text{out}} \cdot h_t + b_{\text{out}}) \times T_{\max}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\sigma$ là hàm sigmoid đảm bảo output trong $[0, 1]$.
+    \item $T_{\max}$ là thời gian xanh tối đa được phép (ví dụ: 80 giây).
+    \item Kết quả là thời lượng xanh dự báo nằm trong khoảng $[0, T_{\max}]$ giây.
+\end{itemize}
+
+\textbf{Huấn luyện với Actor-Critic:}
+
+DurationAgent được huấn luyện sử dụng Actor-Critic framework từ Reinforcement Learning (Chương 2, Mục 2.2):
+
+\begin{itemize}
+    \item \textbf{Actor}: Mạng LSTM + output layer sinh ra hành động (thời lượng xanh).
+    \item \textbf{Critic}: Một mạng nơ-ron khác ước lượng giá trị của state $V(s)$.
+\end{itemize}
+
+Hàm loss được tính như sau:
+
+\begin{equation}
+\mathcal{L}_{\text{policy}} = -\mathbb{E}[\log \pi(a|s) \cdot A(s, a)]
+\end{equation}
+
+\begin{equation}
+\mathcal{L}_{\text{value}} = \mathbb{E}[(V(s) - G_t)^2]
+\end{equation}
+
+\begin{equation}
+\mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{policy}} + \beta \cdot \mathcal{L}_{\text{value}}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $A(s, a) = G_t - V(s)$ là Advantage (lợi thế) - đo mức độ tốt hơn của hành động so với giá trị trung bình.
+    \item $G_t = \sum_{i=0}^{T-t} \gamma^i r_{t+i}$ là cumulative reward từ time step $t$.
+    \item $\gamma = 0.99$ là discount factor.
+    \item $\alpha = 1.0, \beta = 0.5$ là hệ số cân nặng giữa hai thành phần loss.
+    \item Training sử dụng optimizer Adam với learning rate $lr = 10^{-4}$.
+\end{itemize}
+
+\subsubsection{LaneRatioAgent: Phân Bổ Tỷ Lệ Làn Đường}
+
+LaneRatioAgent sử dụng Policy Gradient với Beta Distribution (Chương 2, Mục 2.3) để sinh ra vector tỷ lệ phân bổ làn đường, cho phép agent linh hoạt điều chỉnh lưu lượng giữa các làn dựa trên tình trạng giao thông thực tế.
+
+\textbf{Kiến trúc:}
+
+LaneRatioAgent gồm:
+\begin{itemize}
+    \item \textbf{Policy Network}: Một mạng nơ-ron nhiều lớp (MLP) nhận state và sinh ra các tham số $\mu$ (mean) và $\sigma$ (standard deviation) của Beta Distribution.
+    \item \textbf{Beta Distribution Parameterization}: Chuyển đổi $\mu$ và $\sigma$ thành các tham số hình dạng $\alpha$ và $\beta$ của Beta Distribution.
+    \item \textbf{Action Sampling}: Sample hành động từ Beta Distribution và clamp về $[\epsilon, 1-\epsilon]$ để tránh các giá trị cực đoan.
+\end{itemize}
+
+\textbf{Quá trình tạo tỷ lệ làn:}
+
+Từ state $s_t$ (trạng thái giao thông hiện tại), policy network sinh ra:
+
+\begin{equation}
+\mu, \sigma = \text{MLP}(s_t)
+\end{equation}
+
+Chuyển đổi thành tham số Beta Distribution:
+
+\begin{equation}
+\alpha_i = \mu_i \cdot \left(\frac{\mu_i(1-\mu_i)}{\sigma_i^2} - 1\right)
+\end{equation}
+
+\begin{equation}
+\beta_i = (1-\mu_i) \cdot \left(\frac{\mu_i(1-\mu_i)}{\sigma_i^2} - 1\right)
+\end{equation}
+
+Sample hành động từ Beta Distribution cho mỗi làn $i$:
+
+\begin{equation}
+r_i \sim \text{Beta}(\alpha_i, \beta_i), \quad i = 1, 2, \ldots, N_{\text{lanes}}
+\end{equation}
+
+Chuẩn hóa tỷ lệ sao cho tổng bằng 1 (đảm bảo tính hợp lệ của phân bổ):
+
+\begin{equation}
+r_i^{\text{norm}} = \frac{r_i}{\sum_{j=1}^{N_{\text{lanes}}} r_j}
+\end{equation}
+
+\textbf{Ưu điểm của Beta Distribution:}
+
+Theo Chương 2, Mục 2.3, Beta Distribution được chọn vì:
+\begin{itemize}
+    \item Hỗ trợ hành động liên tục trên $[0, 1]$, phù hợp cho bài toán phân bổ tỷ lệ.
+    \item Linh hoạt: có thể biểu diễn nhiều dạng phân bố bằng cách điều chỉnh $\alpha$ và $\beta$.
+    \item Phương sai của phân bố khuyến khích agent khám phá các tỷ lệ làn khác nhau (exploration).
+\end{itemize}
+
+\textbf{Huấn luyện:}
+
+LaneRatioAgent được huấn luyện với:
+
+\begin{equation}
+\mathcal{L}_{\text{policy}} = -\mathbb{E}[\log p(r|s) \cdot A(s, r)]
+\end{equation}
+
+\begin{equation}
+\mathcal{L}_{\text{entropy}} = -\beta_{\text{entropy}} \cdot \mathbb{E}[\text{entropy}(\text{Beta}(\alpha, \beta))]
+\end{equation}
+
+\begin{equation}
+\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \mathcal{L}_{\text{value}} + \mathcal{L}_{\text{entropy}}
+\end{equation}
+
+Entropy loss (với $\beta_{\text{entropy}} = 0.01$) khuyến khích agent khám phá các tỷ lệ làn khác nhau, tránh bị mắc kẹt ở local optima và giúp tìm kiếm chiến lược tối ưu toàn cục.
+
+\subsection{Tích hợp với SUMO qua TraCI}
+
+\subsubsection{Trích xuất State từ Sensors}
+
+Hệ thống giao tiếp với SUMO simulation thông qua TraCI (Traffic Control Interface). Tại mỗi time step, dữ liệu trạng thái được trích xuất từ các E1 detectors (loop detectors) được cài đặt tại các làn đường:
+
+\begin{equation}
+\text{state}_t = [\text{flow}_t, \text{density}_t, \text{waiting\_time}_t]
+\end{equation}
+
+Dữ liệu được trích xuất mỗi $\Delta t = 1$ giây qua TraCI bằng các hàm:
+
+\begin{itemize}
+    \item \textbf{getLastStepVehicleNumber}: Trích xuất số lượng phương tiện qua detector trong time step vừa qua (đơn vị: vehicles).
+    \item \textbf{getLastStepOccupancy}: Trích xuất tỷ lệ chiếm dụng của detector (đơn vị: \%).
+    \item \textbf{getWaitingTime}: Trích xuất thời gian chờ trung bình trên cạnh đường (đơn vị: giây).
+\end{itemize}
+
+\subsubsection{Áp dụng Action vào Tín Hiệu Đèn Giao Thông}
+
+Kết quả dự báo từ các agent được chuyển đổi thành các lệnh điều khiển đèn giao thông thông qua giao diện TraCI:
+
+\textbf{Từ DurationAgent:} Thời lượng xanh dự báo $d_t$ được áp dụng trực tiếp vào tín hiệu đèn giao thông để điều chỉnh thời lượng pha hiện tại.
+
+\textbf{Từ LaneRatioAgent:} Tỷ lệ phân bổ $r_i^{\text{norm}}$ được sử dụng để ưu tiên các làn có lưu lượng cao (nếu SUMO hỗ trợ tính năng phân bổ làn động).
+
+Cả hai hành động được gửi đến SUMO qua TraCI API để cập nhật trạng thái tín hiệu trong từng bước mô phỏng.
+
+\subsubsection{Hàm Reward}
+
+Reward được tính từ các metric giao thông để đánh giá hiệu quả của các hành động:
+
+\begin{equation}
+\text{reward}_t = -\alpha \cdot \text{avg\_queue\_length}_t - \beta \cdot \text{avg\_waiting\_time}_t + \gamma \cdot \text{throughput}_t
+\end{equation}
+
+Với:
+\begin{itemize}
+    \item $\alpha = 1.0$: Hệ số để giảm độ dài hàng đợi (prioritize queue reduction).
+    \item $\beta = 0.1$: Hệ số để giảm thời gian chờ (lower priority).
+    \item $\gamma = 0.01$: Hệ số để tăng thông lượng (bonus cho nhiều xe qua).
+    \item $\text{throughput}_t = \text{số xe qua giao lộ trong time step } t$.
+\end{itemize}
+
+Reward được thiết kế sao cho agent được thưởng khi giảm hàng đợi và thời gian chờ, đồng thời tối đa hóa số lượng xe có thể qua giao lộ.
+
+\subsubsection{Huấn luyện Parallel với 16 Workers}
+
+Để tăng tốc độ training, hệ thống sử dụng multi-processing với 16 worker processes chạy song song:
+
+\begin{itemize}
+    \item \textbf{Mỗi worker}: Chạy một SUMO instance độc lập để thu thập dữ liệu (data collection).
+    \item \textbf{Batch Update}: Sau mỗi 4 episodes (từ 4 workers), models được cập nhật trên GPU bằng batch gradient descent.
+    \item \textbf{Synchronization}: Tham số model mới được broadcast đến tất cả workers để tiếp tục training.
+    \item \textbf{Tốc độ}: Thay vì training tuần tự (1 episode/lần), parallel training cho phép 16 episodes cùng lúc, tăng tốc độ training khoảng 10-12x.
+\end{itemize}
+
 \subsection{Thiết kế khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông}
-None
+
+\subsubsection{Giới thiệu khối dự báo}
+
+Khối dự báo lưu lượng giao thông chịu trách nhiệm dự báo mức độ tắc nghẽn trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện phương tiện. Kết quả dự báo được sử dụng để điều chỉnh tín hiệu đèn giao thông thông qua giao diện TraCI, nhằm tối ưu hóa khả năng thông hành của mạng lưới.
+
+\subsubsection{Dữ liệu đầu vào từ mô phỏng SUMO}
+Dữ liệu được thu thập từ SUMO thông qua TraCI API với các thông tin chính:
+\begin{itemize}
+    \item \textbf{Số lượng phương tiện:} Từ `traci.edge.getLastStepVehicleNumber(edge)` cho từng đoạn đường
+    \item \textbf{Tốc độ trung bình:} Từ `traci.edge.getLastStepMeanSpeed(edge)` chuyển đổi sang km/h
+    \item \textbf{Khoảng cách lấy mẫu:} 60 giây/lần để phù hợp với cửa sổ kiểm tra tính liên tục
+    \item \textbf{Tập dữ liệu:} Khoảng 1000-1800 hàng từ 10 lần chạy × 2 giờ mô phỏng
+    \item \textbf{Các đặc trưng:} 6 cột (5 cụm + nhãn tắc nghẽn toàn diện)
+\end{itemize}
+
+\subsubsection{Phát hiện Tắc Nghẽn Toàn Diện và Gán Nhãn}
+
+Quy trình phát hiện tắc nghẽn giao thông gồm 5 bước chính:
+
+\begin{enumerate}
+    \item \textbf{Xác định Tốc Độ Thấp (Ngưỡng Động):} 
+          Kiểm tra tốc độ trung bình của mỗi đoạn đường. Nếu $v_{mean} \leq 0.4 \times v_{max,vtype}$ 
+          thì coi là tốc độ thấp. Ngưỡng được tính động dựa trên loại xe (vtype), 
+          ví dụ: $v_{max} = 45$ km/h $\Rightarrow$ ngưỡng = 18 km/h.
+    
+    \item \textbf{Kiểm tra Tính Liên Tục (5 phút):} 
+          Kiểm tra xem tốc độ thấp có kéo dài liên tục $\geq 5$ phút hay không. 
+          Số bước kiểm tra (PERSISTENT\_STEPS) = 5 bước, mỗi bước 60 giây $\Rightarrow$ tổng 300 giây.
+          
+          Tính liên tục được coi là 1 nếu tất cả 5 bước trong lịch sử đều là tốc độ thấp.
+    
+    \item \textbf{Kiểm tra Cặp Upstream-Downstream:} 
+          Một cặp (upstream, downstream) được coi là "cặp bị tắc" khi 
+          cả hai đoạn đều có tốc độ thấp kéo dài (có tính liên tục).
+          
+          Điều kiện: $\text{upstream\_liên\_tục} = 1$ và $\text{downstream\_liên\_tục} = 1$
+    
+    \item \textbf{Phát hiện Tắc Nghẽn Cụm:} 
+          Cụm được coi là bị tắc nếu có $\geq 1$ cặp thỏa điều kiện trên.
+    
+    \item \textbf{Tính Mức Độ Tắc Toàn Diện:}
+          Mức độ tắc toàn diện (0-5) được tính dựa trên số cụm bị tắc:
+          \begin{itemize}
+              \item 0 cụm → mức độ = 0 (bình thường)
+              \item 1 cụm → mức độ = 1
+              \item 2 cụm → mức độ = 2
+              \item 3 cụm → mức độ = 3
+              \item 4 cụm → mức độ = 4
+              \item 5 cụm → mức độ = 5 (toàn mạng tắc)
+          \end{itemize}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=0.75\textheight, keepaspectratio]{fig/fig_3_7_gridlock_detection_5steps.png}
+    \caption[Lưu đồ quy trình phát hiện tắc toàn diện]{Lưu đồ chi tiết 5 bước phát hiện tắc toàn diện giao thông}
+    \label{fig:gridlock_detection_5steps}
+\end{figure}
+
+Giải thích lưu đồ ở hình \ref{fig:gridlock_detection_5steps}: Quá trình phát hiện bắt đầu từ việc kiểm tra tốc độ trung bình của mỗi đoạn đường. Nếu tốc độ thấp hơn ngưỡng động (18 km/h), dữ liệu được lưu vào lịch sử. Tiếp theo, hệ thống kiểm tra xem tốc độ thấp có kéo dài liên tục trong 5 bước thời gian hay không. Khi cả hai điều kiện thỏa mãn, cặp upstream-downstream được coi là có tính liên tục. Nếu ít nhất 1 cặp trong cụm đạt điều kiện này, cụm được gắn nhãn là bị tắc. Cuối cùng, mức độ tắc toàn diện được tính dựa trên số cụm bị tắc.
+          \end{itemize}
+\end{enumerate}
+
+\subsubsection{Tiền Xử Lý Dữ Liệu}
+
+\paragraph{Chuẩn Hóa (Bình Thường Hóa):}
+Sử dụng MinMaxScaler để chuẩn hóa dữ liệu vào khoảng [0, 1]:
+$$x_{\text{chuẩn\_hóa}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}$$
+
+Lý do: LSTM hoạt động tốt nhất với giá trị nhỏ, tránh hiện tượng gradient biến mất hoặc bùng nổ.
+
+\paragraph{Cửa Sổ Trượt (Chuỗi Thời Gian):}
+Dữ liệu được biến đổi từ dạng tuần tự sang dạng học có giám sát:
+\begin{itemize}
+    \item \textbf{Cửa sổ Lookback:} 10 bước thời gian = 10 phút = 600 giây
+    \item \textbf{Phép biến đổi:} $[X(t-10), X(t-9), \ldots, X(t-1)] \rightarrow y(t)$
+    \item \textbf{Hình dạng dữ liệu:} $[\text{số mẫu}, 10 \text{ bước}, 6 \text{ đặc trưng}]$
+    \item \textbf{Tại sao 10 phút:} Khớp với thời gian kiểm tra tính liên tục, 
+          tương ứng 5-10 chu kỳ đèn giao thông, cân bằng giữa thông tin lịch sử dài và tránh quá khớp
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=0.6\textheight, keepaspectratio]{fig/fig_3_7_sliding_window.png}
+    \caption[Minh họa kỹ thuật cửa sổ trượt cho chuỗi thời gian]{Minh họa phương pháp cửa sổ trượt với Lookback = 10 bước để tạo dữ liệu huấn luyện}
+    \label{fig:sliding_window}
+\end{figure}
+
+\subsubsection{Kiến Trúc Mô Hình LSTM}
+
+\paragraph{Cấu Trúc Mạng:}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Tầng} & \textbf{Loại} & \textbf{Hình Dạng Đầu Ra} \\
+\hline
+1 & LSTM(64, return\_sequences=True) & (batch, 10, 64) \\
+2 & Bỏ Bớt(0,2) & (batch, 10, 64) \\
+3 & LSTM(32) & (batch, 32) \\
+4 & Bỏ Bớt(0,2) & (batch, 32) \\
+5 & Kết Nối Đầy Đủ(1) & (batch, 1) \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Giải Thích Kiến Trúc:}
+\begin{itemize}
+    \item \textbf{Tầng 1 (LSTM 64 neuron):} Học các mẫu phức tạp từ 60 đặc trưng đầu vào
+    \item \textbf{Bỏ Bớt (0,2):} Ngẫu nhiên tắt 20\% neuron, ngăn chặn quá khớp với tập dữ liệu nhỏ
+    \item \textbf{Tầng 3 (LSTM 32 neuron):} Nén thông tin thành biểu diễn 32 chiều
+    \item \textbf{Kết Nối Đầy Đủ (1 neuron):} Ánh xạ từ biểu diễn thành 1 đầu ra (dự báo tắc toàn diện)
+\end{itemize}
+
+\paragraph{Ba Cổng LSTM:}
+Mỗi ô LSTM có ba cổng điều khiển dòng thông tin:
+\begin{align}
+\text{Cổng Quên:} \quad f_t &= \sigma(W_f[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f) \\
+\text{Cổng Đầu Vào:} \quad i_t &= \sigma(W_i[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_i) \\
+\text{Trạng Thái Ô:} \quad C_t &= f_t \odot C_{t-1} + i_t \odot \tilde{C}_t \\
+\text{Cổng Đầu Ra:} \quad o_t &= \sigma(W_o[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_o) \\
+\text{Trạng Thái Ẩn:} \quad \mathbf{h}_t &= o_t \odot \tanh(C_t)
+\end{align}
+
+Ứng dụng: Cổng Quên quên thông tin cũ không còn thích hợp, Cổng Đầu Vào nhớ sự kiện tắc nghẽn mới $\rightarrow$ Dự báo tắc toàn diện tốt hơn.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth, height=0.7\textheight, keepaspectratio]{fig/fig_3_7_lstm_architecture.png}
+    \caption[Kiến trúc mô hình LSTM dự báo]{Sơ đồ kiến trúc mô hình LSTM gồm 5 tầng: Input, 2 tầng LSTM (64 & 32 neuron), 2 tầng Dropout, và 1 tầng Dense Output}
+    \label{fig:lstm_architecture}
+\end{figure}
+
+\subsubsection{Cấu Hình Huấn Luyện}
+
+\begin{itemize}
+    \item \textbf{Bộ Tối Ưu:} Adam - Điều chỉnh tốc độ học thích ứng, kết hợp động lượng với RMSprop
+    \item \textbf{Hàm Mất Mát:} MSE (Sai số bình phương trung bình) - phù hợp cho bài toán hồi quy
+    \item \textbf{Lần Lặp:} 200 lần để mô hình hội tụ
+    \item \textbf{Kích Thước Lô:} 32 mẫu/lô để cân bằng tốc độ huấn luyện và tính ổn định
+    \item \textbf{Tỷ Lệ Bỏ Bớt:} 0,2 (bỏ 20\% neuron) - tiêu chuẩn cho LSTM với tập dữ liệu nhỏ
+    \item \textbf{Chia Kiểm Tra:} 20\% dữ liệu dùng làm xác thực trong quá trình huấn luyện
+\end{itemize}
+
+\textbf{Tại Sao Chọn Bộ Tối Ưu Adam?}
+\begin{itemize}
+    \item Tự động điều chỉnh tốc độ học cho từng tham số
+    \item Không cần điều chỉnh tốc độ học thủ công
+    \item Hoạt động đặc biệt tốt với LSTM và chuỗi thời gian
+\end{itemize}
+
+\subsubsection{Tích Hợp Dự Báo vào Mô Phỏng SUMO}
+
+Sau khi mô hình được huấn luyện, kết quả dự báo được sử dụng để điều chỉnh tín hiệu đèn trong SUMO thông qua TraCI:
+\begin{itemize}
+    \item Dự báo mức độ tắc toàn diện tại thời điểm t+1
+    \item So sánh với ngưỡng cảnh báo để quyết định tăng/giảm thời lượng pha xanh
+    \item Gửi lệnh TraCI: `traci.trafficlight.setPhase(tlsID, phaseID)`
+    \item Cập nhật lệnh cứ mỗi 60 giây (khoảng cách lấy mẫu)
+\end{itemize}
+
 
 \subsection{Thiết kế khối mô phỏng giao thông (SUMO)}
 Khối mô phỏng được thiết kế dựa trên một quy trình tự động hóa (Pipeline) tích hợp giữa dữ liệu địa không gian thực tế và các công cụ mô phỏng vi mô. Quy trình xây dựng môi trường mô phỏng bao gồm 5 giai đoạn chính:

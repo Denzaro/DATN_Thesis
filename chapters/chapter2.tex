@@ -221,6 +221,136 @@ Trong lĩnh vực tài chính và kinh tế, LSTM đã trở thành một công 
 Lĩnh vực y tế và khoa học đời sống cũng chứng kiến những đóng góp quan trọng của LSTM trong việc giám sát sức khỏe bệnh nhân và dự báo xu hướng dịch bệnh. Thông qua việc phân tích các tín hiệu sinh học liên tục như điện tâm đồ, điện não đồ hoặc các chỉ số sinh tồn được thu thập từ thiết bị đeo thông minh, LSTM có khả năng phát hiện sớm các dấu hiệu bất thường và đưa ra cảnh báo về các biến cố lâm sàng trước khi chúng xảy ra. Trong công tác y tế cộng đồng, mô hình này hỗ trợ dự đoán sự lây lan của các bệnh truyền nhiễm dựa trên dữ liệu lịch sử về ca nhiễm, biến động thời tiết và mật độ dân cư. Khả năng xử lý các dữ liệu chuỗi thời gian không đồng nhất giúp các cơ quan y tế có cái nhìn toàn diện để đưa ra các biện pháp can thiệp kịp thời và hiệu quả.
 Mặc dù sở hữu những ưu điểm vượt trội về khả năng ghi nhớ, việc triển khai LSTM trong thực tế vẫn đòi hỏi sự cân nhắc kỹ lưỡng về chi phí tính toán và yêu cầu về khối lượng dữ liệu huấn luyện. Quá trình huấn luyện một mô hình LSTM thường yêu cầu tài nguyên phần cứng lớn và kỹ năng tinh chỉnh các siêu tham số để tránh hiện tượng quá khớp, đặc biệt khi làm việc với các chuỗi thời gian có nhiều nhiễu. Tuy nhiên, với sự phát triển của các kiến trúc lai phối hợp giữa LSTM với các cơ chế chú ý hoặc mạng thần kinh tích chập, khả năng biểu diễn của mô hình ngày càng được nâng cao. Những cải tiến này không chỉ giúp tăng tốc độ hội tụ mà còn cho phép mô hình tập trung vào những phân đoạn thời gian quan trọng nhất, khẳng định vị thế của LSTM như một trụ cột trong hệ thống các phương pháp dự báo hiện đại.
 
+\section{TỔNG QUAN VỀ HỌC TĂNG CƯỜNG (REINFORCEMENT LEARNING)}
+
+Học tăng cường (Reinforcement Learning - RL) là một lĩnh vực của học máy tập trung vào việc huấn luyện các tác nhân (agents) học cách đưa ra quyết định tối ưu thông qua tương tác với một môi trường. Khác với học có giám sát (supervised learning) nơi có sẵn nhãn đúng cho mỗi đầu vào, hay học không giám sát (unsupervised learning) nơi tìm kiếm các mẫu ẩn, học tăng cường dựa trên phản hồi của môi trường dưới dạng phần thưởng (reward) hoặc hình phạt. Ý tưởng cốt lõi là agent học cách tối đa hóa tổng phần thưởng nhận được trong quá trình tương tác với môi trường. \cite{SuttonRL2018}
+
+Các thành phần chính của một bài toán học tăng cường bao gồm:
+\begin{itemize}
+    \item \textbf{Tác nhân (Agent)}: Thực thể đưa ra quyết định và thực hiện các hành động trong môi trường.
+    \item \textbf{Môi trường (Environment)}: Hệ thống mà agent tương tác, cung cấp trạng thái (state) và phần thưởng (reward) phản hồi lại các hành động của agent.
+    \item \textbf{Trạng thái (State)}: Biểu diễn hiện tại của môi trường, mô tả đầy đủ thông tin mà agent cần để đưa ra quyết định.
+    \item \textbf{Hành động (Action)}: Các quyết định mà agent có thể thực hiện để tác động đến môi trường.
+    \item \textbf{Phần thưởng (Reward)}: Tín hiệu scalar phản ánh mức độ tốt hoặc xấu của hành động agent vừa thực hiện.
+    \item \textbf{Chính sách (Policy)}: Hàm ánh xạ từ trạng thái đến hành động, biểu diễn chiến lược của agent.
+\end{itemize}
+
+Trong nhiều bài toán thực tế, học tăng cường được sử dụng để giải quyết các vấn đề điều khiển, tối ưu hóa và quy hoạch. Ví dụ, trong lĩnh vực giao thông, RL có thể được áp dụng để huấn luyện các bộ điều khiển tín hiệu giao thông thích ứng, giúp tối ưu hóa thông lượng xe và giảm thời gian chờ. Với khả năng học trực tiếp từ tương tác với môi trường, RL không yêu cầu một mô hình toán học tường minh của môi trường, điều này rất hữu ích khi môi trường phức tạp hoặc khó lập mô hình.
+
+\subsection{Policy Gradient và Actor-Critic Methods}
+
+Policy Gradient là một lớp các thuật toán học tăng cường tối ưu hóa trực tiếp chính sách (policy) của agent. Thay vì ước lượng hàm giá trị (value function), Policy Gradient học một chính sách xác suất $\pi_\theta(a|s)$ tham số hóa bởi $\theta$, biểu diễn xác suất chọn hành động $a$ khi ở trong trạng thái $s$. Mục tiêu là tối đa hóa kỳ vọng phần thưởng tích lũy:
+
+\begin{equation}
+J(\theta) = \mathbb{E}[\sum_{t=0}^{T} \gamma^t r_t]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $J(\theta)$: Hàm mục tiêu (expected return).
+    \item $\gamma$: Hệ số giảm giá (discount factor), $0 \leq \gamma \leq 1$.
+    \item $r_t$: Phần thưởng tại bước thời gian $t$.
+    \item $T$: Chiều dài tối đa của quỹ đạo (episode).
+\end{itemize}
+
+Policy Gradient sử dụng định lý Policy Gradient, cho phép tính toán gradient của hàm mục tiêu:
+
+\begin{equation}
+\nabla_\theta J(\theta) = \mathbb{E}[\nabla_\theta \log \pi_\theta(a|s) Q^\pi(s, a)]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\nabla_\theta \log \pi_\theta(a|s)$: Gradient của log-xác suất hành động.
+    \item $Q^\pi(s, a)$: Hàm giá trị hành động (action-value function), biểu diễn kỳ vọng phần thưởng khi thực hiện hành động $a$ ở trạng thái $s$ và sau đó tuân theo chính sách $\pi$.
+\end{itemize}
+
+\textbf{Actor-Critic Methods} là một biến thể của Policy Gradient kết hợp hai mạng nơ-ron:
+
+\begin{itemize}
+    \item \textbf{Actor (Diễn viên)}: Một mạng nơ-ron chính sách $\pi_\theta(a|s)$ học cách chọn hành động tốt nhất.
+    \item \textbf{Critic (Nhà phê bình)}: Một mạng nơ-ron giá trị $V_\phi(s)$ ước lượng giá trị của trạng thái, được sử dụng để giảm phương sai của ước lượng gradient.
+\end{itemize}
+
+Advantage function được tính như sau:
+
+\begin{equation}
+A(s, a) = Q(s, a) - V(s) = r + \gamma V(s') - V(s)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $A(s, a)$: Advantage (lợi thế), đo mức độ tốt hơn của hành động $a$ so với hành động trung bình tại trạng thái $s$.
+    \item $r$: Phần thưởng ngay tức khắc.
+    \item $\gamma V(s')$: Giá trị ước lượng của trạng thái tiếp theo.
+    \item $V(s)$: Giá trị ước lượng của trạng thái hiện tại.
+\end{itemize}
+
+Policy Loss (Actor Loss):
+\begin{equation}
+\mathcal{L}_{\text{policy}} = -\mathbb{E}[\log \pi_\theta(a|s) \cdot A(s, a)]
+\end{equation}
+
+Value Loss (Critic Loss):
+\begin{equation}
+\mathcal{L}_{\text{value}} = \mathbb{E}[(V_\phi(s) - G_t)^2]
+\end{equation}
+
+Trong đó $G_t$ là return thực tế từ thời điểm $t$ trở đi.
+
+\textbf{Ưu điểm của Actor-Critic:}
+\begin{itemize}
+    \item Giảm phương sai so với Policy Gradient thuần túy nhờ sử dụng Critic.
+    \item Hội tụ nhanh hơn trong nhiều bài toán.
+    \item Linh hoạt cho cả hành động liên tục (continuous actions) và rời rạc (discrete actions).
+\end{itemize}
+
+\subsection{Beta Distribution cho Hành Động Liên Tục}
+
+Trong các bài toán mà agent cần chọn hành động liên tục (continuous actions) thay vì hành động rời rạc (discrete actions), cần một cách để mô hình hóa phân bố xác suất trên một không gian liên tục. Beta Distribution là một lựa chọn phổ biến khi hành động nằm trong khoảng $[0, 1]$ hoặc có thể được chuẩn hóa vào khoảng đó.
+
+Beta Distribution được tham số hóa bởi hai tham số hình dạng $\alpha$ và $\beta$:
+
+\begin{equation}
+\text{Beta}(\alpha, \beta) = \frac{\Gamma(\alpha + \beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha - 1}(1 - x)^{\beta - 1}
+\end{equation}
+
+Trong đó $\Gamma$ là hàm Gamma. Giá trị trung bình và phương sai của Beta Distribution là:
+
+\begin{equation}
+\mathbb{E}[x] = \frac{\alpha}{\alpha + \beta}
+\end{equation}
+
+\begin{equation}
+\text{Var}[x] = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
+\end{equation}
+
+\textbf{Ưu điểm của Beta Distribution:}
+\begin{itemize}
+    \item \textbf{Hỗ trợ hành động liên tục trên [0, 1]}: Phù hợp cho các bài toán yêu cầu hành động là tỷ lệ, xác suất hoặc giá trị chuẩn hóa.
+    \item \textbf{Linh hoạt}: Có thể biểu diễn nhiều dạng phân bố (đơn điểm, đều, bán nguyệt, v.v.) bằng cách điều chỉnh $\alpha$ và $\beta$.
+    \item \textbf{Khuyến khích exploration}: Phương sai của Beta Distribution cho phép mô hình sample các hành động khác nhau, giúp khám phá không gian hành động.
+    \item \textbf{Tính toán hiệu quả}: So sánh với các phân bố khác, Beta Distribution có công thức đóng cho pdf và cdf.
+\end{itemize}
+
+Trong policy network sử dụng Beta Distribution, actor network thường sản sinh ra các tham số $\mu$ (mean) và $\sigma$ (standard deviation), sau đó chuyển đổi thành $\alpha$ và $\beta$:
+
+\begin{equation}
+\alpha = \mu \cdot \left(\frac{\mu(1-\mu)}{\sigma^2} - 1\right)
+\end{equation}
+
+\begin{equation}
+\beta = (1 - \mu) \cdot \left(\frac{\mu(1-\mu)}{\sigma^2} - 1\right)
+\end{equation}
+
+Hành động được sample từ Beta distribution:
+
+\begin{equation}
+a \sim \text{Beta}(\alpha, \beta)
+\end{equation}
+
+Và thường được clamp về khoảng $[\epsilon, 1-\epsilon]$ để tránh các giá trị cực đoan, trong đó $\epsilon$ là một giá trị nhỏ (ví dụ: $10^{-6}$).
+
 \section{TỔNG QUAN VỀ SUPER RESOLUTION GENERATIVE ADVERSARIAL NETWORK}
 Super-Resolution Generative Adversarial Network (SRGAN), được Ledig và cộng sự giới thiệu vào năm 2016, là một trong những mô hình tiên phong ứng dụng mạng GAN vào bài toán tăng độ phân giải ảnh. Mục tiêu của SRGAN là khắc phục hạn chế của các phương pháp nội suy truyền thống và các mô hình tối ưu theo lỗi điểm ảnh như MSE, vốn thường tạo ra ảnh mượt nhưng thiếu chi tiết và không giữ được kết cấu tự nhiên. Thông qua cơ chế huấn luyện đối kháng, SRGAN học cách sinh ra ảnh có độ phân giải cao với chi tiết sắc nét hơn bằng cách sử dụng đồng thời hai thành phần: perceptual loss dựa trên đặc trưng trích xuất từ mạng VGG và adversarial loss từ Discriminator. Sự kết hợp này giúp mô hình tái tạo các hoa văn, kết cấu và đường nét tinh vi thường bị mất đi trong quá trình phóng to ảnh, từ đó tạo ra ảnh đầu ra có chất lượng thị giác chân thực và giàu chi tiết hơn so với các kỹ thuật SR truyền thống. \cite{Ledig2016SRGAN}
 \subsection{Tổng quan kiến trúc}
