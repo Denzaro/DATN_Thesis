@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
   <diagram name="Page-1" id="d2LcfHM5PsW7kx5Sq_SA">
-    <mxGraphModel dx="1056" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="503" dy="301" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -44,13 +44,18 @@
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-16" edge="1" parent="1" source="xgS7kWpS9KQfm5lHcmm8-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="xgS7kWpS9KQfm5lHcmm8-12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-15" connectable="0" parent="xgS7kWpS9KQfm5lHcmm8-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Có" vertex="1">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-15" connectable="0" parent="xgS7kWpS9KQfm5lHcmm8-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Đúng" vertex="1">
           <mxGeometry relative="1" x="0.2903" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="-6" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-23" edge="1" parent="1" source="xgS7kWpS9KQfm5lHcmm8-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="4CtvXxur9Q5rAPS2Ytmi-22">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-23" edge="1" parent="1" source="xgS7kWpS9KQfm5lHcmm8-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4CtvXxur9Q5rAPS2Ytmi-22">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="CxYntXlMBwPZgYnSzi_S-1" connectable="0" parent="4CtvXxur9Q5rAPS2Ytmi-23" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Sai" vertex="1">
+          <mxGeometry relative="1" x="-0.7218" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-6" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" value="Vùng phân tích&lt;br&gt;có diện tích &gt; 0?" vertex="1">
           <mxGeometry height="80" width="130" x="470" y="50" as="geometry" />
@@ -59,13 +64,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11" value="Áp dụng mask phân tích lên ảnh gốc" vertex="1">
-          <mxGeometry height="40" width="220" x="425" y="160" as="geometry" />
+          <mxGeometry height="40" width="220" x="425" y="170" as="geometry" />
         </mxCell>
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-19" edge="1" parent="1" source="xgS7kWpS9KQfm5lHcmm8-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="xgS7kWpS9KQfm5lHcmm8-18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11" value="Chuyển đổi ảnh sang&lt;br&gt;không gian màu HSV" vertex="1">
-          <mxGeometry height="40" width="220" x="425" y="220" as="geometry" />
+          <mxGeometry height="40" width="220" x="425" y="225" as="geometry" />
         </mxCell>
         <mxCell id="xgS7kWpS9KQfm5lHcmm8-21" edge="1" parent="1" source="xgS7kWpS9KQfm5lHcmm8-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="xgS7kWpS9KQfm5lHcmm8-20">
           <mxGeometry relative="1" as="geometry" />
@@ -88,23 +93,23 @@
         <mxCell id="4CtvXxur9Q5rAPS2Ytmi-5" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4CtvXxur9Q5rAPS2Ytmi-3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-13" connectable="0" parent="4CtvXxur9Q5rAPS2Ytmi-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Có" vertex="1">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-13" connectable="0" parent="4CtvXxur9Q5rAPS2Ytmi-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Đúng" vertex="1">
           <mxGeometry relative="1" x="-0.3044" y="-2" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-12" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4CtvXxur9Q5rAPS2Ytmi-6">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-12" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="730" y="540" />
               <mxPoint x="730" y="700" />
-              <mxPoint x="535" y="700" />
             </Array>
+            <mxPoint x="535" y="700" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-14" connectable="0" parent="4CtvXxur9Q5rAPS2Ytmi-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Không" vertex="1">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-14" connectable="0" parent="4CtvXxur9Q5rAPS2Ytmi-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Sai" vertex="1">
           <mxGeometry relative="1" x="-0.7281" y="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint x="-39" y="1" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="4CtvXxur9Q5rAPS2Ytmi-1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=11" value="Có vùng loại trừ&lt;br&gt;từ cấu hình?" vertex="1">
@@ -137,16 +142,17 @@
         <mxCell id="4CtvXxur9Q5rAPS2Ytmi-21" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="4CtvXxur9Q5rAPS2Ytmi-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-26" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4CtvXxur9Q5rAPS2Ytmi-18">
+        <mxCell id="4CtvXxur9Q5rAPS2Ytmi-26" edge="1" parent="1" source="4CtvXxur9Q5rAPS2Ytmi-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="760" y="880" />
               <mxPoint x="535" y="880" />
             </Array>
+            <mxPoint x="535" y="880" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="4CtvXxur9Q5rAPS2Ytmi-22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11" value="Gán tỉ lệ che phủ = 0%" vertex="1">
-          <mxGeometry height="40" width="140" x="690" y="70" as="geometry" />
+          <mxGeometry height="40" width="140" x="680" y="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

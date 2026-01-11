@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.2.9 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.2.9">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
   <diagram name="Page-1" id="3o7AIeRR_VJB7JcFHsJe">
-    <mxGraphModel dx="1042" dy="1720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1056" dy="1733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -19,7 +19,7 @@
         <mxCell id="4yIeASf09Wk0FxncehYY-4" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4yIeASf09Wk0FxncehYY-9" connectable="0" parent="4yIeASf09Wk0FxncehYY-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Có" vertex="1">
+        <mxCell id="4yIeASf09Wk0FxncehYY-9" connectable="0" parent="4yIeASf09Wk0FxncehYY-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Đúng" vertex="1">
           <mxGeometry relative="1" x="-0.2661" y="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -46,14 +46,9 @@
         <mxCell id="4yIeASf09Wk0FxncehYY-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11" value="Tính tỷ lệ phần trăm che phủ&lt;br&gt;của xe máy trong từng vùng ROI" vertex="1">
           <mxGeometry height="50" width="220" x="40" y="350" as="geometry" />
         </mxCell>
-        <mxCell id="4yIeASf09Wk0FxncehYY-24" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-15">
+        <mxCell id="Rj7atsIlfxrKK-fUclVf-2" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="330" y="470" />
-              <mxPoint x="460" y="470" />
-              <mxPoint x="460" y="40" />
-              <mxPoint x="610" y="40" />
-            </Array>
+            <mxPoint x="330" y="470" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="4yIeASf09Wk0FxncehYY-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" value="Dùng YOLO để nhận diện xe 2 bánh - xe 4 bánh và đếm số lượng" vertex="1">
@@ -62,9 +57,9 @@
         <mxCell id="4yIeASf09Wk0FxncehYY-11" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.537;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;" target="4yIeASf09Wk0FxncehYY-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4yIeASf09Wk0FxncehYY-12" connectable="0" parent="4yIeASf09Wk0FxncehYY-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Không" vertex="1">
+        <mxCell id="4yIeASf09Wk0FxncehYY-12" connectable="0" parent="4yIeASf09Wk0FxncehYY-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Sai" vertex="1">
           <mxGeometry relative="1" x="-0.2723" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint x="-15" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="4yIeASf09Wk0FxncehYY-14" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" value="NHẬN DIỆN VÀ TÍNH SỐ LƯỢNG PHƯƠNG TIỆN" vertex="1">
