@@ -73,12 +73,39 @@ Khối thu thập dữ liệu đảm nhiện việc tự động truy suất và
 \end{figure}
 
 Giải thích lưu đồ thu thập dữ liệu ở hình \ref{fig:upload_raw_images}: \\
-\hspace*{1cm} Quá trình thu thập dữ liệu bắt đầu bằng việc khởi tạo Google Drive API để kết nối và thao tác với hệ thống lữu trữ đám mây. Tiếp theo, hệ thống sẽ khởi tạo một hàng đợi dùng để tải ảnh lên Drive (drive_queue) và một bộ nhớ đệm để lưu trữ mã SHA của ảnh được lưu gần nhất của mỗi camera. Sau đó, hệ thống sẽ tiến hành chạy đa luồng để thực hiện các tác vụ sau:
+\hspace*{1cm} Quá trình thu thập dữ liệu bắt đầu bằng việc khởi tạo Google Drive API để kết nối và thao tác với hệ thống lữu trữ đám mây. Tiếp theo, hệ thống sẽ khởi tạo một hàng đợi (drive\_queue) dùng để làm queue trung gian để giao tiếp giữa các tiến trình và một bộ nhớ đệm để lưu trữ mã SHA của ảnh được lưu gần nhất của mỗi camera. Sau đó, hệ thống sẽ tiến hành chạy đa luồng để thực hiện các tác vụ sau:
 \begin{itemize}
-    \item \textbf{Nhóm luồng giám sát camera: } Ở nhóm luồng này tùy theo số lượng camera cần giám sát là 13 camera ứng với 13 địa điểm mà hệ thống sẽ khởi tạo tương ứng số luồng. Mỗi luồng sẽ chịu trách nhiệm truy suất ảnh từ một camera cụ thể. Sau đó, cứ mỗi khoảng thời gian nhất định là khoảng 5 phút thì ảnh sẽ được gom lại và gửi vào hàng đợi drive\_queue để chờ được tải lên Google Drive.
-    \item \textbf{Luồng chính: } Luồng này có đóng vai trò như một bộ điều phối, chịu trách nhiệm phân loại và giao task cho nhóm luồng upload ảnh lên Drive.
+    \item \textbf{Nhóm luồng truy suất camera: } Ở nhóm luồng này tùy theo số lượng camera cần giám sát là 13 camera ứng với 13 địa điểm mà hệ thống sẽ khởi tạo tương ứng số luồng. Mỗi luồng sẽ chịu trách nhiệm truy suất ảnh từ một camera cụ thể. Sau đó, cứ mỗi khoảng thời gian nhất định là khoảng 5 phút thì ảnh sẽ được gom lại và gửi vào hàng đợi drive\_queue để chờ được tải lên Google Drive.
+    \item \textbf{Luồng chính: } Luồng này khởi tạo 2 nhóm luồng truy suất camera và nhóm luồng upload dữ liệu lên Drive. Ngoài ra, luồng này có đóng vai trò như một bộ điều phối, chịu trách nhiệm phân loại và giao task cho nhóm luồng upload ảnh lên Google Drive.
     \item \textbf{Nhóm luồng upload dữ liệu lên Drive: } Nhóm luồng này bao gồm 2 luồng chạy song song, chịu trách nhiệm nhận task để đẩy ảnh từ hàng đợi lên Google Drive.
 \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{fig/main_threading.png}
+    \caption[Lưu đồ chi tiết hoạt động của luồng chính]{Lưu đồ chi tiết hoạt động của luồng chính}
+    \label{fig:main_threading}
+\end{figure}
+
+Giải thích lưu đồ chi tiết hoạt động của luồng chính ở hình \ref{fig:main_threading}: \\
+\hspace*{1cm} Luồng chính bắt đầu bằng việc khởi tạo nhóm luồng truy suất camera và nhóm luồng upload cùng với cơ chế đồng bộ hóa. Sau đó, luồng chính đi vào một vòng lặp liên tục chờ nhận công việc từ hàng đợi drive\_queue. Nếu hàng đợi không có task, luồng sẽ nghỉ 0.1 giây rồi tiếp tục kiểm tra. Khi nhận được task, luồng chính sẽ xác định loại công việc: nếu là task tạo thư mục, luồng kiểm tra thư mục camera đã tồn tại chưa và tiến hành tạo trên Google Drive nếu chưa có; nếu là task upload ảnh, luồng chuẩn bị thông tin và phân phối công việc cho nhóm luồng upload. Vòng lặp này tiếp tục cho đến khi nhận được tín hiệu ngắt từ người dùng, lúc đó luồng chính sẽ gửi tín hiệu dừng đến tất cả các luồng con, chờ chúng hoàn thành công việc, rồi kết thúc chương trình.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{fig/camera_threading.png}
+    \caption[Lưu đồ chi tiết hoạt động của nhóm luồng truy suất camera]{Lưu đồ chi tiết quá trình truy suất ảnh từ camera trên website}
+    \label{fig:camera_threading}
+\end{figure}
+
+Giải thích lưu đồ chi tiết hoạt động của nhóm luồng truy suất camera ở hình \ref{fig:camera_threading}: \\
+\hspace*{1cm} Luồng giám sát camera bắt đầu bằng việc khởi tạo batch buffer - một bộ đệm dùng để gom nhóm các ảnh trước khi upload - sau đó gửi một task thông qua drive\_queue để yêu cầu tạo folder cho camera trên Google Drive. Sau bước khởi tạo, hệ thống đi vào vòng lặp chính. Đầu tiên, hệ thống kiểm tra xem đang ở trạng thái hoạt động hay không. Nếu không hoạt động, hệ thống sẽ kiểm tra thời điểm hiện tại có nằm trong khung giờ cho phép hay không; nếu không thì ngủ 4 giây rồi quay lại đầu vòng lặp, nếu có thì chuyển sang trạng thái hoạt động. Khi đã ở trạng thái hoạt động, hệ thống gửi yêu cầu HTTP để lấy ảnh từ camera trên website giaothong.hochiminhcity.gov.vn.
+
+Nếu việc lấy ảnh thất bại, hệ thống quay lại đầu vòng lặp để thử lại. Nếu thành công, hệ thống tính toán mã SHA của ảnh vừa lấy và so sánh với mã SHA của ảnh trước đó đã được lưu trong bộ nhớ đệm. Việc so sánh này nhằm phát hiện ảnh mới có thực sự khác biệt hay không, tránh lưu trữ các ảnh trùng lặp. Nếu mã SHA không thay đổi, nghĩa là ảnh giống ảnh cũ, hệ thống bỏ qua và quay lại vòng lặp. Nếu mã SHA khác nhau, hệ thống tiếp tục kiểm tra xem thời điểm ảnh được chụp có nằm trong khung giờ cho phép hay không. Nếu không nằm trong khung giờ, hệ thống chuyển về trạng thái không hoạt động và quay lại đầu vòng lặp.
+
+Khi ảnh mới hợp lệ (SHA khác và trong khung giờ), hệ thống cập nhật mã SHA mới vào bộ nhớ đệm và thêm ảnh vào batch buffer. Tiếp theo, hệ thống kiểm tra xem batch buffer đã gom đủ ảnh trong khoảng thời gian 5 phút hay chưa. Nếu chưa đủ, hệ thống ngủ 4 giây rồi tiếp tục vòng lặp để lấy thêm ảnh. Nếu đã đủ, hệ thống đẩy toàn bộ ảnh trong batch qua drive\_queue để upload lên Google Drive, sau đó xóa batch buffer hiện tại và tiếp tục ngủ 4 giây trước khi bắt đầu chu kỳ mới. Vòng lặp này tiếp tục cho đến khi người dùng thực hiện ngắt (Ctrl+C), lúc đó hệ thống sẽ xóa batch buffer còn lại và kết thúc tiến trình.
+
+
+
 
 
 \subsection{Thiết kế khối lưu trữ}
@@ -117,6 +144,7 @@ Như trên hình \ref{fig:file_structure}, dữ liệu được tổ chức theo
         \end{itemize}
     \end{itemize}
 \end{itemize}
+
 
 \subsection{Thiết kế khối tiền xử lý ảnh}
 Khối tiền xử lý ảnh có vai trò chuẩn hóa và nâng cao chất lượng đầu vào trước khi đưa vào khối nhận diện và phân tích phương tiện. Hệ thống thực hiện các bước tiền xử lý chính sau:
