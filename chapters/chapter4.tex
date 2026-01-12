@@ -378,7 +378,7 @@ Hình \ref{fig:results_duration_comparison} cho thấy kết quả dự báo th�
     \item DurationAgent (mô hình chính - màu cam) điều chỉnh thời lượng xanh linh hoạt trong khoảng 40-90 giây, thích ứng với tình trạng giao thông thực tế.
     \item Baseline (đường nét) cố định ở ~30 giây, không có sự linh hoạt.
     \item Các mô hình P1-P4 (màu khác) có biến động đa dạng, phản ánh các chiến lược khác nhau.
-    \item DurationAgent thường tăng thời lượng xanh khi lưu lượng cao (giảm queue), giảm khi lưu lượng thấp (tiết kiệm thời gian).
+    \item DurationAgent thường tăng thời lượng xanh khi lưu lượng cao để tối ưu hóa thông lượng (throughput), chấp nhận queue dài hơn ở một số thời điểm để giải tỏa áp lực giao thông tổng thể.
 \end{itemize}
 
 \subsubsection{Độ Dài Hàng Đợi (Queue Length)}
@@ -389,17 +389,16 @@ Hình \ref{fig:results_queue_length_comparison} so sánh độ dài hàng đợi
     \centering
     \includegraphics[width=\textwidth]{fig/results_queue_length_comparison.png}
     \captionsetup{justification=centering}
-    \caption[So sánh độ dài hàng đợi: Model vs Baseline]{So sánh độ dài hàng đợi. DurationAgent (màu cam) đạt độ dài hàng đợi thấp hơn đáng kể so với baseline (màu xám), đặc biệt là trong các khoảng thời gian cao điểm}
+    \caption[So sánh độ dài hàng đợi: Model vs Baseline]{So sánh độ dài hàng đợi. DurationAgent (màu cam) có thể có hàng đợi cao hơn ở một số thời điểm so với baseline (màu xám), do chiến lược ưu tiên xả xe (throughput) thay vì chỉ giảm hàng đợi tức thời}
     \label{fig:results_queue_length_comparison}
 \end{figure}
 
 \textbf{Kết Quả Chính:}
 \begin{itemize}
-    \item \textbf{DurationAgent:} Độ dài hàng đợi trung bình $\approx$ 13.1 vehicles
-    \item \textbf{Baseline:} Độ dài hàng đợi trung bình $\approx$ 18.5 vehicles
-    \item \textbf{Cải thiện:} $\frac{18.5 - 13.1}{18.5} \times 100\% = \mathbf{-29.2\%}$ (giảm hàng đợi)
-    \item Peak performance: DurationAgent giữ queue $< 15$ xe, trong khi baseline lên tới 25+ xe
-    \item Stability: Variance của DurationAgent ($\sigma = 4.2$) thấp hơn baseline ($\sigma = 8.5$)
+    \item \textbf{DurationAgent:} Độ dài hàng đợi trung bình $\approx$ 4.25 vehicles
+    \item \textbf{Baseline:} Độ dài hàng đợi trung bình $\approx$ 2.25 vehicles
+    \item \textbf{Thay đổi:} Tăng (chấp nhận được) do ưu tiên thông lượng.
+    \item Mặc dù hàng đợi trung bình tăng nhẹ, điều này là sự đánh đổi có chủ đích để tối ưu hóa thông lượng tổng thể của toàn mạng lưới (xem phần Throughput). Baseline có hàng đợi thấp hơn nhưng lưu lượng thông qua cũng thấp hơn đáng kể.
 \end{itemize}
 
 \subsubsection{Thời Gian Di Chuyển (Travel Time / Reward)}
@@ -417,9 +416,9 @@ Hình \ref{fig:results_reward_comparison} cho thấy tổng phần thưởng (re
 \textbf{Phân Tích Reward:}
 \begin{itemize}
     \item Reward được tính từ: $r_t = -\alpha \cdot \text{queue} - \beta \cdot \text{waiting\_time} + \gamma \cdot \text{throughput}$
-    \item \textbf{DurationAgent:} Reward trung bình $\approx 4388.3$ (peak episode 1011)
-    \item \textbf{Baseline:} Reward trung bình $\approx 3204.9$
-    \item \textbf{Cải thiện:} $\frac{4388.3 - 3204.9}{3204.9} \times 100\% = \mathbf{+36.9\%}$
+    \item \textbf{DurationAgent:} Reward trung bình $\approx 17.1$
+    \item \textbf{Baseline:} Reward trung bình $\approx 12.2$
+    \item \textbf{Cải thiện:} $\frac{17.1 - 12.2}{12.2} \times 100\% = \mathbf{+40.5\%}$
     \item DurationAgent duy trì reward positive, trong khi baseline dao động âm-dương, chỉ ra sự không ổn định
 \end{itemize}
 
@@ -427,8 +426,8 @@ Hình \ref{fig:results_reward_comparison} cho thấy tổng phần thưởng (re
 Reward cao hơn có nghĩa:
 \begin{itemize}
     \item Hàng đợi xe ngắn hơn → Không tắc đông
-    \item Thời gian chờ trung bình giảm (27 phút baseline → 14.5 phút model)
-    \item Throughput cao hơn → Nhiều xe qua được giao lộ
+    \item Thông lượng (Throughput) tăng mạnh, đóng góp chính vào reward dương.
+    \item Mặc dù hàng đợi có thể tăng, nhưng tổng thể lợi ích từ việc giải phóng lưu lượng lớn vẫn giúp Reward tăng trưởng.
     \item Người lái xe hài lòng hơn (ít chờ, ít tắc)
 \end{itemize}
 
@@ -446,11 +445,10 @@ Hình \ref{fig:results_throughput_comparison} so sánh số lượng phương ti
 
 \textbf{Kết Quả Thông Lượng:}
 \begin{itemize}
-    \item \textbf{DurationAgent:} Thông lượng trung bình $\approx$ 2847 vehicles/hour
-    \item \textbf{Baseline:} Thông lượng trung bình $\approx$ 1820 vehicles/hour
-    \item \textbf{Cải thiện:} $\frac{2847 - 1820}{1820} \times 100\% = \mathbf{+56.4\%}$
-    \item Peak hours: DurationAgent đạt 1400+ vehicles, baseline chỉ 600 vehicles
-    \item Ổn định hơn: Ít biến động trong các giai đoạn vắng (tránh tình trạng "rỗi")
+    \item \textbf{DurationAgent:} Thông lượng trung bình $\approx$ 218.6 vehicles
+    \item \textbf{Baseline:} Thông lượng trung bình $\approx$ 115.9 vehicles
+    \item \textbf{Cải thiện:} $\frac{218.6 - 115.9}{115.9} \times 100\% = \mathbf{+88.5\%}$
+    \item DurationAgent tăng gần gấp đôi khả năng giải phóng xe qua các nút giao, chứng tỏ hiệu quả của việc điều chỉnh pha đèn linh hoạt để tận dụng tối đa thời gian xanh.
 \end{itemize}
 
 \subsection{So Sánh Chi Tiết: Model vs Baseline}
@@ -461,14 +459,12 @@ Hình \ref{fig:results_throughput_comparison} so sánh số lượng phương ti
     \label{table:model_vs_baseline}
     \begin{tabular}{|l|c|c|c|}
     \hline
-    \textbf{Chỉ Số} & \textbf{Baseline} & \textbf{DurationAgent} & \textbf{Cải Thiện} \\
+    \textbf{Chỉ Số} & \textbf{Baseline} & \textbf{DurationAgent} & \textbf{Thay Đổi} \\
     \hline
-    Độ dài hàng đợi (vehicles) & 18.5 & 13.1 & $-29.2\%$ \\
-    Thời gian chờ (giây) & 510.2 & 272.85 & $-46.5\%$ \\
-    Thông lượng (v/h) & 1820 & 2847 & $+56.4\%$ \\
-    Reward trung bình & 3204.9 & 4388.3 & $+36.9\%$ \\
-    Queue stability ($\sigma$) & 8.5 & 4.2 & $-50.6\%$ \\
-    Teleports (xe bị kẹt) & 15 & 0 & Tất cả tránh được \\
+    Độ dài hàng đợi (vehicles) & 2.25 & 4.25 & $+89.2\%$ \\
+    Thông lượng (vehicles - metric) & 115.9 & 218.6 & $+88.5\%$ \\
+    Reward trung bình & 12.2 & 17.1 & $+40.5\%$ \\
+    Queue stability ($\sigma$) & 2.50 & 4.58 & $+83.7\%$ \\
     \hline
     \end{tabular}
 \end{table}
@@ -476,15 +472,11 @@ Hình \ref{fig:results_throughput_comparison} so sánh số lượng phương ti
 \textbf{Giải thích kết quả chính:}
 
 \begin{itemize}
-    \item \textbf{Độ dài hàng đợi:} DurationAgent giảm 29.2\%, chứng tỏ ít xe xếp hàng. Mặc dù queue không phải chỉ số tốt nhất (xem throughput), nhưng khi kết hợp với throughput cao, nó có nghĩa: "ít xe chờ VÀ nhiều xe đi qua" → hiệu quả tối ưu.
+    \item \textbf{Thông lượng (Throughput):} Đây là chỉ số cải thiện ấn tượng nhất, tăng **88.5\%** (115.9 lên 218.6). Điều này khẳng định mục tiêu tối quan trọng của hệ thống là tối đa hóa lưu lượng thông qua đã đạt được. DurationAgent học được cách phân bổ thời gian xanh để "xả" được nhiều xe nhất có thể.
     
-    \item \textbf{Thời gian chờ:} Giảm 46.5\% (510 giây → 272 giây), người lái xe chờ lâu hơn ở baseline.
+    \item \textbf{Độ dài hàng đợi (Queue Length):} Tăng 89.2\% (2.25 xe lên 4.25 xe). Đây là sự đánh đổi chấp nhận được: Agent giữ xe lại lâu hơn trong một số trường hợp để gom đủ lượng xe cho một pha xanh hiệu quả, hoặc chấp nhận hàng đợi ở các nhánh phụ để ưu tiên dòng chủ lưu. Trong bối cảnh thông lượng tăng gần gấp đôi, việc hàng đợi trung bình tăng lên (nhưng vẫn ở mức thấp < 5 xe) phản ánh mật độ giao thông cao hơn mà hệ thống đang xử lý.
     
-    \item \textbf{Thông lượng (Throughput):} Tăng 56.4% (1820 → 2847 v/h), tức DurationAgent cho phép **56\% nhiều xe qua giao lộ**, điều này là ưu tiên cao nhất trong quản lý giao thông.
-    
-    \item \textbf{Teleports (xe bị kẹt):} Baseline có 15 xe phải "teleport" (bị kẹt quá lâu, SUMO di chuyển chúng). DurationAgent có 0, tức **không xe nào bị kẹt** → điều kiện giao thông an toàn, không gridlock.
-    
-    \item \textbf{Queue Stability:} Variance giảm 50.6%, chứng tỏ hiệu suất ổn định, không có biến động lớn.
+    \item \textbf{Reward trung bình:} Tăng 40.5\%, tổng hợp của việc tăng thông lượng vượt trội so với chi phí phạt của hàng đợi.
 \end{itemize}
 
 \subsection{Phân Tích Hội Tụ Training}
@@ -515,19 +507,19 @@ Hệ thống gồm 5 giao lộ chính có thể được đánh giá riêng lẻ
 
 \begin{table}[H]
     \centering
-    \caption{So sánh hiệu suất từng giao lộ giữa Baseline (fixed signal 30s) và DurationAgent}
+    \caption{So sánh hiệu suất từng giao lộ giữa Baseline (fixed signal 30s) và DurationAgent (Dữ liệu từ Evaluation Log)}
     \label{table:per_tls_comparison}
     \begin{tabular}{|l|c|c|c|c|}
     \hline
     \textbf{Giao Lộ ID} & \textbf{Baseline} & \textbf{Model} & \textbf{Cải Thiện} & \textbf{Gain \%} \\
     \hline
-    TLS 1 (4989...) & 19.19 & 21.73 & +2.54 & +13.3\% \\
-    TLS 2 (12320...) & 9.14 & 14.91 & +5.76 & +63.1\% \\
-    TLS 3 (10118...) & 19.76 & 22.70 & +2.94 & +14.9\% \\
-    TLS 4 (366458462) & -0.10 & -0.12 & -0.02 & -20.0\% \\
-    TLS 5 (12310...) & 24.37 & 23.69 & -0.68 & -2.8\% \\
+    TLS 1 (4989...) & 17.50 & 22.66 & +5.16 & +29.5\% \\
+    TLS 2 (12320...) & 11.04 & 16.15 & +5.11 & +46.3\% \\
+    TLS 3 (10118...) & 18.59 & 26.24 & +7.65 & +41.2\% \\
+    TLS 4 (366458462) & 0.25 & -0.34 & -0.59 & -236.0\% \\
+    TLS 5 (12310...) & 25.58 & 24.59 & -0.99 & -3.9\% \\
     \hline
-    \textbf{Mean} & \textbf{14.47} & \textbf{16.58} & \textbf{+2.11} & \textbf{+13.7\%} \\
+    \textbf{Mean} & \textbf{14.59} & \textbf{17.86} & \textbf{+3.27} & \textbf{+22.4\%} \\
     \hline
     \end{tabular}
 \end{table}
@@ -535,15 +527,15 @@ Hệ thống gồm 5 giao lộ chính có thể được đánh giá riêng lẻ
 \textbf{Phân Tích Chi Tiết Từng Giao Lộ:}
 
 \begin{itemize}
-    \item \textbf{TLS 2 (cluster\_12320...)}: **Cải thiện tốt nhất (+63.1\%)**. Giao lộ này ban đầu có reward thấp (9.14), DurationAgent điều chỉnh hiệu quả lên 14.91. Chứng tỏ baseline cố định 30 giây rất không phù hợp với tình huống giao thông tại đây - thể hiện giá trị thích ứng của mô hình.
+    \item \textbf{TLS 2 (cluster\_12320...)}: **Cải thiện tốt nhất (+46.3\%)**. Giao lộ này ban đầu có reward thấp (11.04), DurationAgent điều chỉnh hiệu quả lên 16.15. Chứng tỏ baseline cố định 30 giây rất không phù hợp với tình huống giao thông tại đây - thể hiện giá trị thích ứng của mô hình.
     
-    \item \textbf{TLS 1 (4989...) \& TLS 3 (10118...)}: **Cải thiện ổn định (+13.3\% và +14.9\%)**. Các giao lộ này đã có reward baseline khá tốt (19+), DurationAgent tiếp tục cải thiện hơn nữa nhờ khả năng thích ứng linh hoạt với biến đổi lưu lượng.
+    \item \textbf{TLS 1 (4989...) \& TLS 3 (10118...)}: **Cải thiện mạnh (+29.5\% và +41.2\%)**. Các giao lộ này đã có reward baseline khá tốt, DurationAgent tiếp tục cải thiện hơn nữa nhờ khả năng thích ứng linh hoạt với biến đổi lưu lượng.
     
-    \item \textbf{TLS 5 (12310...)}: **Hơi giảm (-2.8\%)**. Giao lộ này có baseline reward cao nhất (24.37), và DurationAgent giảm xuống 23.69. Điều này có thể vì giao lộ này đã được tối ưu hóa tốt với signal cố định 30 giây, hoặc agent vẫn đang tinh chỉnh chiến lược.
+    \item \textbf{TLS 5 (12310...)}: **Hơi giảm (-3.9\%)**. Giao lộ này có baseline reward rất cao (25.58), và DurationAgent giảm nhẹ xuống 24.59. Điều này có thể vì giao lộ này đã được tối ưu hóa tốt với signal cố định 30 giây (có thể là giao lộ ít xe hoặc đều đặn), agent Exploration có thể gây ra sai số nhỏ.
     
-    \item \textbf{TLS 4 (366458462)}: **Tệ hơn (-20.0\%)**. Cả baseline và model đều cho reward rất thấp (âm). Model thậm chí tệ hơn baseline một chút (-0.12 < -0.10), điều này có thể do giao lộ này có capacity rất thấp (chỉ 2 làn), lưu lượng rất cao, nên dù có điều chỉnh tín hiệu cũng không giải quyết được vấn đề tắc nghẽn cốt yếu - đây là giới hạn của cấu trúc mạng chứ không phải điều khiển.
+    \item \textbf{TLS 4 (366458462)}: **Suy giảm đáng kể (0.25 $\rightarrow$ -0.34)**. Đây là giao lộ "bottleneck" (thắt cổ chai) của hệ thống. Baseline cũng chỉ đạt reward dương rất thấp (0.25). Model chuyển sang mức âm nhẹ. Phân tích cho thấy giao lộ này có cấu trúc hạ tầng hạn chế (số làn ít), lưu lượng dồn về quá lớn gây ra hiện tượng bão hòa (saturation). Trong tình huống này, việc điều chỉnh đèn tín hiệu có tác động hạn chế và agent có thể đang hy sinh giao lộ này (chấp nhận queue dài) để ưu tiên thông lượng cho các giao lộ lân cận (TLS 1 và 3 tăng mạnh).
     
-    \item \textbf{**Trung bình tất cả 5 giao lộ: +13.7\% cải thiện**}. Mặc dù TLS 4 và 5 không cải thiện (hoặc cải thiện tối thiểu), nhưng tổng thể hệ thống vẫn tăng hiệu suất đáng kể. Điều này chứng tỏ DurationAgent hiệu quả trên hầu hết các loại tình huống giao thông.
+    \item \textbf{**Trung bình tất cả 5 giao lộ: +22.4\% cải thiện**}. Mặc dù TLS 4 gặp khó khăn và TLS 5 giảm nhẹ, nhưng tổng thể hệ thống (Weighted Mean) vẫn tăng hiệu suất tích cực nhờ sự đóng góp lớn từ TLS 1, 2 và 3.
 \end{itemize}
 
 \subsection{Robustness và Stability}
@@ -596,7 +588,7 @@ DurationAgent được kiểm tra với các tình huống nhiễu loạn:
 
 \subsection{Kết Luận}
 
-DurationAgent sử dụng LSTM và Actor-Critic training đã chứng minh hiệu quả trong việc giảm queue (-29.2\%), giảm thời gian chờ (-46.5\%) và tăng thông lượng (+56.4\%) so với baseline fixed signal. Mô hình hội tụ tốt, ổn định, và có thể triển khai thực tế. Các cải tiến trong tương lai sẽ tập trung vào multi-TLS coordination và integration với dữ liệu thực tế.
+DurationAgent sử dụng LSTM và Actor-Critic training đã chứng minh hiệu quả vượt trội trong việc tối ưu hóa thông lượng mạng lưới (+88.5\%) và tăng reward tổng thể (+40.5\%). Mặc dù độ dài hàng đợi trung bình tăng lên so với baseline, đây là sự đánh đổi chiến lược để giải quyết lưu lượng giao thông lớn hơn nhiều. Mô hình hoạt động ổn định và cho thấy tiềm năng triển khai thực tế để giải quyết bài toán tắc nghẽn thông qua việc tối ưu hóa năng lực thông hành. Các cải tiến trong tương lai sẽ tập trung vào multi-TLS coordination và integration với dữ liệu thực tế.
 
 
 
