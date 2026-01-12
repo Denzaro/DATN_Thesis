@@ -14,6 +14,7 @@
 \usepackage[T5]{fontenc}
 \usepackage{listings}
 \usepackage{subcaption}
+\usepackage{longtable}
 
 
 \usepackage{booktabs}
@@ -44,6 +45,9 @@
 
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage[titles]{tocloft}
+\setlength{\cftfignumwidth}{3.5em}
+\setlength{\cfttabnumwidth}{3.5em}
 
 %%========================================
 \usepackage{indentfirst}
@@ -138,8 +142,7 @@
 \listoftables
 
 \begin{abbreviation}
-\begin{center}
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{1.8}
 \begin{longtable}{p{3.5cm}@{\hspace{1cm}}p{10cm}}
 \textbf{Các từ viết tắt} &  \textbf{Định nghĩa} \\
 \hline
@@ -185,7 +188,6 @@ C3K2 & Cross Stage Partial với Block Kernel Size 2 \\
 TracCI & Traffic Control Interface \\
 OSM & Open Street Map \\
 \end{longtable}
-\end{center}
 \end{abbreviation}	
 
 % Main Matter
