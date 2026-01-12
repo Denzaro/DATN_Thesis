@@ -345,7 +345,7 @@ x_t^{\text{norm}} = \frac{x_t - x_{\min}}{x_{\max} - x_{\min}}
 
 \textbf{Quá trình xử lý LSTM:}
 
-Tại mỗi time step, input $x_t^{\text{norm}}$ cùng với hidden state trước đó $h_{t-1}$ và cell state $c_{t-1}$ được đưa vào khối LSTM. Theo lý thuyết trong Chương 2, Mục 2.1.1, khối LSTM thực hiện quá trình với ba cổng điều khiển:
+Tại mỗi time step, input $x_t^{\text{norm}}$ cùng với hidden state trước đó $h_{t-1}$ và cell state $c_{t-1}$ được đưa vào khối LSTM. Theo lý thuyết trong Chương 2, Mục 2.3.2, khối LSTM thực hiện quá trình với ba cổng điều khiển:
 
 \begin{enumerate}
     \item \textbf{Cổng Quên}: $f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$ - Quyết định thông tin nào từ cell state trước được giữ lại để ghi nhớ các mẫu lưu lượng dài hạn.
