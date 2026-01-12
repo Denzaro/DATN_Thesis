@@ -95,7 +95,7 @@ Giải thích lưu đồ thu thập dữ liệu ở hình \ref{fig:upload_raw_im
 \end{figure}
 
 Giải thích lưu đồ chi tiết hoạt động của luồng chính ở hình \ref{fig:main_threading}: \\
-\hspace*{1cm} Luồng chính bắt đầu bằng việc khởi tạo nhóm luồng truy suất camera và nhóm luồng upload cùng với cơ chế đồng bộ hóa. Sau đó, luồng chính đi vào một vòng lặp liên tục chờ nhận công việc từ hàng đợi drive\_queue. Nếu hàng đợi không có task, luồng sẽ nghỉ 0.1 giây rồi tiếp tục kiểm tra. Khi nhận được task, luồng chính sẽ xác định loại công việc: nếu là task tạo thư mục, luồng kiểm tra thư mục camera đã tồn tại chưa và tiến hành tạo trên Google Drive nếu chưa có; nếu là task upload ảnh, luồng chuẩn bị thông tin và phân phối công việc cho nhóm luồng upload. Vòng lặp này tiếp tục cho đến khi nhận được tín hiệu ngắt từ người dùng, lúc đó luồng chính sẽ gửi tín hiệu dừng đến tất cả các luồng con, chờ chúng hoàn thành công việc, rồi kết thúc chương trình.
+\hspace*{1cm} Luồng chính khởi tạo các nhóm luồng truy xuất, nhóm luồng upload và cơ chế đồng bộ hóa rồi đi vào vòng lặp chờ nhận task từ hàng đợi \texttt{drive\_queue}. Khi có task, hệ thống phân loại: nếu là yêu cầu tạo thư mục, luồng chính kiểm tra và tạo mới trên Google Drive nếu cần; nếu là yêu cầu upload, task được phân phối cho nhóm luồng upload xử lý. Vòng lặp duy trì liên tục cho đến khi có tín hiệu ngắt, lúc này luồng chính gửi lệnh dừng, chờ các luồng con hoàn tất rồi kết thúc chương trình.
 
 \begin{figure}[H]
     \centering
