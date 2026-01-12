@@ -299,6 +299,33 @@ Mô hình LSTM được áp dụng để dự báo mức độ tắc toàn diệ
     \label{fig:gridlock_dashboard}
 \end{figure}
 
+\subsection{Giao Diện Điều Khiển và Mô Phỏng Thời Gian Thực}
+
+Hệ thống được tích hợp bộ điều khiển trực quan (SUMO Web Controller) cho phép theo dõi và can thiệp vào quá trình mô phỏng theo thời gian thực.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/sumo_control_ui.png}
+    \caption[Giao diện SUMO Control tích hợp AI Agents]{Giao diện SUMO Control tích hợp. Bên trái là panel điều khiển Agent (Duration/LaneRatio) và Gridlock Prediction. Bản đồ trung tâm hiển thị trạng thái đèn theo thời gian thực (Duration đếm ngược, Queue length, Flow). Bảng thống kê bên trên hiển thị tổng số xe và trạng thái từng con đường.}
+    \label{fig:sumo_control_ui}
+\end{figure}
+
+Giao diện Hình \ref{fig:sumo_control_ui} hiển thị các thông số quan trọng mà Agent đang quan sát:
+\begin{itemize}
+    \item \textbf{Gridlock Prediction:} Level hiện tại (ví dụ: Level 3 - Traffic Jam) và trạng thái (Enabled/Disabled).
+    \item \textbf{TLS Control:} Thời gian xanh hiện tại (Dur), Chu kỳ (Cyc), Hàng đợi (Q) và Lưu lượng (F) tại từng đèn.
+    \item \textbf{Simulation Stats:} Tổng số xe (Vehicles), số đèn đang hoạt động.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/sumo_result.png}
+    \caption[Giao diện mô phỏng SUMO tương ứng]{Giao diện mô phỏng SUMO (SUMO-GUI) tương ứng với thời điểm trên Web Controller. Các phương tiện được hiển thị chi tiết, màu sắc biểu thị tốc độ hoặc trạng thái chờ. Trạng thái đèn tín hiệu trên GUI đồng bộ hoàn toàn với Web Controller.}
+    \label{fig:sumo_result}
+\end{figure}
+
+Hình \ref{fig:sumo_result} minh họa góc nhìn từ phần mềm SUMO-GUI, cho thấy sự tương đồng chính xác với dữ liệu được hiển thị trên Web Controller, khẳng định độ trễ thấp và tính chính xác của hệ thống giám sát thời gian thực.
+
 \subsubsection{Phân Tích Biểu Đồ Mô Phỏng}
 
 \textbf{(a) Số Lượng Phương Tiện Trên Mạng:} Biểu đồ trên cùng bên trái cho thấy quá trình tăng dần số lượng xe từ 0 lên ~700 xe (warming-up phase) trong 30 phút đầu, sau đó ổn định ở mức 600-700 xe. Giai đoạn warming-up này dùng để hệ thống đạt trạng thái cân bằng.
@@ -598,38 +625,7 @@ DurationAgent được kiểm tra với các tình huống nhiễu loạn:
     \item Convergence speed: Hội tụ sau ~1200 episodes (12 giờ mô phỏng)
 \end{itemize}
 
-\subsection{Limitations và Future Work}
 
-\subsubsection{Hạn Chế Hiện Tại}
-
-\begin{itemize}
-    \item \textbf{Adaptation to Sudden Incidents:} Agent cần 30-60 giây để adapt sau khi có incident (xe tai nạn, lane closure).
-    \begin{itemize}
-        \item \textit{Giải pháp:} Thêm incident detection module từ camera hoặc traffic monitoring system.
-    \end{itemize}
-    \item \textbf{Multi-TLS Coordination:} Hiện tại các agents hoạt động độc lập, chưa có coordination giữa các giao lộ.
-    \begin{itemize}
-        \item \textit{Giải pháp:} Sử dụng Graph Neural Networks (GNN) để mô hình hóa các tương tác giữa giao lộ.
-    \end{itemize}
-    \item \textbf{Extreme Congestion:} Khi flow vượt capacity của đường (gridlock), mô hình vẫn có hiệu suất hạn chế.
-    \begin{itemize}
-        \item \textit{Giải pháp:} Bổ sung module "demand management" (chuyển hướng luồng).
-    \end{itemize}
-\end{itemize}
-
-\subsubsection{Hướng Phát Triển Tiếp Theo}
-
-\begin{enumerate}
-    \item \textbf{Multi-Agent Coordination:} Mở rộng từ single TLS sang network-wide coordination sử dụng multi-agent RL.
-    \item \textbf{Real-World Validation:} Test trên dữ liệu giao thông thực tế từ camera và sensors.
-    \item \textbf{Weather Integration:} Thêm dữ liệu thời tiết (mưa, sương mù) ảnh hưởng đến lưu lượng.
-    \item \textbf{Vehicle Classification:} Phân biệt bus, taxi, private car → điều khiển tối ưu hơn.
-    \item \textbf{Predictive Control:} Dự báo 10-15 phút trước để planning proactive (không chỉ reactive).
-\end{enumerate}
-
-\subsection{Kết Luận}
-
-DurationAgent sử dụng LSTM và Actor-Critic training đã chứng minh hiệu quả vượt trội trong việc tối ưu hóa thông lượng mạng lưới (+88.5\%) và tăng reward tổng thể (+40.5\%). Mặc dù độ dài hàng đợi trung bình tăng lên so với baseline, đây là sự đánh đổi chiến lược để giải quyết lưu lượng giao thông lớn hơn nhiều. Mô hình hoạt động ổn định và cho thấy tiềm năng triển khai thực tế để giải quyết bài toán tắc nghẽn thông qua việc tối ưu hóa năng lực thông hành. Các cải tiến trong tương lai sẽ tập trung vào multi-TLS coordination và integration với dữ liệu thực tế.
 
 
 

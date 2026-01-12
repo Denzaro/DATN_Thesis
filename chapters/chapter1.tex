@@ -43,13 +43,13 @@ Phương pháp thực nghiệm mô phỏng:
 \begin{itemize}
     \item Thu thập dữ liệu snapshot camera và xử lý bằng học sâu: Quá trình được khởi đầu bằng việc tự động hóa thu thập dữ liệu snapshot từ các website camera giám sát thông qua các kỹ thuật scraping, kết hợp với Google API để truyền tải và lưu trữ dữ liệu tập trung trên Google Drive, đảm bảo tính liên tục và tính sẵn sàng cao cho việc phân tích quy mô lớn. Ngay sau đó, sức mạnh của mô hình học sâu tiên tiến YOLOv11 được khai thác để nhận diện và đếm chính xác các loại phương tiện trong từng khung hình, từ đó bóc tách các thông số then chốt như lưu lượng xe và mật độ giao thông theo từng mốc thời gian và vị trí cụ thể. 
     
-    \item Xây dựng mô hình dự báo mật độ giao thông: None
+    \item Xây dựng mô hình dự báo mật độ giao thông: Phát triển mô hình học sâu dựa trên kiến trúc Long Short-Term Memory (LSTM) để xử lý dữ liệu chuỗi thời gian không gian (spatial-temporal). Mô hình tiếp nhận dữ liệu vận tốc, mật độ từ các cụm giao thông (clusters) để dự báo mức độ tắc nghẽn (gridlock levels) trong tương lai gần, làm cơ sở cho các quyết định điều tiết chủ động.
     
-    \item Xây dựng mô hình điều chỉnh tín hiệu đèn giao thông: None
+    \item Xây dựng mô hình điều chỉnh tín hiệu đèn giao thông: Thiết kế các tác tử học tăng cường (Reinforcement Learning Agents), cụ thể là DurationAgent, để điều khiển tín hiệu đèn giao thông. Agent học chiến lược tối ưu hóa thời lượng pha xanh (Green Duration) một cách thích ứng dựa trên trạng thái giao thông hiện tại và dự báo, thay thế cho các chu kỳ đèn cố định truyền thống.
     
-    \item Tích hợp mô phỏng giao thông với SUMO: None
+    \item Tích hợp mô phỏng giao thông với SUMO: Xây dựng môi trường mô phỏng vi mô sử dụng phần mềm SUMO (Simulation of Urban MObility), tích hợp bản đồ thực tế từ OpenStreetMap. Thiết lập giao diện điều khiển qua TraCI (Traffic Control Interface) cho phép đồng bộ hóa dữ liệu thời gian thực và thực thi các lệnh điều khiển từ mô hình Python vào môi trường mô phỏng.
     
-    \item Tích hợp module điều khiển giao thông: None
+    \item Tích hợp module điều khiển giao thông: Kết nối các thành phần rời rạc thành một hệ thống khép kín (Closed-loop System). Dữ liệu từ môi trường mô phỏng được đưa vào mô hình dự báo, kết quả dự báo hỗ trợ Agent ra quyết định điều chỉnh tín hiệu, và các quyết định này được phản hồi ngược lại môi trường để tác động trực tiếp lên luồng giao thông, tạo thành cơ chế điều khiển thích nghi liên tục.
     
     \item Xây dựng dashboard trực quan: Triển khai giao diện hiển thị gồm luồng xe chạy như mô phỏng (trong SUMO), biểu đồ mật độ theo thời gian, kết quả dự báo LSTM, và so sánh hiệu quả giữa hai kịch bản (có/không điều tiết). Dashboard sẽ giúp trực quan hóa kết quả và hỗ trợ phân tích.
     
@@ -60,11 +60,11 @@ Phương pháp phân tích đánh giá:
 \begin{itemize}
     \item \textbf{Đánh giá độ chính xác của khối phát hiện và đếm phương tiện từ camera: } Kết quả đếm phương tiện tự động được đối chiếu với số liệu đếm thủ công hoặc các nguồn dữ liệu tham chiếu (nếu có), nhằm xác định mức độ chính xác và độ tin cậy của mô hình trong các điều kiện giao thông khác nhau.
     
-    \item \textbf{Phân tích hiệu năng của mô hình LSTM: } None
+    \item \textbf{Phân tích hiệu năng của mô hình LSTM: } Đánh giá độ chính xác của mô hình dự báo thông qua các chỉ số sai số (MAE, RMSE) và khả năng phân loại mức độ tắc nghẽn (Accuracy, F1-Score). So sánh hiệu quả giữa các kiến trúc mô hình khác nhau để lựa chọn cấu hình tối ưu.
     
-    \item \textbf{Phân tích kết quả mô phỏng giao thông bằng SUMO: } None
+    \item \textbf{Phân tích kết quả mô phỏng giao thông bằng SUMO: } Thực hiện các kịch bản mô phỏng so sánh giữa trường hợp không điều khiển (Baseline - đèn cố định) và có điều khiển thông minh (DurationAgent). Thu thập và phân tích các chỉ số vận hành mạng lưới.
     
-    \item \textbf{Đánh giá tổng thể hệ thống: } None.
+    \item \textbf{Đánh giá tổng thể hệ thống: } Tổng hợp các kết quả để đánh giá mức độ cải thiện về các chỉ số hiệu năng chính (KPIs) như: giảm độ dài hàng đợi trung bình, tăng thông lượng (throughput) toàn mạng lưới, và cải thiện điểm thưởng (reward) của hệ thống điều khiển.
 
     \item \textbf{Trực quan hóa và phân tích kết quả trên dashboard: } Trình bày và so sánh các biểu đồ, luồng giao thông và chỉ số vận hành trước và sau điều chỉnh đèn tín hiệu, từ đó rút ra nhận xét về hiệu quả điều tiết và lợi ích mang lại cho công tác quản lý giao thông đô thị.
 \end{itemize}
