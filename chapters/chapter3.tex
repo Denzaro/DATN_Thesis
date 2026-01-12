@@ -277,6 +277,34 @@ Như hình \ref{fig:result_static_config}, hệ thống sử dụng hệ số qu
 
 Bước cuối cùng nhưng cũng không kém phần quan trọng, hệ thống sẽ tổng hợp các khung thời điểm về mỗi 5 phút để tạo thành chuỗi thời gian lưu lượng giao thông đồng nhất. Quá trình này bao gồm việc nhóm các bản ghi theo khoảng thời gian 5 phút, sau đó tính lượng trung bình phương tiện có trong khoảng thời gian đó. 
 
+\subsection{Thiết kế khối mô phỏng giao thông (SUMO)}
+Khối mô phỏng được thiết kế dựa trên một quy trình tự động hóa (Pipeline) tích hợp giữa dữ liệu địa không gian thực tế và các công cụ mô phỏng vi mô. Quy trình xây dựng môi trường mô phỏng bao gồm 5 giai đoạn chính:
+
+\begin{enumerate}
+    \item \textbf{Lựa chọn vùng (Location Selection):} Người dùng xác định khu vực nghiên cứu thông qua việc vẽ đa giác (Polygon) trên bản đồ tương tác. Tọa độ của đa giác này là dữ liệu đầu vào để truy xuất hạ tầng từ OpenStreetMap.
+    \item \textbf{Xử lý dữ liệu OSM (OSM Processing):} Hệ thống sử dụng thư viện OSMnx để tải dữ liệu mạng lưới đường bộ. Tại giai đoạn này, một bước quan trọng là làm sạch dữ liệu (Network Cleanup) bằng cách loại bỏ các đoạn đường không phục vụ mô phỏng chính như đường hẻm nhỏ, đường cụt hoặc lối đi bộ để giảm tải tính toán (như hình \ref{fig:fig_I3_network_cleanup}).
+    \item \textbf{Biên dịch mạng lưới (Network Compilation):} Dữ liệu OSM được công cụ \textit{netconvert} của SUMO biên dịch sang định dạng \texttt{.net.xml}. Giai đoạn này cũng thực hiện việc gộp các nút giao gần nhau và cấu hình hệ thống đèn tín hiệu mặc định.
+    \item \textbf{Tạo luồng phương tiện (Flow Generation):} Hệ thống xác định các cạnh biên (\textit{fringe edges}) của mạng lưới để làm điểm phát sinh và điểm kết thúc của phương tiện. Luồng xe được tạo ra dựa trên tỷ lệ phân bổ phương tiện (xe máy, xe hơi) thu thập từ thực tế.
+    \item \textbf{Cấu hình mô phỏng (SUMO Config):} Tổng hợp tất cả các tệp hạ tầng, lộ trình và tín hiệu vào một tệp cấu hình duy nhất (\texttt{.sumocfg}) để khởi chạy môi trường mô phỏng.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/fig_I3_network_cleanup.png}
+        \caption[Xử lý làm sạch mạng lưới]{Xóa đường hẻm, cụt để giảm tải mô phỏng}
+        \label{fig:fig_I3_network_cleanup}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/fig_I4_osm_export_sumo.png}
+        \caption[Quy trình biên dịch mạng lưới]{Xuất dữ liệu OSM và biên dịch sang SUMO}
+        \label{fig:fig_I4_osm_export_sumo}
+    \end{minipage}
+\end{figure}
+
 \subsection{Thiết kế và thực hiện các agent điều khiển giao thông}
 
 Hệ thống điều khiển giao thông thông minh được xây dựng theo kiến trúc phân cấp với hai agent độc lập chuyên biệt: DurationAgent dùng LSTM để dự báo thời lượng xanh của tín hiệu, và LaneRatioAgent sử dụng Policy Gradient với Beta Distribution để phân bổ tỷ lệ làn đường.
@@ -652,7 +680,7 @@ Mỗi ô LSTM có ba cổng điều khiển dòng thông tin:
     \item \textbf{Chia Kiểm Tra:} 20\% dữ liệu dùng làm xác thực trong quá trình huấn luyện
 \end{itemize}
 
-\textbf{Tại Sao Chọn Bộ Tối Ưu Adam?}
+\textbf{Đặc điểm bộ tối ưu Adam:}
 \begin{itemize}
     \item Tự động điều chỉnh tốc độ học cho từng tham số
     \item Không cần điều chỉnh tốc độ học thủ công
@@ -670,33 +698,7 @@ Sau khi mô hình được huấn luyện, kết quả dự báo được sử d
 \end{itemize}
 
 
-\subsection{Thiết kế khối mô phỏng giao thông (SUMO)}
-Khối mô phỏng được thiết kế dựa trên một quy trình tự động hóa (Pipeline) tích hợp giữa dữ liệu địa không gian thực tế và các công cụ mô phỏng vi mô. Quy trình xây dựng môi trường mô phỏng bao gồm 5 giai đoạn chính:
 
-\begin{enumerate}
-    \item \textbf{Lựa chọn vùng (Location Selection):} Người dùng xác định khu vực nghiên cứu thông qua việc vẽ đa giác (Polygon) trên bản đồ tương tác. Tọa độ của đa giác này là dữ liệu đầu vào để truy xuất hạ tầng từ OpenStreetMap.
-    \item \textbf{Xử lý dữ liệu OSM (OSM Processing):} Hệ thống sử dụng thư viện OSMnx để tải dữ liệu mạng lưới đường bộ. Tại giai đoạn này, một bước quan trọng là làm sạch dữ liệu (Network Cleanup) bằng cách loại bỏ các đoạn đường không phục vụ mô phỏng chính như đường hẻm nhỏ, đường cụt hoặc lối đi bộ để giảm tải tính toán (như hình \ref{fig:fig_I3_network_cleanup}).
-    \item \textbf{Biên dịch mạng lưới (Network Compilation):} Dữ liệu OSM được công cụ \textit{netconvert} của SUMO biên dịch sang định dạng \texttt{.net.xml}. Giai đoạn này cũng thực hiện việc gộp các nút giao gần nhau và cấu hình hệ thống đèn tín hiệu mặc định.
-    \item \textbf{Tạo luồng phương tiện (Flow Generation):} Hệ thống xác định các cạnh biên (\textit{fringe edges}) của mạng lưới để làm điểm phát sinh và điểm kết thúc của phương tiện. Luồng xe được tạo ra dựa trên tỷ lệ phân bổ phương tiện (xe máy, xe hơi) thu thập từ thực tế.
-    \item \textbf{Cấu hình mô phỏng (SUMO Config):} Tổng hợp tất cả các tệp hạ tầng, lộ trình và tín hiệu vào một tệp cấu hình duy nhất (\texttt{.sumocfg}) để khởi chạy môi trường mô phỏng.
-\end{enumerate}
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{fig/fig_I3_network_cleanup.png}
-        \caption[Xử lý làm sạch mạng lưới]{Xóa đường hẻm, cụt để giảm tải mô phỏng}
-        \label{fig:fig_I3_network_cleanup}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{fig/fig_I4_osm_export_sumo.png}
-        \caption[Quy trình biên dịch mạng lưới]{Xuất dữ liệu OSM và biên dịch sang SUMO}
-        \label{fig:fig_I4_osm_export_sumo}
-    \end{minipage}
-\end{figure}
 
 \subsection{Thiết kế khối hiển thị và đánh giá kết quả}
 Khối hiển thị được thiết kế là một ứng dụng web dashboard, tích hợp các công cụ hỗ trợ người dùng phân tích kịch bản giao thông:
