@@ -1,4 +1,45 @@
 \chapter{KẾT QUẢ VÀ THẢO LUẬN}
+\section{KẾT QUẢ CỦA QUÁ TRÌNH THU THẬP VÀ TỔ CHỨC DỮ LIỆU SNAPSHOT TỪ CAMERA GIAO THÔNG}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/get_data_location.png}
+        \caption{Ảnh các folder lưu trữ dữ liệu theo địa điểm từ các camera giao thông}
+        \label{fig:get_data_location}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/get_data_date.png}
+        \caption{Ảnh các folder lưu trữ dữ liệu theo ngày tháng theo từng địa điểm}
+        \label{fig:get_data_date}
+    \end{subfigure}
+    
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/get_data_hour.png}
+        \caption{Ảnh các folder lưu trữ dữ liệu theo giờ trong ngày theo từng địa điểm}
+        \label{fig:get_data_time}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{fig/get_data_images.png}
+        \caption{Ảnh các file ảnh snapshot giao thông được thu thập từ camera}
+        \label{fig:get_data_images}
+    \end{subfigure}
+    \caption[Hình ảnh tổ chức dữ liệu trên Google Drive khi thu thập dữ liệu từ các camera giao thông]{Hình ảnh tổ chức dữ liệu trên Google Drive khi thu thập dữ liệu từ các camera giao thông}
+    \label{fig:get_data_result}
+\end{figure}
+Dựa vào hình \ref{fig:get_data_result}, quá trình thu thập dữ liệu snapshot từ các camera giao thông được thực hiện tự động thông qua các script Python sử dụng kỹ thuật web scraping kết hợp với Google Drive API để lưu trữ dữ liệu. Kết quả thu thập dữ liệu được tổ chức theo cấu trúc thư mục rõ ràng như sau:
+\begin{itemize}
+    \item Mỗi địa điểm camera giao thông được lưu trữ trong một thư mục riêng biệt (Hình \ref{fig:get_data_location}).
+    \item Bên trong mỗi thư mục địa điểm, dữ liệu được phân chia theo ngày tháng (Hình \ref{fig:get_data_date}).
+    \item Trong mỗi thư mục ngày tháng, dữ liệu tiếp tục được chia nhỏ theo giờ trong ngày (Hình \ref{fig:get_data_time}).
+    \item Cuối cùng, bên trong mỗi thư mục giờ là các file ảnh snapshot giao thông được thu thập từ camera (Hình \ref{fig:get_data_images}).
+    \item Mỗi ảnh snapshot được lấy theo timestamp của UNIX.
+\end{itemize}
 \section{KẾT QUẢ CỦA TIỀN XỬ LÝ VÀ TĂNG CƯỜNG CHẤT LƯỢNG ẢNH}
 Đề tài sử dụng mô hình Real ESRGAN với các thông số cơ bản để tăng cường chất lượng ảnh:
 \begin{itemize}

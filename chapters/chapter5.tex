@@ -1,3 +1,17 @@
 \chapter{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
 \section{KẾT LUẬN}
+Sau quá trình nghiên cứu và thực hiện đề tài "Xây dựng hệ thống mô phỏng dự báo và điều chỉnh đèn giao thông dựa trên dữ liệu snapshot từ camera giao thông sử dụng học sâu và mô phỏng SUMO", nhóm thực hiện đã hoàn thành các mục tiêu đề ra và đạt được những kết quả khả quan. Cụ thể:
+
+\begin{enumerate}
+    \item \textbf{Xây dựng quy trình xử lý và tăng cường dữ liệu ảnh giao thông:} Nhóm đã giải quyết hiệu quả thách thức từ dữ liệu ảnh snapshot chất lượng thấp và ảnh hưởng bởi điều kiện môi trường (ánh sáng, thời tiết) thông qua các kỹ thuật tiền xử lý và mô hình tăng cường độ phân giải (Super-Resolution). Điều này đảm bảo độ tin cậy cho dữ liệu đầu vào của hệ thống.
+
+    \item \textbf{Ứng dụng hiệu quả mô hình Deep Learning trong nhận diện phương tiện:} Việc sử dụng mô hình YOLOv11m đã cho phép hệ thống nhận diện và phân loại phương tiện với độ chính xác cao ngay cả trên ảnh tĩnh. Dữ liệu trích xuất về số lượng và phân bố phương tiện là cơ sở vững chắc cho các bước phân tích tiếp theo.
+
+    \item \textbf{Dự báo lưu lượng giao thông ngắn hạn với LSTM:} Mô hình LSTM được xây dựng đã thể hiện khả năng nắm bắt tốt các đặc trưng chuỗi thời gian của lưu lượng giao thông. Kết quả dự báo cung cấp thông tin giá trị về xu hướng giao thông trong tương lai gần, hỗ trợ ra quyết định điều khiển.
+
+    \item \textbf{Tích hợp mô phỏng và đánh giá điều khiển đèn tín hiệu:} Hệ thống đã kết nối thành công luồng dữ liệu từ mô hình dự báo sang phần mềm mô phỏng SUMO thông qua giao thức TraCI. Các kịch bản thử nghiệm đã chứng minh tính khả thi của việc điều chỉnh pha đèn tín hiệu dựa trên lưu lượng dự báo, góp phần cải thiện khả năng thông hành tại nút giao.
+\end{enumerate}
+
+Tóm lại, đề tài đã đề xuất một giải pháp tổng thể kết hợp giữa xử lý ảnh, học sâu và mô phỏng, phù hợp với điều kiện hạ tầng giám sát phổ biến hiện nay (camera snapshot). Kết quả nghiên cứu không chỉ có ý nghĩa về mặt học thuật mà còn mở ra triển vọng ứng dụng thực tế trong việc tối ưu hóa quản lý giao thông đô thị.
+
 \section{HƯỚNG PHÁT TRIỂN}
