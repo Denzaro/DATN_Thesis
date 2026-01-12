@@ -60,6 +60,17 @@
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
+% Custom Chapter Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries} % Format of the text
+  {\chaptertitlename\ \thechapter} % Label (e.g., "Chương 1")
+  {20pt} % Separation between label and title body
+  {\Huge} % Format of the title body
+
+% Spacing: left, before, after
+% 'before' is set to -20pt to reduce the top whitespace (default is usually 50pt)
+\titlespacing*{\chapter}{0pt}{-20pt}{40pt}
+
 \titlespacing*{\section}{0pt}{20pt}{15pt} 
 %Heading 1
 \titleformat*{\section}{\fontsize{18pt}{0pt}\selectfont \bfseries}
