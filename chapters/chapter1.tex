@@ -41,9 +41,11 @@ Bên cạnh đó, đề tài tổng hợp các nghiên cứu liên quan đến m
 
 Phương pháp thực nghiệm mô phỏng:
 \begin{itemize}
-    \item Thu thập dữ liệu snapshot camera và xử lý bằng học sâu: Sử dụng mô hình YOLOv11 để phát hiện và đếm phương tiện từ ảnh hoặc video snapshot thu được từ camera giao thông. Từ kết quả đếm được xác định các thông số như lưu lượng xe, mật độ theo từng mốc thời gian và từng điểm giao thông. Đây chính là bước chuyển dữ liệu hình ảnh thô thành dạng dữ liệu có cấu trúc để sử dụng tiếp. Việc này tận dụng các thư viện, công cụ thực nghiệm đã có (ví dụ từ thực tế/nguồn mở) như một số nghiên cứu đã thực hiện.
+    \item Thu thập dữ liệu snapshot camera và xử lý bằng học sâu: Quá trình được khởi đầu bằng việc tự động hóa thu thập dữ liệu snapshot từ các website camera giám sát thông qua các kỹ thuật scraping, kết hợp với Google API để truyền tải và lưu trữ dữ liệu tập trung trên Google Drive, đảm bảo tính liên tục và tính sẵn sàng cao cho việc phân tích quy mô lớn. Ngay sau đó, sức mạnh của mô hình học sâu tiên tiến YOLOv11 được khai thác để nhận diện và đếm chính xác các loại phương tiện trong từng khung hình, từ đó bóc tách các thông số then chốt như lưu lượng xe và mật độ giao thông theo từng mốc thời gian và vị trí cụ thể. 
     
     \item Xây dựng mô hình dự báo mật độ giao thông: None
+    
+    \item Xây dựng mô hình điều chỉnh tín hiệu đèn giao thông: None
     
     \item Tích hợp mô phỏng giao thông với SUMO: None
     
