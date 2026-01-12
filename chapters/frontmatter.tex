@@ -3,7 +3,7 @@ Với tư cách là người thực hiện khóa luận tốt nghiệp này, ch�
 \begin{table}[!h]
 \centering
 \begin{tabular}{p{3cm} p{3cm} p{3cm} p{3cm}}
-&  & \multicolumn{2}{c}{Người thực hiện tiểu luận} \\
+&  & \multicolumn{2}{c}{Nhóm sinh viên thực hiện tiểu luận} \\
 &  & \multicolumn{2}{c}{\textit{(Ký và ghi rõ họ tên)}} \\
 &  &             &            \\
 &  &             &            \\
@@ -11,7 +11,7 @@ Với tư cách là người thực hiện khóa luận tốt nghiệp này, ch�
 &  &             &            \\
 &  &             &            \\
 &  &             &            \\
-&  & \multicolumn{2}{c}{Ngô Trọng Nghĩa}     
+&  & \multicolumn{1}{c}{Ngô Trọng Nghĩa} & \multicolumn{1}{c}{Nguyễn Nhựt Đăng}     
 \end{tabular}
 \end{table}
 
@@ -25,5 +25,5 @@ Nghiên cứu này đề xuất một hệ thống tích hợp dựa trên học
 
 Trong hệ thống đề xuất, mô hình YOLOv11m được sử dụng để thực hiện nhiệm vụ nhận diện và đếm phương tiện từ ảnh snapshot, cho phép trích xuất các đặc trưng như lưu lượng xe theo làn, mật độ giao thông và phân bố phương tiện theo thời gian. Các thông tin này sau đó được chuyển đổi thành chuỗi dữ liệu thời gian có cấu trúc và tích hợp vào mô hình mạng nơ-ron hồi tiếp LSTM để dự báo lưu lượng xe trong ngắn hạn. Trên cơ sở kết quả dự báo, dữ liệu đầu vào cho phần mềm mô phỏng giao thông SUMO được xây dựng nhằm tái hiện trạng thái giao thông tại khu vực nghiên cứu và đánh giá tác động của các kịch bản điều chỉnh tín hiệu đèn giao thông theo thời gian.
 
-Hệ thống được thiết kế theo hướng mô-đun, cho phép kết hợp hiệu quả giữa xử lý ảnh, học sâu, dự báo chuỗi thời gian và mô phỏng giao thông, đồng thời không yêu cầu xử lý dữ liệu thời gian thực, giúp giảm độ phức tạp tính toán và tăng tính khả thi triển khai. Kết quả thực nghiệm cho thấy phương pháp đề xuất có khả năng dự báo lưu lượng xe với độ chính xác cao và hỗ trợ đánh giá hiệu quả các chiến lược điều chỉnh tín hiệu giao thông trong môi trường mô phỏng. Những kết quả này cho thấy tiềm năng ứng dụng của hệ thống trong việc hỗ trợ quản lý giao thông đô thị thông minh và làm nền tảng cho các nghiên cứu mở rộng trong tương lai.
+Hệ thống được thiết kế theo hướng mô-đun, cho phép kết hợp hiệu quả giữa xử lý ảnh, học sâu và mô phỏng giao thông mà không yêu cầu xử lý dữ liệu thời gian thực. Kết quả thực nghiệm cho thấy phương pháp có khả năng dự báo lưu lượng xe chính xác và hỗ trợ đánh giá hiệu quả các chiến lược điều chỉnh tín hiệu giao thông. Những kết quả này cho thấy tiềm năng ứng dụng của hệ thống trong quản lý giao thông đô thị thông minh.
 
