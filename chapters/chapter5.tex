@@ -1,38 +1,68 @@
-\chapter{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+﻿\chapter{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+
+Chương này tổng kết lại những đóng góp chính của luận văn, đánh giá hiệu quả của hệ thống đã xây dựng trong việc giải quyết bài toán giao thông đô thị, đồng thời phân tích thẳng thắn các hạn chế còn tồn tại. Trên cơ sở đó, các định hướng nghiên cứu và phát triển trong tương lai được đề xuất nhằm hoàn thiện và nâng cao tính ứng dụng thực tiễn của hệ thống.
 
 \section{KẾT LUẬN}
 
-Sau quá trình nghiên cứu và thực hiện đề tài "Xây dựng hệ thống mô phỏng dự báo và điều chỉnh đèn giao thông dựa trên dữ liệu snapshot từ camera giao thông sử dụng học sâu và mô phỏng SUMO", nhóm thực hiện đã hoàn thành các mục tiêu đề ra và đạt được những kết quả khả quan. DurationAgent sử dụng LSTM và Actor-Critic training đã chứng minh hiệu quả vượt trội trong việc tối ưu hóa thông lượng mạng lưới.
-
-Các kết quả chính đạt được bao gồm:
+Đề tài "Xây dựng hệ thống mô phỏng dự báo và điều chỉnh đèn giao thông dựa trên dữ liệu snapshot từ camera giao thông sử dụng học sâu và mô phỏng SUMO" đã hoàn thành mục tiêu thiết kế và triển khai một khung giải pháp toàn diện (End-to-End Framework) cho bài toán điều khiển giao thông thông minh (Intelligent Traffic Signal Control - ITSC). Bằng cách kết hợp linh hoạt giữa Thị giác máy tính (Computer Vision), Học sâu (Deep Learning) và Học tăng cường (Reinforcement Learning) trên nền tảng mô phỏng vi mô, luận văn đã đạt được những kết quả cụ thể sau:
 
 \begin{enumerate}
-    \item \textbf{Hiệu quả điều khiển vượt trội:} Hệ thống đã chứng minh khả năng cải thiện thông lượng mạng lưới lên tới \textbf{+88.5\%} và tăng điểm thưởng tổng thể (Reward) thêm \textbf{+40.5\%} so với phương pháp điều khiển cố định (Baseline). Mặc dù độ dài hàng đợi trung bình tăng nhẹ, đây là sự đánh đổi chiến lược hợp lý để giải quyết lưu lượng giao thông lớn.
-    
-    \item \textbf{Xây dựng quy trình xử lý dữ liệu toàn diện:} Nhóm đã giải quyết hiệu quả thách thức từ dữ liệu ảnh snapshot chất lượng thấp thông qua các kỹ thuật tiền xử lý và mô hình tăng cường độ phân giải (Real-ESRGAN), kết hợp với mô hình YOLOv11 nhận diện phương tiện chính xác.
-    
-    \item \textbf{Dự báo tắc nghẽn chính xác:} Mô hình LSTM đã thể hiện khả năng nắm bắt tốt các đặc trưng chuỗi thời gian không gian của lưu lượng giao thông, cung cấp thông tin cảnh báo sớm quan trọng cho hệ thống điều khiển.
-    
-    \item \textbf{Khung mô phỏng khép kín (Closed-loop):} Hệ thống đã kết nối thành công luồng dữ liệu thời gian thực từ mô hình dự báo sang phần mềm mô phỏng SUMO thông qua giao thức TraCI, tạo tiền đề cho việc triển khai thực tế.
+    \item \textbf{Phương pháp luận xử lý dữ liệu giao thông thực tế:} 
+    Nhóm nghiên cứu đã đề xuất và kiểm chứng thành công quy trình xử lý dữ liệu đầu vào phi cấu trúc và chất lượng thấp (ảnh snapshot độ phân giải thấp, chụp ngắt quãng) thành dữ liệu giao thông có cấu trúc. Việc kết hợp mô hình siêu phân giải Real-ESRGAN để khôi phục chi tiết ảnh và YOLOv11 để nhận diện phương tiện đã cho thấy hiệu quả rõ rệt trong việc trích xuất thông tin mật độ giao thông, ngay cả trong điều kiện đặc thù nhiều xe máy của Việt Nam.
+
+    \item \textbf{Mô hình dự báo tắc nghẽn đáng tin cậy:} 
+    Mô hình Long Short-Term Memory (LSTM) được xây dựng đã chứng minh khả năng nắm bắt tốt các đặc trưng chuỗi thời gian - không gian (Spatio-Temporal) của dòng giao thông. Kết quả dự báo mức độ tắc nghẽn đóng vai trò là tham số trạng thái quan trọng (State Space), giúp hệ thống điều khiển có cái nhìn "đi trước" thay vì chỉ phản ứng thụ động với tình trạng hiện tại.
+
+    \item \textbf{Chiến lược điều khiển đèn tín hiệu thích nghi hiệu quả:} 
+    Tác tử điều khiển DurationAgent sử dụng kiến trúc Actor-Critic đã học được chiến lược tối ưu hóa pha đèn linh hoạt. Các chỉ số thực nghiệm cho thấy sự vượt trội so với phương pháp điều khiển chu kỳ cố định (Fixed-time Control):
+    \begin{itemize}
+        \item \textbf{Thông lượng mạng lưới (Network Throughput):} Cải thiện ấn tượng lên tới \textbf{+88.5\%}, minh chứng cho khả năng giải phóng lưu lượng xe tắc nghẽn nhanh chóng.
+        \item \textbf{Hiệu suất tổng thể (Cumulative Reward):} Tăng \textbf{+40.5\%}, phản ánh sự cân bằng tốt hơn giữa thời gian chờ và số lượng xe được thông qua.
+    \end{itemize}
+
+    \item \textbf{Hệ thống mô phỏng khép kín (Hardware-in-the-Loop Simulation Readiness):} 
+    Việc xây dựng thành công đường ống dữ liệu (pipeline) kết nối từ dữ liệu ảnh thực $\rightarrow$ dự báo AI $\rightarrow$ điều khiển mô phỏng SUMO qua TraCI đã tạo ra một nền tảng "Digital Twin" sơ khai (Digital Twin Prototype). Điều này cho phép kiểm thử các thuật toán điều khiển một cách an toàn và chi phí thấp trước khi triển khai thực tế.
 \end{enumerate}
 
-\section{HẠN CHẾ CỦA ĐỀ TÀI}
+\section{HẠN CHẾ VÀ THÁCH THỨC}
 
-Mặc dù đã đạt được những kết quả tích cực, hệ thống vẫn tồn tại một số hạn chế cần được xem xét:
+Mặc dù hệ thống đã chứng minh được tính khả thi và hiệu quả trên môi trường mô phỏng, quá trình nghiên cứu vẫn bộc lộ những hạn chế cần được khắc phục để hướng tới ứng dụng thực tiễn quy mô lớn:
 
+\subsection{Hạn chế về Dữ liệu và Cảm biến}
 \begin{itemize}
-    \item \textbf{Thích ứng với sự cố bất ngờ (Sudden Incidents):} Agent hiện tại cần khoảng 30-60 giây để thích ứng sau khi có sự cố giao thông (như tai nạn hay đóng làn).
-    \item \textbf{Phối hợp đa giao lộ (Multi-TLS Coordination):} Các agent hiện hoạt động độc lập tại từng giao lộ, chưa có cơ chế giao tiếp và phối hợp tối ưu trên toàn mạng lưới (Network-wide coordination).
-    \item \textbf{Xử lý tình trạng kẹt cứng (Extreme Congestion):} Khi lưu lượng vượt quá khả năng thông hành của đường (bão hòa), hiệu quả điều chỉnh tín hiệu đèn bị giới hạn nếu không có các biện pháp điều tiết từ xa.
+    \item \textbf{Độ trễ và tính liên tục của dữ liệu:} Việc phụ thuộc vào ảnh snapshot (thường có độ trễ cập nhật từ vài chục giây đến vài phút) thay vì luồng video thời gian thực (Video Streaming) làm giảm khả năng phản ứng tức thời của hệ thống. Khoảng trống dữ liệu giữa các lần chụp khiến hệ thống phải sử dụng các kỹ thuật nội suy, có thể dẫn đến sai số trạng thái.
+    \item \textbf{Thách thức trong nhận diện phương tiện xe hai bánh:} Mặc dù đã áp dụng YOLOv11, việc tách biệt và đếm chính xác từng xe máy trong các đám đông (occlusion) vào giờ cao điểm vẫn là bài toán khó. Sai số trong ước lượng mật độ xe máy ảnh hưởng trực tiếp đến độ chính xác của đầu vào cho mô hình kiểm soát.
+    \item \textbf{Tính phụ thuộc vào góc quay Camera (Camera Perspective):} Các thuật toán xử lý ảnh hiện tại rất nhạy cảm với góc đặt camera, điều kiện ánh sáng và vật cản. Việc thay đổi hạ tầng vật lý đòi hỏi phải hiệu chỉnh lại (re-calibrate) vùng quan tâm (ROI) và tham số mô hình thủ công.
+\end{itemize}
+
+\subsection{Hạn chế về Giải thuật và Điều khiển}
+\begin{itemize}
+    \item \textbf{Tính cục bộ của tác tử (Single-Intersection Optimization):} Hiện tại, các agent hoạt động độc lập tại từng giao lộ mà chưa có cơ chế giao tiếp (Communication) hay phối hợp (Coordination) cấp mạng lưới. Điều này có thể dẫn đến tình trạng tối ưu cục bộ, nơi việc giải phóng tắc nghẽn ở nút này lại đẩy áp lực giao thông sang nút lân cận.
+    \item \textbf{Khả năng thích ứng với sự cố bất thường (Robustness):} Thời gian "khởi động ấm" (Warm-up period) để hệ thống thích nghi lại sau khi xảy ra sự cố đột ngột (tai nạn, đóng làn đường) còn khá dài (30-60 giây), chưa đáp ứng tốt yêu cầu giải quyết sự cố khẩn cấp.
+    \item \textbf{Giới hạn trong điều kiện giao thông bão hòa:} Khi mật độ xe vượt quá sức chứa vật lý của cơ sở hạ tầng (Saturated Volume), giải pháp điều chỉnh đèn tín hiệu đơn thuần sẽ giảm hiệu quả. Lúc này cần các giải pháp điều tiết vĩ mô hơn.
 \end{itemize}
 
 \section{HƯỚNG PHÁT TRIỂN}
 
-Dựa trên các kết quả và hạn chế đã phân tích, nhóm đề xuất các hướng phát triển tiếp theo cho đề tài:
+Dựa trên các phân tích trên và xu hướng công nghệ thế giới, luận văn đề xuất lộ trình phát triển tiếp theo được chia thành các giai đoạn:
 
+\subsection{Cải tiến mô hình và Thuật toán (Ngắn hạn)}
 \begin{enumerate}
-    \item \textbf{Phối hợp đa tác tử (Multi-Agent Coordination):} Mở rộng từ điều khiển độc lập sang phối hợp toàn mạng lưới sử dụng Multi-Agent Reinforcement Learning (MARL) hoặc Graph Neural Networks (GNN) để mô hình hóa tương tác giữa các giao lộ.
-    \item \textbf{Kiểm chứng thực tế (Real-World Validation):} Triển khai thử nghiệm hệ thống trên dữ liệu giao thông thực tế (Real-world dataset) hoặc thí điểm quy mô nhỏ (Pilot test) để đánh giá độ tin cậy.
-    \item \textbf{Tích hợp dữ liệu đa nguồn:} Bổ sung dữ liệu thời tiết (mưa, sương mù) và phân loại phương tiện chi tiết (xe buýt, xe ưu tiên) vào mô hình dự báo và điều khiển để tăng độ chính xác và tính thực tiễn.
-    \item \textbf{Điều khiển dự báo (Predictive Control):} Phát triển khả năng dự báo dài hạn (10-15 phút) để hệ thống có thể lập kế hoạch điều tiết chủ động (Proactive) thay vì chỉ phản ứng lại tình trạng hiện tại (Reactive).
+    \item \textbf{Nâng cấp mô hình nhận diện (Advanced Perception):} Tiếp tục tinh chỉnh mô hình phát hiện đối tượng tập trung vào bài toán "Vehicle Counting in Dense Crowds" (Đếm xe trong đám đông dày đặc) sử dụng các kỹ thuật như Density Map Regression thay vì Bounding Box detection truyền thống để cải thiện độ chính xác đếm xe máy.
+    \item \textbf{Học tăng cường đa tác tử (Multi-Agent Reinforcement Learning - MARL):} Chuyển đổi mô hình điều khiển từ đơn lẻ sang phối hợp nhóm. Áp dụng các thuật toán như QMIX, MAPPO để các đèn giao thông có thể "học" cách hợp tác, tạo ra làn sóng xanh (Green Wave) tối ưu trên các trục đường chính.
 \end{enumerate}
+
+\subsection{Mở rộng hệ thống và Tích hợp công nghệ (Trung hạn)}
+\begin{enumerate}
+    \item \textbf{Mô hình hóa dữ liệu dạng đồ thị (Graph Neural Networks - GNN):} Sử dụng GNN để biểu diễn mạng lưới giao thông, cho phép mô hình dự báo không chỉ nắm bắt biến động thời gian (Temporal) mà còn hiểu sâu sắc mối quan hệ không gian (Spatial dependencies) giữa các nút giao lân cận.
+    \item \textbf{Xử lý tại biên (Edge Computing):} Nghiên cứu triển khai các mô hình AI rút gọn (Lightweight Models) trực tiếp xuống các thiết bị tại nút giao (Camera AI hoặc Edge Box) để giảm độ trễ truyền dẫn và giảm phụ thuộc vào đường truyền mạng về server trung tâm.
+\end{enumerate}
+
+\subsection{Hướng tới Đô thị thông minh (Dài hạn)}
+\begin{enumerate}
+    \item \textbf{Tích hợp dữ liệu đa nguồn (Multi-modal Data Fusion):} Kết hợp dữ liệu hình ảnh với dữ liệu GPS từ các ứng dụng gọi xe, dữ liệu cảm biến vòng từ (Inductive Loop) và thông tin thời tiết để xây dựng bức tranh toàn cảnh chính xác nhất về trạng thái giao thông.
+    \item \textbf{Giao tiếp V2X (Vehicle-to-Everything):} Chuẩn bị nền tảng hạ tầng để đón đầu xu hướng xe tự hành và kết nối. Hệ thống có thể gửi khuyến nghị tốc độ tối ưu trực tiếp đến phương tiện để giảm thiểu số lần dừng chờ đèn đỏ.
+    \item \textbf{Kiểm chứng thực địa (Field Operational Test):} Hợp tác triển khai thí điểm (Pilot) tại một cụm giao thông nhỏ để đánh giá hiệu quả thực tế và thu thập phản hồi từ người tham gia giao thông.
+\end{enumerate}
+
+Kết luận, luận văn đã xây dựng được nền móng vững chắc cho một hệ thống điều khiển giao thông thông minh "Made in Vietnam". Mặc dù còn nhiều thách thức, nhưng với lộ trình phát triển rõ ràng, hệ thống hứa hẹn sẽ đóng góp tích cực vào việc giải quyết bài toán giao thông đô thị bền vững.
