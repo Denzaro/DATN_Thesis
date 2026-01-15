@@ -1,0 +1,280 @@
+% set documentclass to widescree 16:9 ratio
+\documentclass[aspectratio=169]{beamer}
+
+% Load UofC_dynamic style file
+\usepackage{UofC_dynamic}
+\usepackage{booktabs} % For better tables
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+
+% Title and author data
+\title{HỆ THỐNG DỰ BÁO VÀ ĐIỀU KHIỂN TẮC NGHẼN GIAO THÔNG TÍCH HỢP} %Title
+\subtitle{Sử Dụng Học Sâu và Mô Phỏng SUMO} %Subtitle
+% Had to use \texorpdfstring{//} to ensure new line in presenter details
+\author[N.T. Nghĩa \& N.N. Đăng]{Ngô Trọng Nghĩa (21161155) - Nguyễn Nhựt Đăng (21119062) \texorpdfstring{\\} % presenter info
+        Khoa Điện - Điện Tử \texorpdfstring{\\}
+        Trường Đại Học Sư Phạm Kỹ Thuật TP.HCM}
+\date{\today} % date
+
+\begin{document}
+
+% ---------------------------------------------------------
+% 1. Title Page
+% ---------------------------------------------------------
+\CustomTitlePage
+
+% ---------------------------------------------------------
+% 2. Outline
+% ---------------------------------------------------------
+\begin{frame}{Nội Dung Báo Cáo}
+    \begin{itemize}
+        \item \textbf{I. GIỚI THIỆU}: Lý do và Mục tiêu đề tài
+        \item \textbf{II. THIẾT KẾ HỆ THỐNG}: Kiến trúc và các Mô-đun
+        \item \textbf{III. KẾT QUẢ}: Triển khai và Đánh giá
+        \item \textbf{IV. KẾT LUẬN}: Tổng kết và Hướng phát triển
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% I. INTRODUCTION
+% ---------------------------------------------------------
+\BigHeadingFrame{I. GIỚI THIỆU}
+
+\begin{SplitFrame}{Lý Do Chọn Đề Tài}
+    \textbf{Thách thức đô thị}
+    \begin{itemize}
+        \item Đô thị hóa nhanh dẫn đến tắc nghẽn nghiêm trọng.
+        \item Thiệt hại kinh tế lớn và ô nhiễm môi trường.
+        \item Đèn giao thông chu kỳ cố định không hiệu quả.
+    \end{itemize}
+    
+    \nextcolumn 
+    
+    \textbf{Giải pháp đề xuất}
+    \begin{itemize}
+        \item Ứng dụng **Deep Learning** (YOLO, LSTM) để giám sát thời gian thực.
+        \item Sử dụng **Mô phỏng SUMO** để thử nghiệm an toàn.
+        \item **Điều khiển thích nghi** (Adaptive Control) để tối ưu dòng xe.
+    \end{itemize}
+\end{SplitFrame}
+
+\begin{frame}{Mục Tiêu Đề Tài}
+    \begin{itemize}
+        \item \textbf{Thu thập dữ liệu}: Tự động tải ảnh snapshot từ camera giao thông công cộng.
+        \item \textbf{Xử lý}: Tăng cường chất lượng ảnh (Real-ESRGAN) và phát hiện xe (YOLOv11).
+        \item \textbf{Dự báo}: Dự báo mức độ tắc nghẽn (Gridlock Levels) sử dụng LSTM.
+        \item \textbf{Điều khiển}: Điều khiển đèn giao thông thích nghi dùng Học Tăng Cường (Reinforcement Learning - DurationAgent).
+        \item \textbf{Đánh giá}: Kiểm chứng hiệu quả trên môi trường mô phỏng SUMO.
+    \end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------
+% II. SYSTEM DESIGN
+% ---------------------------------------------------------
+\BigHeadingFrame{II. THIẾT KẾ HỆ THỐNG}
+
+\FullImageFrame{
+    ../fig/system_block_diagram.png
+}{
+    0.7\textwidth
+}{
+    Sơ đồ khối hệ thống: Từ thu thập dữ liệu đến điều khiển mô phỏng
+}
+{
+    fig:system_block
+}
+
+\begin{frame}{1. Thu Thập & Tiền Xử Lý Dữ Liệu}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Thu thập dữ liệu}
+            \begin{itemize}
+                \item Cào (Scrape) ảnh snapshot từ web camera.
+                \item Lưu trữ Google Drive (Phân cấp: Địa điểm/Ngày/Giờ).
+            \end{itemize}
+            \vspace{0.5cm}
+            \textbf{Tiền xử lý}
+            \begin{itemize}
+                \item **Real-ESRGAN**: Nâng cao độ phân giải ảnh thấp.
+                \item Chia nhỏ ảnh thành 4 phần (quadrants) để xử lý chi tiết.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \includegraphics[width=\textwidth]{../fig/upscale_image.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{2. Nhận Diện Phương Tiện (YOLOv11)}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \includegraphics[width=\textwidth]{../fig/vehicle_detector.png}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \textbf{Phương pháp Lai (Hybrid)}
+            \begin{itemize}
+                \item **Nhận diện Ô tô**: Dùng YOLOv11n (Bounding Boxes).
+                \item **Ước lượng Xe máy**:
+                \begin{itemize}
+                    \item Khó nhận diện từng xe khi mật độ cao.
+                    \item Dùng **Độ phủ vùng quan tâm (ROI Coverage \%)** + Phân đoạn.
+                    \item Quy đổi \% diện tích $\to$ Số lượng xe.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{3. Dự Báo Tắc Nghẽn (LSTM)}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \textbf{Kiến trúc Mô hình}
+            \begin{itemize}
+                \item \textbf{Đầu vào}: Dữ liệu giao thông 10 phút trước.
+                \item \textbf{LSTM Layers}: Học phụ thuộc thời gian.
+                \item \textbf{Đầu ra}: Mức độ tắc nghẽn (0-5).
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{../fig/fig_3_7_lstm_architecture.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{4. Mô Phỏng và Điều Khiển (SUMO)}
+    \begin{columns}[T]
+        \begin{column}{0.35\textwidth}
+            \begin{itemize}
+                \item \textbf{Môi trường}: SUMO.
+                \item \textbf{Bản đồ}: OpenStreetMap.
+                \item \textbf{Agent: DurationAgent}
+                \begin{itemize}
+                    \item Actor-Critic RL.
+                    \item Điều chỉnh đèn xanh (40-80s).
+                    \item Tối đa Thông lượng.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.62\textwidth}
+            \centering
+            \includegraphics[width=\textwidth,height=0.7\textheight,keepaspectratio]{../fig/fig_II4_sumo_control.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------
+% III. RESULTS
+% ---------------------------------------------------------
+\BigHeadingFrame{III. KẾT QUẢ}
+
+\begin{frame}{1. Kết Quả Nhận Diện}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../fig/detect_q1_tl.png} \\
+            \small{Độ phủ ROI cho Xe máy}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../fig/result_segment.jpg} \\
+            \small{Kết quả nhận diện tích hợp cuối cùng}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{2. Dashboard và Trực Quan Hóa}
+    \centering
+    \includegraphics[width=0.85\textwidth]{../fig/gridlock_prediction_dashboard.png}
+    \begin{itemize}
+        \item Giám sát thời gian thực dòng phương tiện và mức độ tắc nghẽn.
+        \item So sánh giữa Dự báo (LSTM) và Thực tế.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{3. Hiệu Quả Điều Khiển: Thông Lượng}
+    \centering
+    \includegraphics[width=0.85\textwidth]{../fig/results_throughput_comparison.png}
+    \vspace{0.2cm}
+    \begin{itemize}
+        \item **DurationAgent (Xanh)** vượt trội so với Baseline (Cam).
+        \item **Thông Lượng (Throughput)**: Tăng \textbf{+88.5\%} (115.9 $\to$ 218.6 xe).
+    \end{itemize}
+\end{frame}
+
+\begin{SplitFrame}{Hiệu Quả Điều Khiển: Hàng Đợi và Reward}
+    \textbf{So Sánh Độ Dài Hàng Đợi}
+    \includegraphics[width=\textwidth]{../fig/results_queue_length_comparison.png}
+    \begin{itemize}
+        \item Hàng đợi tăng nhẹ, nhưng dòng xe cải thiện lớn.
+        \item Đánh đổi để đạt thông lượng cao hơn.
+    \end{itemize}
+    
+    \nextcolumn 
+    
+    \textbf{Phần Thưởng Tích Lũy}
+    \includegraphics[width=\textwidth]{../fig/results_reward_comparison.png}
+    \begin{itemize}
+        \item **Cải thiện Reward**: \textbf{+40.5\%}.
+        \item Hệ thống tối ưu hóa hiệu quả di chuyển tổng thể.
+    \end{itemize}
+\end{SplitFrame}
+
+\begin{frame}{5. So Sánh Tổng Thể}
+    \centering
+    \begin{table}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{Chỉ Số} & \textbf{Baseline (Cố định)} & \textbf{DurationAgent} & \textbf{Cải thiện} \\
+            \midrule
+            Thông lượng (xe) & 115.9 & 218.6 & \textbf{+88.5\%} \\
+            Reward & 12.2 & 17.1 & \textbf{+40.5\%} \\
+            Hàng đợi (xe) & 2.25 & 4.25 & N/A (Đánh đổi) \\
+            Độ ổn định Hàng đợi & 2.50 & 4.58 & +83.7\% \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \vspace{0.5cm}
+    \textbf{Kết luận}: AI Agent học thành công cách "xả" xe trong giờ cao điểm, tăng gấp đôi năng lực mạng lưới so với định thời cố định.
+\end{frame}
+
+% ---------------------------------------------------------
+% IV. CONCLUSION
+% ---------------------------------------------------------
+\BigHeadingFrame{IV. KẾT LUẬN}
+
+\begin{frame}{Tổng Kết và Hướng Phát Triển}
+    \textbf{Tổng Kết}
+    \begin{itemize}
+        \item Xây dựng thành công quy trình khép kín: Camera $\to$ Dữ liệu $\to$ AI $\to$ Mô phỏng.
+        \item Phương pháp **YOLOv11 + ROI** giải quyết bài toán đếm xe máy tại Việt Nam.
+        \item **LSTM** cảnh báo sớm xu hướng tắc nghẽn.
+        \item **Agent RL** tăng thông lượng gần \textbf{90\%}.
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    
+    \textbf{Hướng Phát Triển}
+    \begin{itemize}
+        \item Triển khai trên thiết bị Edge (Jetson Nano/Orin).
+        \item Tích hợp với bộ điều khiển đèn thực tế.
+        \item Mở rộng quy mô mạng lưới nhiều nút giao hơn.
+    \end{itemize}
+\end{frame}
+
+
+% ---------------------------------------------------------
+% THANK YOU
+% ---------------------------------------------------------
+\ThankYouFrame{
+    Cảm Ơn Quý Thầy Cô và Các Bạn Đã Lắng Nghe!
+}{
+    Source Code và Demo: \url{github.com/YourRepo}
+}{
+    \textbf{Nguyễn Nhựt Đăng} \\
+    dang.nguyen@student.hcmute.edu.vn \\
+    \textbf{Ngô Trọng Nghĩa} \\
+    nghia.ngo@student.hcmute.edu.vn
+}
+
+\end{document}
