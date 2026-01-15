@@ -1,0 +1,117 @@
+% set documentclass to widescree 16:9 ratio
+\documentclass[aspectratio=169]{beamer}
+
+% Load UofC_dynamic style file
+\usepackage{UofC_dynamic}
+
+% Title and author data
+\title{Type to add title of the presentation/talk} %Title
+\subtitle{Type to add subtitle of the presentation/talk} %Subtitle
+% Had to use \texorpdfstring{//} to ensure new line in presenter details
+\author[Presenter's Name]{Presenter's Name \texorpdfstring{\\} % presenter info
+        Presenter's title / additional designations \texorpdfstring{\\}
+        Faculty of / Department of / additional designations}
+\date{\today} % date
+
+\begin{document}
+
+% ---------------------------------------------------------
+% 1. Title Page
+% Uses the Title Background, no footline/headline
+% ---------------------------------------------------------
+\CustomTitlePage
+
+% ---------------------------------------------------------
+% 2. Type A: Full Page Content Frame
+% Uses Content Background + Footline
+% Usage \begin{frame} <content> /end{frame}
+% ---------------------------------------------------------
+\begin{frame}{Standard Content Frame}
+    \begin{itemize}
+        \item This is a standard full-page content frame.
+        \item It uses the Times New Roman font.
+        \item It has the content background image.
+        \item It includes the footline defined in the style file.
+    \end{itemize}
+
+    \[ E = mc^2 \]
+\end{frame}
+
+% ---------------------------------------------------------
+% 3. Type B: Two Column content frame
+% Usage:   \begin{SplitFrame} 
+         %        <Left Side content> 
+         % \nextcolumn 
+         %        <Right Side content> 
+         % \end{SplitFrame}
+% ---------------------------------------------------------
+\begin{SplitFrame}{Comparison Analysis}
+    \textbf{Left Side}
+    
+    Here is some text on the left side of the screen.
+    \begin{itemize}
+        \item Point A
+        \begin{itemize}
+            \item Subpoint A.a
+            \begin{itemize}
+                \item Subsubpoint A.a.a
+        \end{itemize}
+        \end{itemize}
+        \item Point B
+    \end{itemize}
+    
+    \nextcolumn % This command inserts the orange line and switches columns
+    
+    \textbf{Right Side}
+    
+    Here is the text on the right side. The orange line separates these two columns perfectly.
+    \begin{enumerate}
+        \item Point 1
+        \item Point 2
+        \item Point 3
+    \end{enumerate}
+\end{SplitFrame}
+
+% ---------------------------------------------------------
+% 4. Type E: Special Heading Only Frame
+% Largest possible heading, no other content
+% Usage: \BigHeadingFrame<heading>
+% ---------------------------------------------------------
+\BigHeadingFrame{This slide is for one big, bold statement. Bullet points can't compete!}
+
+% ---------------------------------------------------------
+% 5. Type C: Full Page Image Frame
+% No headline. Replaces background locally.
+% ---------------------------------------------------------
+% Ensure you have an image named 'image4.jpg' or change this
+% Usage: \FullImageFrame<image_path><width><caption><label>
+
+\FullImageFrame{
+    assets/image4.jpg
+}{
+    0.7\textwidth % <--- Image Width (70% of the text width)
+}{
+    This is a detailed figure illustrating the main findings of the study.
+}
+{
+    fig:myFig
+}
+
+% ---------------------------------------------------------
+% 6. Type D: Thank You Page (Constraint 3d)
+% Uses Title Background
+% ---------------------------------------------------------
+% Usage: \ThankYouFrame<text><more_info><contact_details>
+
+\ThankYouFrame{
+    Thank you for attending!\\
+    and/or other concluding message
+}{
+    For more information go to \url{ucalgary.ca/webaddress}
+}{
+    Presenter's name\\
+    presentersemail@ucalgary.ca\\
+    Phone number / Twitter handle / additional contact info
+}
+
+\end{document}
