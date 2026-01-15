@@ -1,7 +1,7 @@
 \chapter{THIẾT KẾ HỆ THỐNG}
 
 \section{YÊU CẦU CỦA HỆ THỐNG}
-Hệ thống được đề xuất hướng tới việc mô phỏng, dự báo và điều tiết giao thông dựa trên dữ liệu hình ảnh snapshot thu thập từ camera giao thông, kết hợp các kỹ thuật học sâu và mô phỏng giao thông vi mô. Để đáp ứng mục tiêu nghiên cứu và đảm bảo khả năng triển khai thực tế, hệ thống cần thỏa mãn các yêu cầu chức năng và phi chức năng sau.
+Hệ thống được đề xuất hướng tới việc mô phỏng, dự báo và điều chỉnh tính hiệu đèn giao thông dựa trên dữ liệu hình ảnh snapshot thu thập từ camera giao thông, kết hợp các kỹ thuật học sâu và mô phỏng giao thông vi mô. Để đáp ứng mục tiêu nghiên cứu và đảm bảo khả năng triển khai thực tế, hệ thống cần thỏa mãn các yêu cầu chức năng và phi chức năng sau.
 
 Về giai đoạn thu thập dữ liệu, hệ thống cần đảm bảo các yêu cầu sau:
 \begin{itemize}
@@ -12,16 +12,15 @@ Về giai đoạn thu thập dữ liệu, hệ thống cần đảm bảo các y
 Về giai đoạn tiền xử lý dữ liệu, nhận diện và đếm phương tiện, hệ thống cần đáp ứng các yêu cầu sau:
 \begin{itemize}
     \item Các ảnh đầu vào cần được thực hiện các bước xử lý ảnh cơ bản như tăng độ phân giải, giảm nhiễu và chuẩn hóa kích thước.
-    \item Hệ thống tích hợp mô hình YOLOv11 nhằm nhận diện các phương tiện giao thông chính trên từng ảnh snapshot, trong đó các phương tiện được quy ước và phân loại thành hai nhóm: xe hai bánh (xe máy) và xe bốn bánh (xe hơi).
+    \item Hệ thống tích hợp mô hình YOLOv11 nhằm nhận diện các phương tiện giao thông chính trên từng ảnh snapshot, trong đó các phương tiện được quy ước và phân loại thành hai nhóm: xe hai bánh (xe máy) và xe bốn bánh (xe hơi). Ngoài ra, đối với các địa điểm có mật độ giao thông cao, hệ thống cần bổ sung các thuật toán xử lý ảnh để ước lượng số lượng xe máy dựa trên tỷ lệ che phủ trong các vùng quan tâm (ROI).
     \item Kết quả phát hiện bao gồm số lượng phương tiện theo từng loại tại mỗi thời điểm và tại từng địa điểm giám sát cụ thể, trong đó “địa điểm” được hiểu là vị trí camera đại diện cho một khu vực giao thông trên bản đồ.
     \item Lưu trữ kết quả đếm phương tiện với timestamp và vị trí tương ứng để phục vụ cho các bước xử lý tiếp theo.
-    \item Đảm bảo độ chính xác cao trong việc nhận diện và đếm phương tiện, với sai số không vượt quá $5\%$ so với thực tế.
 \end{itemize}
 
 Tiếp đến là yêu cầu về mô phỏng giao thông:
 \begin{itemize}
     \item Khả năng xây dựng mạng lưới giao thông mô phỏng tương ứng với khu vực thực tế từ dữ liệu OpenStreetMap (OSM).
-    \item Tái hiện luồng phương tiện (xe hai bánh và xe bốn bánh) với lưu lượng biến thiên theo thời gian dựa trên các giá trị thực tế và dự báo.
+    \item Tái hiện luồng phương tiện (xe hai bánh và xe bốn bánh) với lưu lượng biến thiên theo thời gian dựa trên các giá trị thực tế.
     \item Hỗ trợ lập trình điều khiển tín hiệu đèn giao thông thông qua giao diện TraCI của SUMO.
 \end{itemize}
 
@@ -34,34 +33,33 @@ Tiếp đến là yêu cầu về mô phỏng giao thông:
     \item Đảm bảo sai số dự báo nằm trong ngưỡng chấp nhận được.
 \end{itemize}
 
-Đối với giai đoạn tích hợp và điều khiển luồng giao thông, hệ thống cần đáp ứng các yêu cầu sau:
+Đối với giai đoạn tích hợp và điều khiển tín hiệu đèn giao thông, hệ thống cần đáp ứng các yêu cầu sau:
 \begin{itemize}
     \item Tích hợp kết quả dự báo vào môi trường mô phỏng SUMO.
     \item Hỗ trợ điều chỉnh chương trình đèn tín hiệu dựa trên dữ liệu dự báo.
     \item Cung cấp giao diện để giao tiếp giữa mô hình dự báo và công cụ mô phỏng (TraCI).
-    \item Cho phép so sánh hiệu quả giữa chiến lược điều khiển thích ứng và chiến lược cố định.
 \end{itemize}
 
 Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống cần:
 \begin{itemize}
     \item Cung cấp giao diện trực quan để hiển thị kết quả nhận diện, đếm phương tiện, dự báo lưu lượng và mô phỏng giao thông.
     \item Hỗ trợ các biểu đồ, bản đồ nhiệt và các công cụ phân tích để người dùng có thể dễ dàng hiểu và đánh giá tình hình giao thông. 
-     \item So sánh hiệu quẩ giữa việc xử dụng chiến lược điều tiết và không sử dụng để đánh giá hiệu quả của các biện pháp điều tiết dựa trên các chỉ số: thời gian di chuyển trung bình, thời gian đợi, chiều dài hàng đợi.
+     \item So sánh hiệu quả giữa việc xử dụng chiến lược điều chỉnh tín hiệu đèn giao thông và không sử dụng để đánh giá hiệu quả của các biện pháp điều tiết dựa trên các chỉ số: thời gian di chuyển trung bình, thời gian đợi, chiều dài hàng đợi.
 \end{itemize}
 
 \section{KIẾN TRÚC HỆ THỐNG}
 \subsection{Sơ đồ khối hệ thống}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=0.6\textheight, keepaspectratio]{fig/system_block_diagram.png}
+    \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{fig/system_block_diagram.png}
     \caption{Sơ đồ khối kiến trúc hệ thống}
     \label{fig:system_block_diagram}
 \end{figure}
 
 \textbf{Chức năng từng khối: }
 \begin{itemize}
-    \item \textbf{Khối thu thập dữ liệu: } Khối thu thập dữ liệu chịu trách nhiệm tiếp nhận các hỉnh ảnh snapshot từ nguồn mở Open Street Map (OSM). Trong đề tài này, dữ liệu không được thu thập trực tiếp từ hệ thống camera vật lý mà được lấy từ nguồn dữ liệu mở, nơi các camera giao thông đã được thiết lập và công bố sẵn cho mục đích quan sát và tham khảo. Quá trình thu thập dữ liệu được thực hiện thông qua truy suất tự động (web scraping) để tải về các hình ảnh snapshot tại các thời điểm xác định (khoảng 12 giây một ảnh). 
-    \item \textbf{Khối lưu trữ: } Khối lưu trữ đóng vai trò quản lý và tổ chức toàn bộ dữ liệu hình ảnh thu thập được cũng như các dữ liệu trung gian phát sinh trong quá trình xử lý. Các ảnh snapshot thu thập từ camera phía OSM được lưu trữ dưới dạng cấu trúc thư mục phân cấp trên hệ thống lưu trữ tệp tin đám mây Google Drive. Mỗi ảnh được gắn nhãn thời gian rõ ràng và sắp xếp theo từng thư mục tương ứng với địa điểm giám sát, nhằm đảm bảo tính nhất quán và thuận tiện cho việc truy xuất, xử lý và phân tích về sau. Bên cạnh đó, các ảnh kết quả sau khi nhận diện và đếm phương tiện, dữ liệu thống kê mật độ giao thông theo thời gian, cũng như dữ liệu đầu vào và đầu ra của mô hình LSTM đều được lưu trữ tập trung tại khối này.
+    \item \textbf{Khối thu thập dữ liệu: } Khối thu thập dữ liệu chịu trách nhiệm tiếp nhận các hỉnh ảnh snapshot từ nguồn mở (Cổng thông tin giao thông thành phố Hồ Chí Minh). Trong đề tài này, dữ liệu không được thu thập trực tiếp từ hệ thống camera vật lý mà được lấy từ nguồn dữ liệu mở, nơi các camera giao thông đã được thiết lập và công bố sẵn cho mục đích quan sát và tham khảo. Quá trình thu thập dữ liệu được thực hiện thông qua truy suất tự động (web scraping) để tải về các snapshot tại các thời điểm xác định (khoảng 12 giây một ảnh). 
+    \item \textbf{Khối lưu trữ: } Khối lưu trữ đóng vai trò quản lý và tổ chức toàn bộ dữ liệu hình ảnh thu thập được cũng như các dữ liệu trung gian phát sinh trong quá trình xử lý. Các ảnh snapshot thu thập từ camera phía website được lưu trữ dưới dạng cấu trúc thư mục phân cấp trên hệ thống lưu trữ tệp tin đám mây Google Drive. Mỗi ảnh được gắn nhãn thời gian rõ ràng và sắp xếp theo từng thư mục tương ứng với địa điểm giám sát, nhằm đảm bảo tính nhất quán và thuận tiện cho việc truy xuất, xử lý và phân tích về sau. Bên cạnh đó, các ảnh kết quả sau khi nhận diện và đếm phương tiện, dữ liệu thống kê mật độ giao thông theo thời gian, cũng như dữ liệu đầu vào của mô hình LSTM đều được lưu trữ tập trung tại khối này.
     \item \textbf{Khối tiền xử lý ảnh: } Khối tiền xử lý ảnh đảm nhiệm việc thực hiện các phép biến đổi cần thiết nhằm cải thiện chất lượng dữ liệu hình ảnh trước khi đưa vào mô hình nhận diện. Nguyên nhân là do các ảnh snapshot thu thập từ camera giao thông công khai trên mạng thường có chất lượng không đồng đều, chịu ảnh hưởng bởi nhiều yếu tố như độ phân giải thấp, nhiễu ảnh, điều kiện ánh sáng không ổn định và góc chụp chưa tối ưu. Do đó, khối này áp dụng một số kỹ thuật xử lý ảnh cơ bản, bao gồm tăng cường độ phân giải (super-resolution), lọc nhiễu (denoising), chuẩn hóa kích thước ảnh (resizing) và chia nhỏ ảnh nhằm đảm bảo dữ liệu đầu vào cho mô hình nhận diện đạt chất lượng tốt hơn và có tính nhất quán, dễ dàng nhận diện.
     \item \textbf{Khối nhận diện và phân tích phương tiện: } Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 để thực hiện phát hiện và phân loại các phương tiện giao thông xuất hiện trong từng ảnh snapshot. Mô hình được khởi tạo từ trọng số huấn luyện sẵn (pre-trained) trên các tập dữ liệu lớn và đa dạng, nhờ đó có khả năng nhận diện hiệu quả các loại phương tiện phổ biến. Tuy nhiên, nhằm đơn giản hóa bài toán và phù hợp với mục tiêu nghiên cứu, các phương tiện được quy ước và gom nhóm thành hai lớp chính, bao gồm xe hai bánh (đại diện cho xe máy, xe đạp,...) và xe bốn bánh (đại diện cho xe hơi, xe tải, xe buýt,...). Bên cạnh đó, do chất lượng hình ảnh thu thập từ camera giao thông còn hạn chế và các bước tiền xử lý không thể khắc phục hoàn toàn các yếu tố bất lợi như góc quay cao, góc quay xiên hoặc mật độ giao thông lớn, một số phương tiện đặc biệt là xe máy có thể bị che khuất hoặc chồng chéo, dẫn đến độ chính xác nhận diện suy giảm. Để khắc phục vấn đề này, khối xử lý còn tích hợp các thuật toán xử lý ảnh bổ sung như Polygon Fill, Rectangle Fill, Pixel-wise Logic và Non-zero Pixel Count nhằm tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm. Trên cơ sở đó, số lượng xe máy trong từng vùng được ước lượng, góp phần nâng cao độ chính xác tổng thể của quá trình đếm phương tiện.
     \item \textbf{Khối mô phỏng: } Sử dụng phần mềm SUMO để tái hiện mạng lưới giao thông thực tế. Khối này tiếp nhận hạ tầng từ OSM và luồng phương tiện từ khối dự báo để thực hiện các kịch bản mô phỏng giao thông vi mô, phục vụ việc đánh giá chiến lược điều phối.
@@ -70,11 +68,11 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
 \end{itemize}
 
 \subsection{Thiết kế khối thu thập dữ liệu}
-Khối thu thập dữ liệu đảm nhiện việc tự động truy suất và tải về các hình ảnh snapshot từ website camera giao thông công khai của thành phố Hồ Chí Minh (giaothong.hochiminhcity.gov.vn) rồi sau đó đẩy dữ liệu thu thập được lên khối lưu trữ đám mây Google Drive để phục vụ cho các bước xử lý tiếp theo.
+Khối thu thập dữ liệu đảm nhiện việc tự động truy suất và tải về các hình ảnh snapshot từ website camera giao thông công khai của thành phố Hồ Chí Minh (giaothong.hochiminhcity.gov.vn), sau đó đẩy dữ liệu thu thập được lên khối lưu trữ đám mây Google Drive để phục vụ cho các bước xử lý tiếp theo.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, keepaspectratio]{fig/upload_raw_images.png}
+    \includegraphics[width=\textwidth, height=0.9\textheight, keepaspectratio]{fig/upload_raw_images.png}
     \caption[Lưu đồ chính cho quá trình thu thập dữ liệu]{Lưu đồ chính quá trình thu thập dữ liệu}
     \label{fig:upload_raw_images}
 \end{figure}
@@ -89,13 +87,17 @@ Giải thích lưu đồ thu thập dữ liệu ở hình \ref{fig:upload_raw_im
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{fig/main_threading.png}
+    \includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{fig/main_threading.png}
     \caption[Lưu đồ chi tiết hoạt động của luồng chính]{Lưu đồ chi tiết hoạt động của luồng chính}
     \label{fig:main_threading}
 \end{figure}
 
 Giải thích lưu đồ chi tiết hoạt động của luồng chính ở hình \ref{fig:main_threading}: \\
-\hspace*{1cm} Luồng chính khởi tạo các nhóm luồng truy xuất, nhóm luồng upload và cơ chế đồng bộ hóa rồi đi vào vòng lặp chờ nhận task từ hàng đợi \texttt{drive\_queue}. Khi có task, hệ thống phân loại: nếu là yêu cầu tạo thư mục, luồng chính kiểm tra và tạo mới trên Google Drive nếu cần; nếu là yêu cầu upload, task được phân phối cho nhóm luồng upload xử lý. Vòng lặp duy trì liên tục cho đến khi có tín hiệu ngắt, lúc này luồng chính gửi lệnh dừng, chờ các luồng con hoàn tất rồi kết thúc chương trình.
+\hspace*{1cm} Lưu đồ này mô tả quy trình xử lý của một hệ thống giám sát đa luồng. Quá trình bắt đầu với việc khởi tạo hai nhóm luồng riêng biệt: một nhóm chịu trách nhiệm truy suất dữ liệu từ camera và một nhóm chuyên trách việc tải dữ liệu (upload), đi kèm với cơ chế đồng bộ hóa. Sau khi khởi động xong, hệ thống bước vào vòng lặp chính để liên tục giám sát và xử lý các công việc trong hàng đợi drive\_queue.
+
+Trong vòng lặp này, hệ thống kiểm tra xem có tác vụ nào đang chờ hay không. Nếu hàng đợi rỗng, nó sẽ tạm nghỉ 0.1 giây để giảm tải trước khi kiểm tra lại. Khi nhận được tác vụ, hệ thống phân loại nó theo hai hướng: Nếu là tác vụ tạo thư mục, chương trình sẽ kiểm tra xem thư mục camera đó đã tồn tại trên Google Drive chưa, và chỉ tạo mới nếu chưa có. Nếu là tác vụ upload ảnh, hệ thống sẽ chuẩn bị dữ liệu cần thiết rồi phân phối công việc đó cho nhóm luồng upload xử lý.
+
+Quy trình tuần hoàn này diễn ra liên tục cho đến khi có sự can thiệp ngắt từ người dùng. Khi đó, hệ thống sẽ gửi tín hiệu dừng đến tất cả các luồng, chờ đợi chúng hoàn thành nốt các công việc đang dang dở để đảm bảo an toàn dữ liệu, sau đó mới chính thức kết thúc chương trình.
 
 \begin{figure}[H]
     \centering
@@ -184,7 +186,7 @@ Trong trường hợp này, hệ thống tiến hành thực hiện lại bướ
 Ngược lại, nếu ảnh đầu ra đạt yêu cầu về độ sáng, ảnh sẽ được chia thành bốn vùng con có kích thước bằng nhau. 
 Quá trình này được thực hiện bằng cách xác định tọa độ trung điểm theo chiều rộng và chiều cao của ảnh, từ đó cắt ảnh thành bốn phần tương ứng với các góc \textit{Top-Left}, \textit{Top-Right}, \textit{Bottom-Left} và \textit{Bottom-Right}.
 
-Cuối cùng, các ảnh con sau khi chia không được lưu dưới dạng các tệp ảnh riêng lẻ, mà được lưu trữ dưới dạng các giá trị trong bộ nhớ cùng với các id để nhận biết được các phần ảnh để phục vụ cho quá trình nhận diện và phân tích phuwogn tiện ở khối tiếp theo.
+Cuối cùng, các ảnh con sau khi chia không được lưu dưới dạng các tệp ảnh riêng lẻ, mà được lưu trữ dưới dạng các giá trị trong bộ nhớ cùng với các id để nhận biết được các phần ảnh để phục vụ cho quá trình nhận diện và phân tích phương tiện ở khối tiếp theo.
 
 \subsection{Thiết kế khối nhận diện và phân tích phương tiện}
 Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 đã được huấn luyện trước trên dataset COCO (pre-trained model) để phát hiện và phân loại các phương tiện giao thông trong từng ảnh snapshot. Tuy nhiên, bởi vì dữ liệu đầu vào có chất lượng không tốt, góc quay không tối ưu và mật độ giao thông cao, việc nhận diện chính xác các phương tiện, đặc biệt là xe máy trở nên khó khăn. Do đó, ngoài việc sử dụng mô hình YOLOv11 để phát hiện và phân loại phương tiện thì cần có thêm các bước xử lý ảnh bổ sung nhằm nâng nâng cao độ chính xác trong việc đếm xe máy, tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm (ROI - Region of Interest).
@@ -268,7 +270,7 @@ Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{fig/result_static_config.png}
+    \includegraphics[width=0.6\textwidth,height=0.6\textheight,keepaspectratio]{fig/result_static_config.png}
     \caption[Cấu hình quy đổi diện tích che phủ sang số lượng xe hai bánh]{Cấu hình quy đổi diện tích che phủ sang số lượng xe hai bánh}
     \label{fig:result_static_config}
 \end{figure}

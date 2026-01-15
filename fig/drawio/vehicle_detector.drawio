@@ -1,0 +1,114 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="3o7AIeRR_VJB7JcFHsJe">
+    <mxGraphModel dx="1056" dy="1733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4yIeASf09Wk0FxncehYY-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="" vertex="1">
+          <mxGeometry height="240" width="345" x="485" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="" vertex="1">
+          <mxGeometry height="405" width="420" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-2" edge="1" parent="1" source="gUjU6kc9OcLllOW2brgR-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gUjU6kc9OcLllOW2brgR-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Nhận lần lượt 4 ảnh đầu vào &lt;br&gt;và xử lý từng ảnh" vertex="1">
+          <mxGeometry height="50" width="200" x="50" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-4" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-9" connectable="0" parent="4yIeASf09Wk0FxncehYY-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" value="Đúng" vertex="1">
+          <mxGeometry relative="1" x="-0.2661" y="1" as="geometry">
+            <mxPoint x="19" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-1" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=12;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Phần ảnh có &lt;br&gt;cấu hình &lt;br&gt;phân vùng ROI ?&lt;/font&gt;" vertex="1">
+          <mxGeometry height="120" width="172.5" x="63.75" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-6" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Dùng YOLO để nhận diện&lt;br&gt;và đếm số lượng xe 4 bánh&lt;br&gt;trong ROI" vertex="1">
+          <mxGeometry height="60" width="210" x="45" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-22" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="150" y="490" />
+              <mxPoint x="460" y="490" />
+              <mxPoint x="460" y="40" />
+              <mxPoint x="610" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tính tỷ lệ phần trăm che phủ&lt;br&gt;của xe máy trong từng vùng ROI" vertex="1">
+          <mxGeometry height="50" width="220" x="40" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Dùng YOLO để nhận diện xe 2 bánh - xe 4 bánh &lt;br&gt;và đếm số lượng" vertex="1">
+          <mxGeometry height="60" width="200" x="225" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-14" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" value="NHẬN DIỆN VÀ TÍNH SỐ LƯỢNG PHƯƠNG TIỆN" vertex="1">
+          <mxGeometry height="30" width="170" x="270" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-17" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Thu thập kết quả từ 4 phần ảnh" vertex="1">
+          <mxGeometry height="45" width="220" x="500" y="62.5" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-19" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Loại bỏ phát hiện trùng lập các phương tiện ở các rìa của ảnh" vertex="1">
+          <mxGeometry height="60" width="200" x="510" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-21" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Ghép 4 phần ảnh lại thành 1 ảnh hoàn chỉnh để &lt;br&gt;trực quan hóa số liệu" vertex="1">
+          <mxGeometry height="50" width="200" x="510" y="217.5" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Ghi số liệu vào file CSV" vertex="1">
+          <mxGeometry height="50" width="200" x="510" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-26" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" value="XỬ LÝ KẾT QUẢ" vertex="1">
+          <mxGeometry height="30" width="160" x="690" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-32" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="gUjU6kc9OcLllOW2brgR-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-31" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=14;" value="Bắt đầu" vertex="1">
+          <mxGeometry height="60" width="100" x="100" y="-30" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-34" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=14;" value="Kết thúc" vertex="1">
+          <mxGeometry height="60" width="100" x="560" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="4yIeASf09Wk0FxncehYY-35" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="4yIeASf09Wk0FxncehYY-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GFmUdF6Oi1lAVu-8vRkI-5" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-10" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="325" y="200" />
+            </Array>
+            <mxPoint x="390" y="260" as="sourcePoint" />
+            <mxPoint x="450" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GFmUdF6Oi1lAVu-8vRkI-6" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" value="Sai" vertex="1">
+          <mxGeometry x="260" y="180" as="geometry">
+            <mxPoint x="2" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GFmUdF6Oi1lAVu-8vRkI-8" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-10" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="400" y="270" as="sourcePoint" />
+            <mxPoint x="325" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

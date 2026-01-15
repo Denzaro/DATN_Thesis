@@ -1,0 +1,137 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="sY_MECppc0YVWO9QEycK">
+    <mxGraphModel dx="1056" dy="1733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-6" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sgAG1Wjd48PwTEVJ8X4t-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Nhận ảnh đầu vào&lt;br&gt;và định danh ảnh đầu vào" vertex="1">
+          <mxGeometry height="50" width="200" x="285" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-9" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Khởi tạo mô hình YOLOv11n" vertex="1">
+          <mxGeometry height="50" width="200" x="285" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-9" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tải cấu hình cho vị trí camera &lt;br&gt;và id ảnh&lt;div&gt;tương ứng từ tệp cấu hình&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="210" x="280" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-11" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-12" connectable="0" parent="NxJdqeXAoVu66BZYlpSC-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" value="Đúng" vertex="1">
+          <mxGeometry relative="1" x="-0.4449" as="geometry">
+            <mxPoint x="25" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-24" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-30" connectable="0" parent="NxJdqeXAoVu66BZYlpSC-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" value="Sai" vertex="1">
+          <mxGeometry relative="1" x="-0.4498" y="-2" as="geometry">
+            <mxPoint x="-44" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-8" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;" value="Có cấu hình&lt;br&gt;phân vùng &lt;br&gt;cho vị trí này?" vertex="1">
+          <mxGeometry height="110" width="160" x="305" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-14" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tải ngưỡng tin cậy và IoU&lt;br&gt;phù hợp với điều kiện ánh sáng" vertex="1">
+          <mxGeometry height="45" width="210" x="280" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-11" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="385" y="610" />
+              <mxPoint x="730" y="610" />
+              <mxPoint x="730" y="15" />
+              <mxPoint x="885" y="15" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tải các vùng quan tâm (ROI)&lt;br&gt;và vùng loại trừ từ cấu hình" vertex="1">
+          <mxGeometry height="45" width="210" x="280" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-16" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;fontStyle=0" value="Thực hiện phát hiện xe 4 bánh&lt;br&gt;trong từng vùng ROI bằng YOLO" vertex="1">
+          <mxGeometry height="50" width="230" x="770" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-15" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Đếm số lượng&lt;br&gt;xe 4 bánh có trong ảnh" vertex="1">
+          <mxGeometry height="45" width="200" x="785" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-14" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tính tỷ lệ phần trăm phủ&lt;br&gt;của xe máy trong từng vùng ROI" vertex="1">
+          <mxGeometry height="50" width="220" x="775" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-21" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tạo ảnh trực quan hóa&lt;br&gt;với vùng ROI, phương tiện,&lt;br&gt;và tỷ lệ phủ xe máy" vertex="1">
+          <mxGeometry height="55" width="230" x="770" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-26" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Thực hiện phát hiện xe 4 bánh và xe 2 bánh có trong ảnh" vertex="1">
+          <mxGeometry height="50" width="200" x="510" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-20" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="640" />
+              <mxPoint x="740" y="640" />
+              <mxPoint x="740" y="370" />
+              <mxPoint x="885" y="370" />
+            </Array>
+            <mxPoint x="885" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Tạo ảnh trực quan hóa&lt;br&gt;với các khung bao phương tiện" vertex="1">
+          <mxGeometry height="50" width="200" x="510" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-18" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Lưu ảnh trực quan hóa&lt;br&gt;vào bộ nhớ đệm" vertex="1">
+          <mxGeometry height="50" width="200" x="785" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="NxJdqeXAoVu66BZYlpSC-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacingLeft=10" value="Tổng hợp kết quả cho ảnh:&lt;br&gt;• Định danh ảnh&lt;br&gt;• Số lượng ô tô và xe máy&lt;br&gt;• Tỷ lệ phủ xe máy&lt;br&gt;• Danh sách phát hiện&lt;br&gt;• Ảnh trực quan hóa" vertex="1">
+          <mxGeometry height="110" width="280" x="745" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-2" edge="1" parent="1" source="sgAG1Wjd48PwTEVJ8X4t-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=14;" value="Bắt đầu" vertex="1">
+          <mxGeometry height="60" width="100" x="335" y="-70" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-3" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=14;" value="Kết thúc" vertex="1">
+          <mxGeometry height="60" width="100" x="835" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-8" edge="1" parent="1" source="sgAG1Wjd48PwTEVJ8X4t-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NxJdqeXAoVu66BZYlpSC-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;align=left;spacingLeft=10" value="Phân loại phương tiện :&lt;div&gt;• 4 bánh (xe con, xe buýt, xe tải)&lt;br&gt;• 2 bánh (xe máy, xe đạp)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="240" x="265" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sgAG1Wjd48PwTEVJ8X4t-19" edge="1" parent="1" source="NxJdqeXAoVu66BZYlpSC-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="sgAG1Wjd48PwTEVJ8X4t-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

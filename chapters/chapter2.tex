@@ -159,7 +159,7 @@ Trong đó:
     \label{fig:lstm_input_gate} 
 \end{figure}
 
-Input Gate chịu trách nhiệm quyết định thông tin mới nào sẽ được thêm vào Cell State.Có thể nhìn thấy theo hình \ref{fig:lstm_input_gate}, quá trình cập nhật thông tin mới boa gồm sự phối hợp giữa Input Gate và vector ứng viên mới. Cụ thể:
+Input Gate chịu trách nhiệm quyết định thông tin mới nào sẽ được thêm vào Cell State.Có thể nhìn thấy theo hình \ref{fig:lstm_input_gate}, quá trình cập nhật thông tin mới bao gồm sự phối hợp giữa Input Gate và vector ứng viên mới. Cụ thể:
 \begin{itemize}
     \item Một vector ứng viên mới được tổng hợp từ lớp ẩn trước đó ($h_{t-1}$) và dữ liệu đầu vào hiện tại ($x_t$) thông qua một mạng nơ-ron với hàm kích hoạt tanh. Vector này biểu diễn các giá trị tiềm năng để cập nhật vào Cell State. Bởi vì giá trị hàm tanh trong khoảng [-1, 1], nó giúp điều chỉnh các giá trị ứng viên mới sao cho phù hợp với phạm vi của Cell State, tránh việc giá trị trở nên quá lớn.
     \item Một mạng nơ-ron khác với hàm kích hoạt sigmoid được sử dụng như một bộ lọc để xác định mức độ quan trọng của từng giá trị trong vector ứng viên mới. Đầu ra của mạng này sẽ quyết định phần thông tin nào trong vector ứng viên sẽ được thêm vào Cell State.
@@ -193,7 +193,7 @@ Trong đó:
     \item $\tanh$ là hàm kích hoạt tanh.
 \end{itemize}
 
-Đầu ra của 2 bước trên sẽ được sử dụng để cập nhật Cell State hiện tại ($c_t$) như sau:
+Đầu ra của hai bước trên sẽ được sử dụng để cập nhật Cell State hiện tại ($c_t$) như sau:
 \begin{equation}
     c_t = f_t \cdot c_{t-1} + i_t \cdot \tilde{c}_t
 \end{equation}
@@ -207,7 +207,7 @@ Trong đó:
     \label{fig:lstm_output_gate}
 \end{figure}
 
-Việc cập nhật dữ liệu cho Cell State đã hoàn tất, bước tiếp theo cũng là bước cuối cùng trong quá trình xử lý của LSTM là quyết định một lớp ẩn mới. Để làm điều này, LSTM sử dụng 3 thứ: Cell State mới, lớp ẩn trước đó và dữ liệu đầu vào hiện tại.
+Việc cập nhật dữ liệu cho Cell State đã hoàn tất, bước tiếp theo cũng là bước cuối cùng trong quá trình xử lý của LSTM là quyết định một lớp ẩn mới. Để làm điều này, LSTM sử dụng: Cell State mới, lớp ẩn trước đó và dữ liệu đầu vào hiện tại.
 Lý do cho việc tại sao lại không đưa cell state mới ra làm đầu ra cho Output Gate (Tức là lớp ẩn tiếp theo) là bởi vì Cell State chứa toàn bộ thông tin theo thời gian và không phải tất cả thông tin đều cần thiết cho việc dự báo tại thời điểm hiện tại. Do đó, Output Gate sẽ quyết định phần thông tin nào từ Cell State mới sẽ được sử dụng để tạo ra lớp ẩn mới.
 \begin{equation}
     o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)
@@ -216,8 +216,11 @@ Lý do cho việc tại sao lại không đưa cell state mới ra làm đầu r
 Tuy nhiên, lớp ẩn mới ($h_t$) là được coi là output của mô hình LSTM nhưng để ra được kết quả cuối cùng mà con người hiểu được, ta cần thêm một bước nữa là đưa lớp ẩn mới qua một lớp Linear Layer (Dense Layer).
 \subsection{Ứng dụng của LSTM trong dự báo chuỗi thời gian}
 Mạng bộ nhớ dài-ngắn hạn (LSTM) đại diện cho một bước tiến quan trọng trong lĩnh vực học sâu, đặc biệt là trong việc giải quyết các bài toán dự báo chuỗi thời gian phức tạp nhờ vào khả năng xử lý các phụ thuộc dài hạn. Khác với các mô hình mạng thần kinh tái phát truyền thống thường gặp phải hiện tượng triệt tiêu đạo hàm khi huấn luyện trên các chuỗi dữ liệu dài, LSTM được thiết kế với cấu trúc tế bào đặc biệt bao gồm các cổng kiểm soát luồng thông tin một cách tinh vi. Nhờ vào sự phối hợp giữa cổng quên, cổng vào và cổng ra, mô hình có khả năng chọn lọc thông tin quan trọng để lưu giữ trong trạng thái tế bào qua nhiều bước thời gian và loại bỏ những dữ liệu nhiễu không còn giá trị. Đặc tính này giúp LSTM vượt trội trong việc nắm bắt các quy luật lặp lại, xu hướng và các mối liên hệ nhân quả tiềm ẩn trong dữ liệu lịch sử.
+
 Trong lĩnh vực tài chính và kinh tế, LSTM đã trở thành một công cụ chủ đạo để dự báo các biến số có độ biến động cao như giá cổ phiếu, tỷ giá hối đoái và chỉ số lạm phát. Do dữ liệu tài chính thường chứa đựng nhiều yếu tố phi tuyến tính và chịu ảnh hưởng bởi tâm lý thị trường phức tạp, các phương pháp thống kê cổ điển như ARIMA thường khó có thể phản ánh đầy đủ các biến chuyển bất ngờ. LSTM có khả năng tự động trích xuất các đặc trưng từ dữ liệu quá khứ mà không cần các giả định khắt khe về phân phối xác suất, từ đó giúp các nhà đầu tư và hoạch định chính sách nhận diện được xu hướng tăng trưởng hoặc rủi ro suy thoái với độ chính xác cao hơn. Việc tích hợp LSTM vào các hệ thống giao dịch tự động cũng cho phép tối ưu hóa danh mục đầu tư dựa trên việc dự đoán các điểm đảo chiều của thị trường trong ngắn hạn và dài hạn.
+
 Đối với ngành năng lượng và quản lý hạ tầng, ứng dụng của LSTM tập trung mạnh mẽ vào việc dự báo nhu cầu tiêu thụ điện năng và quản lý lưới điện thông minh. Việc dự báo chính xác tải trọng điện đóng vai trò quyết định trong việc cân bằng cung cầu, giảm thiểu lãng phí và lập kế hoạch vận hành cho các nguồn năng lượng tái tạo như điện gió hay điện mặt trời vốn có tính bất định cao. LSTM chứng minh được hiệu quả vượt trội khi xử lý các chuỗi dữ liệu có tính chu kỳ đa dạng, từ chu kỳ theo giờ trong ngày đến chu kỳ theo mùa trong năm, đồng thời tích hợp hiệu quả các biến số ngoại sinh như điều kiện thời tiết và các sự kiện kinh tế xã hội. Tương tự, trong lĩnh vực giao thông vận tải, mô hình này được sử dụng để dự đoán lưu lượng xe cộ và thời gian di chuyển, hỗ trợ việc điều tiết giao thông và giảm thiểu ùn tắc tại các đô thị lớn.
+
 Lĩnh vực y tế và khoa học đời sống cũng chứng kiến những đóng góp quan trọng của LSTM trong việc giám sát sức khỏe bệnh nhân và dự báo xu hướng dịch bệnh. Thông qua việc phân tích các tín hiệu sinh học liên tục như điện tâm đồ, điện não đồ hoặc các chỉ số sinh tồn được thu thập từ thiết bị đeo thông minh, LSTM có khả năng phát hiện sớm các dấu hiệu bất thường và đưa ra cảnh báo về các biến cố lâm sàng trước khi chúng xảy ra. Trong công tác y tế cộng đồng, mô hình này hỗ trợ dự đoán sự lây lan của các bệnh truyền nhiễm dựa trên dữ liệu lịch sử về ca nhiễm, biến động thời tiết và mật độ dân cư. Khả năng xử lý các dữ liệu chuỗi thời gian không đồng nhất giúp các cơ quan y tế có cái nhìn toàn diện để đưa ra các biện pháp can thiệp kịp thời và hiệu quả.
 Mặc dù sở hữu những ưu điểm vượt trội về khả năng ghi nhớ, việc triển khai LSTM trong thực tế vẫn đòi hỏi sự cân nhắc kỹ lưỡng về chi phí tính toán và yêu cầu về khối lượng dữ liệu huấn luyện. Quá trình huấn luyện một mô hình LSTM thường yêu cầu tài nguyên phần cứng lớn và kỹ năng tinh chỉnh các siêu tham số để tránh hiện tượng quá khớp, đặc biệt khi làm việc với các chuỗi thời gian có nhiều nhiễu. Tuy nhiên, với sự phát triển của các kiến trúc lai phối hợp giữa LSTM với các cơ chế chú ý hoặc mạng thần kinh tích chập, khả năng biểu diễn của mô hình ngày càng được nâng cao. Những cải tiến này không chỉ giúp tăng tốc độ hội tụ mà còn cho phép mô hình tập trung vào những phân đoạn thời gian quan trọng nhất, khẳng định vị thế của LSTM như một trụ cột trong hệ thống các phương pháp dự báo hiện đại.
 
@@ -364,7 +367,7 @@ SRGAN hoạt động theo cơ chế GAN truyền thống, trong đó có hai m�
 \end{figure}
 
 \subsection{Kiến trúc Generator}
-Generator sử dụng kiến trúc mạng Residual Network (ResNet) thay vì các mạng tích chập sâu thông thường. Việc lựa chọn ResNet đóng vai trò quan trọng bởi các kết nối tắt (skip connections) trong kiến trúc này giúp dòng gradient lan truyền hiệu quả hơn trong quá trình huấn luyện. Nhờ đó, mô hình có thể xây dựng các mạng rất sâu mà không gặp phải hiện tượng mất mát gradient, đồng thời cải thiện khả năng học đặc trưng tinh vi trong ảnh.
+Generator sử dụng kiến trúc mạng Residual Network (ResNet) thay vì các mạng tích chập sâu thông thường. Việc lựa chọn ResNet đóng vai trò quan trọng bởi các kết nối tắt trong kiến trúc này giúp dòng gradient lan truyền hiệu quả hơn trong quá trình huấn luyện. Nhờ đó, mô hình có thể xây dựng các mạng rất sâu mà không gặp phải hiện tượng mất mát gradient, đồng thời cải thiện khả năng học đặc trưng tinh vi trong ảnh.
 
 Bộ sinh (Generator) được xây dựng từ 16 Residual Block, mỗi khối gồm hai lớp tích chập với kernel kích thước 3x3 và 64 kênh đặc trưng. Sau mỗi lớp tích chập là Batch Normalization và hàm kích hoạt Parametric ReLU (PReLU). Khác với ReLU hoặc LeakyReLU truyền thống, PReLU cho phép hệ số dốc ở vùng âm được học tự động, giúp mô hình thích nghi tốt hơn trong quá trình huấn luyện mà không làm tăng nhiều chi phí tính toán.
 
@@ -575,7 +578,7 @@ L_{confidence} = \sum_{i=0}^{S^2} \sum_{j=0}^{B} 1_{ij}^{obj} \left[ 1_{ij}^{obj
 
 Trong đó:
 \begin{itemize}
-    \item $\lambda_{noobj}$: Hệ số điều chỉnh quan trọng được sử dụng để kiểm soát trọng số của phần lỗi liên quan đến các bounding box không chứa đối tượ (no-object).
+    \item $\lambda_{noobj}$: Hệ số điều chỉnh quan trọng được sử dụng để kiểm soát trọng số của phần lỗi liên quan đến các bounding box không chứa đối tượng (no-object).
     \item $1_{ij}^{noobj}$: Cho biết bounding box thứ  của cell i không chứa đối tượng.
     \item $C_{i}$: Độ tin cậy thực tế (1 nếu có đối tượng, 0 nếu không có).
     \item $\hat{C}_{i}$: Độ tin cậy dự đoán của bounding box.
@@ -598,7 +601,7 @@ AP được tính bằng diện tích dưới đường cong Precision-Recall (P
 \textbf{Intersection over Union (IoU): } IoU đo mức độ trùng khớp giữa bounding box dự đoán và bounding box ground truth. Chỉ số này được tính bằng tỉ lệ giữa diện tích vùng giao nhau và diện tích vùng hợp nhất của hai bounding box. Giá trị IoU càng cao cho thấy mô hình định vị đối tượng càng chính xác. Công thức tính như hình \ref{fig:IOU} dưới đây:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{fig/IOU.jpg}
+    \includegraphics[width=0.6\textwidth,height=0.6\textheight,keepaspectratio]{fig/IOU.jpg}
     \captionsetup{justification=centering}
     \caption[Cách tính chỉ số IOU]{Cách tính chỉ số IOU}
     \label{fig:IOU}
@@ -667,7 +670,7 @@ Nhìn chung, các kết quả đánh giá cho thấy YOLOv11 không chỉ cải 
     \centering
     \includegraphics[width=\textwidth]{fig/yolov11_vs_prev_ver.png}
     \captionsetup{justification=centering}
-    \caption[Hiệu suất của mô hình yolov11 so với các phiên bản trước]{Hiệu suất của mô hình yolov11 so với các phiên bản trước}
+    \caption[Hiệu suất của mô hình YOLOv11 so với các phiên bản trước]{Hiệu suất của mô hình YOLOv11 so với các phiên bản trước}
     \label{fig:yolov11_vs_prev_ver}
 \end{figure}
 Ngoài ra, đường cong cải tiến của YOLOv11 cho thấy khả năng mở rộng (scaling) vượt trội giữa các biến thể của mô hình, cho phép khai thác tài nguyên tính toán một cách hiệu quả và linh hoạt hơn so với các thế hệ trước. Đặc tính này giúp các phiên bản YOLOv11 duy trì sự cân bằng tối ưu giữa độ chính xác và hiệu năng khi thay đổi quy mô mô hình. Những kết quả đạt được đã khẳng định YOLOv11 là một bước tiến đáng kể trong lĩnh vực phát hiện đối tượng theo thời gian thực, đáp ứng hiệu quả các yêu cầu ngày càng khắt khe của các ứng dụng thị giác máy tính hiện đại.
@@ -705,14 +708,6 @@ Trong thực tiễn, mô phỏng giao thông đóng vai trò như một “phòn
 \section{CÔNG CỤ MÔ PHỎNG GIAO THÔNG: SUMO}
 \subsection{Giới thiệu phần mềm SUMO}
 SUMO (Simulation of Urban Mobility) là phần mềm mô phỏng giao thông đô thị miễn phí và mã nguồn mở, được phát triển bởi Viện Nghiên cứu Giao thông Vận tải Đức (German Aerospace Center - DLR). Phần mềm này cho phép xây dựng và mô phỏng các mạng lưới giao thông đô thị phức tạp với mức độ chi tiết cao, bao gồm hệ thống đường bộ, nút giao thông, làn đường, hệ thống tín hiệu đèn giao thông, nhiều loại phương tiện khác nhau (ô tô, xe máy, xe buýt, xe tải) cũng như các đối tượng tham gia giao thông khác như người đi bộ và xe đạp. SUMO hoạt động dựa trên mô hình mô phỏng vi mô, trong đó mỗi phương tiện được mô phỏng như một thực thể độc lập, cho phép theo dõi chính xác vị trí, vận tốc và hành vi di chuyển của từng đối tượng trong suốt quá trình mô phỏng.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig/sumo_logo.png}
-    \captionsetup{justification=centering}
-    \caption[Phần mềm SUMO]{Phần mềm SUMO}
-    \label{fig:sumo_logo}
-\end{figure}
 
 Nhờ khả năng tùy biến cao thông qua các tham số mô phỏng, mô hình hành vi lái xe và dữ liệu đầu vào linh hoạt, SUMO được sử dụng rộng rãi trong nghiên cứu khoa học, quy hoạch giao thông và kỹ thuật giao thông. Một số ứng dụng tiêu biểu của SUMO bao gồm:
 
