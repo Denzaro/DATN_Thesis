@@ -320,6 +320,62 @@ Hình \ref{fig:map_step1}, \ref{fig:map_step2} và \ref{fig:map_step3} minh họ
     \item \textbf{Cấu hình xuất dữ liệu:} Tùy chỉnh các tham số chuyển đổi như gộp các nút giao gần nhau (junction grouping), tự động thêm đèn tín hiệu (TLS) và tạo luồng phương tiện ngẫu nhiên (random flows) để kiểm thử nhanh mạng lưới.
 \end{itemize}
 
+\subsubsection{Hiệu chỉnh lưu lượng giao thông từ dữ liệu thực tế}
+
+Một trong những thách thức lớn nhất trong mô phỏng giao thông là đảm bảo tính chân thực của dữ liệu đầu vào. Thay vì sử dụng các giá trị lưu lượng ngẫu nhiên hoặc giả định, đề tài xây dựng quy trình hiệu chỉnh (calibration) lưu lượng giao thông dựa trên dữ liệu thu thập thực tế từ khối nhận diện phương tiện.
+
+\paragraph{Liên kết giữa khối thu thập dữ liệu và khối mô phỏng} \mbox{}\\
+
+Dữ liệu số lượng phương tiện từ khối nhận diện (Chương 4, Mục 4.2) được sử dụng làm đầu vào để ước lượng lưu lượng giao thông tại các nút giao trong SUMO. Quy trình chuyển đổi bao gồm các bước sau:
+
+\begin{enumerate}
+    \item \textbf{Tổng hợp dữ liệu snapshot:} Từ các ảnh giao thông được xử lý (bao gồm cả phân đoạn và tính phần trăm che phủ), hệ thống thu được số lượng xe hai bánh và xe bốn bánh trung bình mỗi 5 phút tại từng địa điểm.
+    
+    \item \textbf{Ước lượng số lượng phương tiện:} Dựa vào quy ước chuyển đổi phần trăm che phủ (như hình 4.3.12), hệ thống ước lượng tổng số xe. Ví dụ: với phần trăm che phủ 40.6\% và quy ước 1\%/xe, ta ước lượng được $\approx 41$ xe hai bánh trong vùng đó.
+    
+    \item \textbf{Chuyển đổi sang tốc độ dòng chảy:} Số lượng xe trung bình $N(t)$ trong khoảng thời gian $\Delta t$ được chuyển đổi sang tốc độ dòng chảy (flow rate) theo công thức:
+\end{enumerate}
+
+\begin{equation}
+q_i(t) = \left(\frac{N(t) \cdot 3600}{L_{\text{tot}}} \cdot \frac{L_i}{T_i}\right) \cdot (1 - \gamma_i)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $q_i(t)$ là lưu lượng phương tiện của nhánh $i$ tại thời điểm $t$ (xe/giờ),
+    \item $N(t)$ là số lượng phương tiện trung bình quan sát được tại nút giao trong khoảng thời gian $\Delta t$,
+    \item $L_{\text{tot}}$ là tổng số làn (đã quy đổi) kết nối với nút giao,
+    \item $L_i$ là số làn của nhánh $i$,
+    \item $T_i$ là thời gian trung bình để phương tiện vượt qua nút giao từ nhánh $i$,
+    \item $\gamma_i$ là hệ số tắc nghẽn, biểu diễn tỷ lệ phương tiện không tham gia dòng chảy (ví dụ: $\gamma_i = 0.1$ nghĩa là 10\% phương tiện bị kẹt).
+\end{itemize}
+
+\paragraph{Ví dụ minh họa} \mbox{}\\
+
+Giả sử tại nút giao Đinh Bộ Lĩnh - Bạch Đằng, dữ liệu snapshot cho thấy:
+\begin{itemize}
+    \item Tổng số xe hai bánh: 47 xe (từ phân đoạn + YOLOv11)
+    \item Tổng số xe bốn bánh: 12 xe
+    \item Tổng số làn: $L_{\text{tot}} = 16$ làn
+    \item Nhánh hướng Bắc có $L_i = 4$ làn, $T_i = 15$ giây, $\gamma_i = 0.05$
+\end{itemize}
+
+Áp dụng công thức:
+\begin{equation*}
+q_{\text{Bắc}} = \left(\frac{59 \cdot 3600}{16} \cdot \frac{4}{15}\right) \cdot (1 - 0.05) \approx 3363 \text{ xe/giờ}
+\end{equation*}
+
+Giá trị này được sử dụng để cấu hình luồng phương tiện (flow) trong tệp \texttt{flows.add.xml} của SUMO, đảm bảo mô phỏng phản ánh đúng tình trạng giao thông thực tế.
+
+\paragraph{Lợi ích của phương pháp hiệu chỉnh} \mbox{}\\
+
+\begin{itemize}
+    \item \textbf{Tính chân thực cao:} Lưu lượng mô phỏng dựa trên dữ liệu quan sát thực tế, không phải giả định.
+    \item \textbf{Tự động hóa:} Quy trình chuyển đổi từ snapshot sang flow config được tự động hóa hoàn toàn.
+    \item \textbf{Linh hoạt theo thời gian:} Có thể tạo các kịch bản mô phỏng khác nhau cho từng khung giờ (giờ cao điểm, giờ thấp điểm) dựa trên dữ liệu thu thập.
+\end{itemize}
+
+
 \subsection{Thiết kế khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông}
 
 \subsubsection{Giới thiệu khối dự báo}

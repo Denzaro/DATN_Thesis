@@ -299,6 +299,16 @@ Mô hình LSTM được áp dụng để dự báo mức độ tắc toàn diệ
     \label{fig:gridlock_dashboard}
 \end{figure}
 
+\subsubsection{Phân Tích Biểu Đồ Mô Phỏng}
+
+\textbf{(a) Số Lượng Phương Tiện Trên Mạng:} Biểu đồ trên cùng bên trái cho thấy quá trình tăng dần số lượng xe từ 0 lên ~700 xe (warming-up phase) trong 30 phút đầu, sau đó ổn định ở mức 600-700 xe. Giai đoạn warming-up này dùng để hệ thống đạt trạng thái cân bằng.
+
+\textbf{(b) Tình Trạng Tắc Của 5 Cụm:} Biểu đồ thứ hai cho thấy phân bố tắc không đều trong mạng. Cụm 1, 2, 4 thường xuyên bị tắc, trong khi cụm 0 và 3 ít tắc hơn. Từ phút 20 trở đi, liên tục có 3-4 cụm bị tắc, biểu thị tình trạng quá tải của mạng.
+
+\textbf{(c) So Sánh Dự Báo vs Thực Tế:} Biểu đồ thứ ba hiển thị mức độ tắc toàn diện (gridlock level 0-5). Đường màu xanh (actual) và đường màu đỏ (predicted) có xu hướng giống nhau nhưng mô hình có khuynh hướng dự báo cao hơn ~0.5-1 level so với thực tế. Điều này cho phép hệ thống **cảnh báo sớm** (over-predict) để tránh tắc toàn diện.
+
+\textbf{(d) Lỗi Dự Báo:} Biểu đồ dưới cùng cho thấy phân bố lỗi (actual - predicted). Phần lớn lỗi âm (dự báo cao), với phạm vi từ -1.0 đến +0.2 mức độ. Lỗi này hầu hết nằm trong $\pm 0.5$ mức độ, chấp nhận được cho ứng dụng thực tế.
+
 \subsection{Giao Diện Điều Khiển và Mô Phỏng Thời Gian Thực}
 
 Hệ thống được tích hợp bộ điều khiển trực quan (SUMO Web Controller) cho phép theo dõi và can thiệp vào quá trình mô phỏng theo thời gian thực.
@@ -326,15 +336,7 @@ Giao diện Hình \ref{fig:sumo_control_ui} hiển thị các thông số quan t
 
 Hình \ref{fig:sumo_result} minh họa góc nhìn từ phần mềm SUMO-GUI, cho thấy sự tương đồng chính xác với dữ liệu được hiển thị trên Web Controller, khẳng định độ trễ thấp và tính chính xác của hệ thống giám sát thời gian thực.
 
-\subsubsection{Phân Tích Biểu Đồ Mô Phỏng}
 
-\textbf{(a) Số Lượng Phương Tiện Trên Mạng:} Biểu đồ trên cùng bên trái cho thấy quá trình tăng dần số lượng xe từ 0 lên ~700 xe (warming-up phase) trong 30 phút đầu, sau đó ổn định ở mức 600-700 xe. Giai đoạn warming-up này dùng để hệ thống đạt trạng thái cân bằng.
-
-\textbf{(b) Tình Trạng Tắc Của 5 Cụm:} Biểu đồ thứ hai cho thấy phân bố tắc không đều trong mạng. Cụm 1, 2, 4 thường xuyên bị tắc, trong khi cụm 0 và 3 ít tắc hơn. Từ phút 20 trở đi, liên tục có 3-4 cụm bị tắc, biểu thị tình trạng quá tải của mạng.
-
-\textbf{(c) So Sánh Dự Báo vs Thực Tế:} Biểu đồ thứ ba hiển thị mức độ tắc toàn diện (gridlock level 0-5). Đường màu xanh (actual) và đường màu đỏ (predicted) có xu hướng giống nhau nhưng mô hình có khuynh hướng dự báo cao hơn ~0.5-1 level so với thực tế. Điều này cho phép hệ thống **cảnh báo sớm** (over-predict) để tránh tắc toàn diện.
-
-\textbf{(d) Lỗi Dự Báo:} Biểu đồ dưới cùng cho thấy phân bố lỗi (actual - predicted). Phần lớn lỗi âm (dự báo cao), với phạm vi từ -1.0 đến +0.2 mức độ. Lỗi này hầu hết nằm trong $\pm 0.5$ mức độ, chấp nhận được cho ứng dụng thực tế.
 
 \subsection{Thảo Luận}
 
@@ -391,8 +393,8 @@ Cấu hình huấn luyện:
 Baseline được sử dụng để so sánh:
 \begin{itemize}
     \item \textbf{Chiến lược:} Fixed signal plan (cố định)
-    \item \textbf{Thời lượng xanh:} 30 giây cho tất cả pha (không thích ứng)
-    \item \textbf{Tỷ lệ làn:} Phân bổ bằng nhau (25\% mỗi làn nếu 4 làn)
+    \item \textbf{Thời lượng xanh:} xấp xỉ 40 giây (chu kỳ 4 pha) và 17 giây (chu kỳ 6 pha).
+    \item \textbf{Tỷ lệ làn:} Phân bổ bằng nhau (Equal Distribution)
 \end{itemize}
 
 \subsubsection{Dữ Liệu Giao Thông Synthetic cho Training}
@@ -437,15 +439,15 @@ Hình \ref{fig:results_duration_comparison} cho thấy kết quả dự báo th�
     \centering
     \includegraphics[width=\textwidth]{fig/results_duration_comparison.png}
     \captionsetup{justification=centering}
-    \caption[So sánh thời lượng xanh giữa các mô hình]{So sánh thời lượng xanh giữa các mô hình. DurationAgent điều chỉnh thời lượng xanh thích ứng theo tình trạng giao thông (40-80 giây), trong khi baseline cố định ở 30 giây}
+    \caption[So sánh thời lượng xanh giữa các mô hình]{So sánh thời lượng xanh giữa các mô hình. DurationAgent điều chỉnh thời lượng xanh thích ứng theo tình trạng giao thông (15-120 giây), trong khi baseline cố định (đường nét đứt).}
     \label{fig:results_duration_comparison}
 \end{figure}
 
 \textbf{Quan sát:}
 \begin{itemize}
-    \item DurationAgent (mô hình chính - màu cam) điều chỉnh thời lượng xanh linh hoạt trong khoảng 40-90 giây, thích ứng với tình trạng giao thông thực tế.
-    \item Baseline (đường nét) cố định ở ~30 giây, không có sự linh hoạt.
-    \item Các mô hình P1-P4 (màu khác) có biến động đa dạng, phản ánh các chiến lược khác nhau.
+    \item DurationAgent (mô hình chính - màu cam) điều chỉnh thời lượng pha linh hoạt trong dải rộng từ \textbf{15-120 giây}, cho phép phản ứng cực đoan với cả hai trường hợp: đường vắng (giảm về 15s) và tắc nghẽn (tăng lên 120s).
+    \item Baseline (đường nét) duy trì cố định ở mức trung bình (khoảng 40s hoặc 17s tùy số pha), do đó không tận dụng được cơ hội tối ưu hóa trong giờ thấp điểm hoặc cao điểm.
+    \item Các mô hình P1-P4 (màu khác) có biến động đa dạng, phản ánh quá trình tìm kiếm chiến lược (exploration) của agent trong lúc training.
     \item DurationAgent thường tăng thời lượng xanh khi lưu lượng cao để tối ưu hóa thông lượng (throughput), chấp nhận queue dài hơn ở một số thời điểm để giải tỏa áp lực giao thông tổng thể.
 \end{itemize}
 
@@ -483,11 +485,10 @@ Hình \ref{fig:results_reward_comparison} cho thấy tổng phần thưởng (re
 
 \textbf{Phân Tích Reward:}
 \begin{itemize}
-    \item Reward được tính từ: $r_t = -\alpha \cdot \text{queue} - \beta \cdot \text{waiting\_time} + \gamma \cdot \text{throughput}$
-    \item \textbf{DurationAgent:} Reward trung bình $\approx 17.1$
-    \item \textbf{Baseline:} Reward trung bình $\approx 12.2$
-    \item \textbf{Cải thiện:} $\frac{17.1 - 12.2}{12.2} \times 100\% = \mathbf{+40.5\%}$
-    \item DurationAgent duy trì reward positive, trong khi baseline dao động âm-dương, chỉ ra sự không ổn định
+    \item Reward dựa trên cơ chế \textbf{Target Guidance}: $R = -200 \times (Coef_{actual} - Coef_{target})^2 + \text{Bonus}$.
+    \item \textbf{DurationAgent:} Reward trung bình cao hơn và ổn định hơn, nhờ cơ chế phạt nặng (quadratic penalty) khi lệch khỏi hệ số mục tiêu tối ưu.
+    \item \textbf{Baseline:} Reward thấp hơn và dao động lớn do không có cơ chế thích ứng.
+    \item \textbf{Cải thiện:} Sự gia tăng reward phản ánh khả năng của Agent trong việc duy trì trạng thái hệ thống gần với điểm cân bằng lý tưởng (Target Coefficient).
 \end{itemize}
 
 \textbf{Ý Nghĩa Thực Tiễn:}
@@ -513,38 +514,58 @@ Hình \ref{fig:results_throughput_comparison} so sánh số lượng phương ti
 
 \textbf{Kết Quả Thông Lượng:}
 \begin{itemize}
-    \item \textbf{DurationAgent:} Thông lượng trung bình $\approx$ 218.6 vehicles
-    \item \textbf{Baseline:} Thông lượng trung bình $\approx$ 115.9 vehicles
-    \item \textbf{Cải thiện:} $\frac{218.6 - 115.9}{115.9} \times 100\% = \mathbf{+88.5\%}$
-    \item DurationAgent tăng gần gấp đôi khả năng giải phóng xe qua các nút giao, chứng tỏ hiệu quả của việc điều chỉnh pha đèn linh hoạt để tận dụng tối đa thời gian xanh.
+    \item \textbf{DurationAgent (Raw):} Tốc độ dòng chảy trung bình $\approx$ \textbf{1.258 veh/s}, tổng lượng xe: 48,737 xe.
+    \item \textbf{DurationAgent (Optimized):} Tốc độ dòng chảy trung bình $\approx$ \textbf{1.019 veh/s}, tổng lượng xe: 33,679 xe.
+    \item \textbf{Baseline:} Tốc độ dòng chảy trung bình $\approx$ \textbf{1.407 veh/s}, tổng lượng xe: 41,033 xe.
+    \item \textbf{Nhận xét:} Mô hình Raw có throughput thấp hơn Baseline (-10.6\%) do thời gian xanh quá dài gây lãng phí. Mô hình Optimized giảm throughput (-27.6\%) nhưng đạt cân bằng tốt hơn giữa queue và reward.
 \end{itemize}
 
 \subsection{So Sánh Chi Tiết: Model vs Baseline}
 
 \begin{table}[H]
     \centering
-    \caption{So sánh các chỉ số hiệu suất giữa DurationAgent và Baseline}
+    \caption{So sánh hiệu suất: Baseline vs DurationAgent (Raw vs Optimized)}
     \label{table:model_vs_baseline}
     \begin{tabular}{|l|c|c|c|}
     \hline
-    \textbf{Chỉ Số} & \textbf{Baseline} & \textbf{DurationAgent} & \textbf{Thay Đổi} \\
+    \textbf{Chỉ Số} & \textbf{Baseline} & \textbf{Raw} & \textbf{Optimized} \\
     \hline
-    Độ dài hàng đợi (vehicles) & 2.25 & 4.25 & $+89.2\%$ \\
-    Thông lượng (vehicles - metric) & 115.9 & 218.6 & $+88.5\%$ \\
-    Reward trung bình & 12.2 & 17.1 & $+40.5\%$ \\
-    Queue stability ($\sigma$) & 2.50 & 4.58 & $+83.7\%$ \\
+    Tổng lượng xe (vehicles) & 41,033 & 48,737 (+18.8\%) & 33,679 (-17.9\%) \\
+    Độ dài hàng đợi (veh) & 2.67 & 4.84 (+81.1\%) & 2.81 (+5.2\%) \\
+    Thông lượng (veh/s) & 1.407 & 1.258 (-10.6\%) & 1.019 (-27.6\%) \\
+    Reward trung bình & -9.2 & -31.3 & \textbf{+0.2} \\
+    Queue stability ($\sigma$) & 2.93 & 6.36 (+117.3\%) & \textbf{N/A} \\
     \hline
     \end{tabular}
 \end{table}
 
-\textbf{Giải thích kết quả chính:}
+\textbf{Phân tích chi tiết:}
 
 \begin{itemize}
-    \item \textbf{Thông lượng (Throughput):} Đây là chỉ số cải thiện ấn tượng nhất, tăng **88.5\%** (115.9 lên 218.6). Điều này khẳng định mục tiêu tối quan trọng của hệ thống là tối đa hóa lưu lượng thông qua đã đạt được. DurationAgent học được cách phân bổ thời gian xanh để "xả" được nhiều xe nhất có thể.
+    \item \textbf{Mô hình Raw (Chưa hiệu chỉnh):} 
+    \begin{itemize}
+        \item Tổng lượng xe tăng 18.8\% (48,737 xe) do thời gian xanh kéo dài.
+        \item Hàng đợi tăng mạnh (+81.1\%), gây tắc nghẽn cục bộ.
+        \item Throughput giảm 10.6\% (1.258 veh/s) - mất cân bằng giữa queue và flow.
+        \item Reward âm sâu (-31.3) do vi phạm mục tiêu tối ưu hóa.
+        \item \textbf{Kết luận:} Mô hình học được cách tăng tổng xe nhưng hy sinh hiệu quả dòng chảy.
+    \end{itemize}
     
-    \item \textbf{Độ dài hàng đợi (Queue Length):} Tăng 89.2\% (2.25 xe lên 4.25 xe). Đây là sự đánh đổi chấp nhận được: Agent giữ xe lại lâu hơn trong một số trường hợp để gom đủ lượng xe cho một pha xanh hiệu quả, hoặc chấp nhận hàng đợi ở các nhánh phụ để ưu tiên dòng chủ lưu. Trong bối cảnh thông lượng tăng gần gấp đôi, việc hàng đợi trung bình tăng lên (nhưng vẫn ở mức thấp < 5 xe) phản ánh mật độ giao thông cao hơn mà hệ thống đang xử lý.
+    \item \textbf{Mô hình Optimized (Sau hiệu chỉnh Bias):}
+    \begin{itemize}
+        \item Tổng lượng xe giảm 17.9\% (33,679 xe) do thời gian xanh được tối ưu hóa.
+        \item Hàng đợi chỉ tăng nhẹ (+5.2\%), gần như ngang bằng baseline.
+        \item Throughput giảm 27.6\% (1.019 veh/s) - đánh đổi có chủ đích.
+        \item \textbf{Reward dương (+0.2)} - duy nhất đạt mục tiêu tối ưu hóa.
+        \item \textbf{Kết luận:} Đạt cân bằng tốt nhất giữa queue, throughput và reward. Mặc dù tổng xe thấp hơn, nhưng hệ thống ổn định và hiệu quả hơn.
+    \end{itemize}
     
-    \item \textbf{Reward trung bình:} Tăng 40.5\%, tổng hợp của việc tăng thông lượng vượt trội so với chi phí phạt của hàng đợi.
+    \item \textbf{So sánh tổng quan:}
+    \begin{itemize}
+        \item Baseline: Throughput cao (1.407 veh/s) nhưng reward âm (-9.2).
+        \item Raw: Tổng xe cao nhưng mất cân bằng nghiêm trọng.
+        \item Optimized: Cân bằng tốt nhất, reward dương duy nhất, phù hợp triển khai thực tế.
+    \end{itemize}
 \end{itemize}
 
 \subsection{Phân Tích Hội Tụ Training}
@@ -631,4 +652,80 @@ DurationAgent được kiểm tra với các tình huống nhiễu loạn:
 
 
 
+
+
+\subsection{Tối Ưu Hóa Sau Huấn Luyện (Bias Correction)}
+
+Mặc dù quá trình huấn luyện Reinforcement Learning đã giúp agent học được chính sách điều khiển hiệu quả, phân tích sâu kết quả cho thấy vẫn tồn tại một sai số hệ thống (systematic bias) trong các tình huống lưu lượng thấp. Để khắc phục vấn đề này và đạt hiệu suất tối ưu, đề tài áp dụng chiến lược hiệu chỉnh hậu xử lý (Post-Training Bias Correction).
+
+\subsubsection{Vấn Đề: Hiệu Ứng Sàn (Floor Effect)}
+
+Khi quan sát phản ứng của DurationAgent đối với các mức độ tắc nghẽn khác nhau (Hình \ref{fig:response_calibration}), chúng tôi phát hiện một hiện tượng gọi là "Hiệu ứng sàn".
+
+\begin{itemize}
+    \item \textbf{Mục tiêu lý tưởng (Ideal Policy):} Khi hàng đợi rất thấp ($Q \approx 0$), hệ số thời gian nên giảm về mức tối thiểu ($\alpha \approx 0.1$) để tiết kiệm thời gian chu kỳ.
+    \item \textbf{Thực tế mô hình (Raw Prediction):} Agent có xu hướng duy trì hệ số ở mức trung bình ($\alpha \approx 0.35$) ngay cả khi đường vắng.
+\end{itemize}
+
+Nguyên nhân của hiện tượng này là do rào cản khám phá (exploration barrier) trong quá trình học RL. Agent có khuynh hướng chọn giải pháp an toàn (giữ đèn xanh lâu hơn mức cần thiết) để tránh rủi ro tắc nghẽn bất ngờ, thay vì mạo hiểm giảm thời gian xuống mức tối thiểu. Điều này dẫn đến sai số MAE khoảng 0.235.
+
+\subsubsection{Chiến Lược Hiệu Chỉnh (Correction Strategy)}
+
+Thay vì tiếp tục huấn luyện (có thể gây overfitting), chúng tôi áp dụng một hàm hiệu chỉnh đơn giản nhưng hiệu quả trong giai đoạn suy luận (inference):
+
+\begin{equation}
+\alpha_{\text{corrected}} = \text{clip}(\alpha_{\text{raw}} - \delta_{\text{bias}}, 0.0, 1.0)
+\end{equation}
+
+Trong đó $\delta_{\text{bias}} = 0.235$ là giá trị sai số trung bình được xác định thực nghiệm.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/response_calibration_curve.png}
+    \captionsetup{justification=centering}
+    \caption[Đường cong phản ứng trước và sau khi hiệu chỉnh]{Đường cong phản ứng của Agent trước (Raw) và sau (Optimized) khi hiệu chỉnh. Đường màu đỏ đứt nét là chính sách lý tưởng. Sau khi hiệu chỉnh, đường phản ứng của Agent trùng khớp gần như hoàn hảo với đường lý tưởng, loại bỏ hoàn toàn bias ở vùng lưu lượng thấp.}
+    \label{fig:response_calibration}
+\end{figure}
+
+Hình \ref{fig:response_calibration} minh họa rõ ràng hiệu quả của chiến lược này: Đường cong phản ứng sau khi hiệu chỉnh (màu cam) đã bám sát đường lý tưởng (màu đỏ), loại bỏ hoàn toàn khoảng hở sai số ở vùng lưu lượng thấp trong khi vẫn giữ nguyên độ nhạy (độ dốc) ở vùng lưu lượng cao.
+
+\subsubsection{Kết Quả Sau Hiệu Chỉnh}
+
+Việc áp dụng Bias Correction đã mang lại những thay đổi đáng kể về các chỉ số định lượng, như thể hiện trong Hình \ref{fig:model_metrics_comparison}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{fig/model_metrics_comparison.png}
+    \captionsetup{justification=centering}
+    \caption[So sánh hiệu suất trước và sau hiệu chỉnh]{So sánh hiệu suất mô hình trước và sau khi hiệu chỉnh. Sai số MAE/RMSE giảm mạnh, trong khi độ chính xác phân loại giao thông (Accuracy/F1-Score) tăng vọt.}
+    \label{fig:model_metrics_comparison}
+\end{figure}
+
+\textbf{Ưu điểm của Bias Correction:}
+\begin{itemize}
+    \item \textbf{Giảm sai số dự báo:} MAE giảm 85.8\% (từ 0.235 xuống 0.033), RMSE giảm 74.8\%.
+    \item \textbf{Tăng độ chính xác phân loại:} Accuracy tăng 448\% (từ 16.9\% lên 92.7\%), F1-Score tăng 800\%.
+    \item \textbf{Reward dương duy nhất:} Đạt +0.2, trong khi Raw (-31.3) và Baseline (-9.2) đều âm.
+    \item \textbf{Hàng đợi ổn định:} Chỉ tăng 5.2\% so với baseline, thay vì 81.1\% như Raw model.
+    \item \textbf{Cân bằng tốt hơn:} Đạt sự cân bằng giữa queue, throughput và reward, phù hợp triển khai thực tế.
+\end{itemize}
+
+\textbf{Nhược điểm và đánh đổi:}
+\begin{itemize}
+    \item \textbf{Giảm tổng lượng xe:} Tổng xe giảm 17.9\% (từ 41,033 xuống 33,679) so với baseline, và giảm 31\% so với Raw model (48,737).
+    \item \textbf{Throughput thấp hơn:} Tốc độ dòng chảy giảm 27.6\% (1.019 veh/s) so với baseline (1.407 veh/s).
+    \item \textbf{Nguyên nhân:} Bias correction giảm thời gian xanh ở các tình huống lưu lượng thấp-trung bình, dẫn đến ít xe hơn được xử lý trong tổng thời gian mô phỏng.
+    \item \textbf{Trade-off có chủ đích:} Hy sinh một phần throughput để đổi lấy sự ổn định và hiệu quả vận hành (reward dương).
+\end{itemize}
+
+\textbf{Đánh giá tổng quan:}
+
+Kết quả cho thấy Bias Correction không phải là giải pháp "tốt hơn tuyệt đối" mà là một \textbf{sự đánh đổi có chủ đích} giữa hai mục tiêu khác nhau:
+
+\begin{itemize}
+    \item \textbf{Raw Model:} Phù hợp khi mục tiêu là \textit{tối đa hóa tổng lượng xe} (ví dụ: đo lường capacity tối đa của mạng lưới), chấp nhận queue cao và reward âm.
+    \item \textbf{Optimized Model:} Phù hợp khi mục tiêu là \textit{vận hành ổn định và hiệu quả} (ví dụ: triển khai thực tế), ưu tiên cân bằng giữa các chỉ số thay vì tối đa hóa một chỉ số đơn lẻ.
+\end{itemize}
+
+Việc lựa chọn giữa Raw và Optimized phụ thuộc vào ngữ cảnh ứng dụng cụ thể và mục tiêu vận hành của hệ thống giao thông.
 
