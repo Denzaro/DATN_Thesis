@@ -107,6 +107,46 @@ Mô phỏng **không hoàn toàn bám sát thực tế** do:
 
 ---
 
+## 8. Phạm vi về Hệ thống Điều khiển Đèn Giao thông (Traffic TLS LSTM)
+
+### Bao gồm:
+- Sử dụng **Deep Reinforcement Learning** với kiến trúc phân cấp (Hierarchical):
+  - **DurationAgent**: Mô hình LSTM điều chỉnh thời gian đèn xanh (40-80 giây)
+  - **LaneRatioAgent**: Mô hình Beta Distribution phân bổ tỷ lệ làn đường
+- Huấn luyện song song với **16 workers** (parallel training)
+- Tổng **2000 episodes** training trên môi trường SUMO
+- Input: 3 đặc trưng (lưu lượng, mật độ, thời gian chờ)
+- Output: Thời gian đèn xanh tối ưu và tỷ lệ phân bổ làn đường
+
+### Giới hạn:
+- **Kiến trúc LSTM đơn giản**: Chỉ 1 lớp LSTM với 64 hidden units, chưa thử nghiệm với kiến trúc phức tạp hơn (Multi-layer LSTM, Transformer)
+- **Số đặc trưng đầu vào hạn chế**: Chỉ 3 features (lưu lượng, mật độ, thời gian chờ), chưa tích hợp:
+  - Dự báo tắc nghẽn từ LSTM Gridlock Prediction
+  - Thông tin thời tiết, sự kiện đặc biệt
+  - Dữ liệu lịch sử dài hạn (giờ cao điểm, ngày trong tuần)
+- **Phạm vi điều chỉnh**: 
+  - Chỉ điều chỉnh **thời gian đèn xanh** (40-80s) và **tỷ lệ làn đường**
+  - Không điều chỉnh **chu kỳ đèn** hoặc **thứ tự pha tín hiệu**
+- **Training time**: Yêu cầu **2000 episodes** (thời gian training dài), chưa tối ưu hóa tốc độ hội tụ
+- **Hardware requirements**: Cần GPU mạnh (NVIDIA V100+, 16GB VRAM) và 16+ CPU cores cho parallel training
+- **Khả năng khái quát hóa**:
+  - Model được train trên **một mạng lưới cụ thể** (khu vực nghiên cứu tại TP.HCM)
+  - Chưa kiểm chứng khả năng **transfer learning** sang mạng lưới khác
+  - Có thể cần **retrain** khi thay đổi topology mạng
+- **Reward function đơn giản**: Chỉ tối ưu throughput và giảm thời gian chờ, chưa tính:
+  - Công bằng giữa các hướng (fairness)
+  - Tiêu thụ nhiên liệu, khí thải
+  - Ưu tiên xe ưu tiên (xe cứu thương, xe buýt)
+- **Chưa tích hợp với Gridlock Prediction**: Hai hệ thống (LSTM dự báo tắc nghẽn và RL điều khiển đèn) hoạt động **độc lập**, chưa kết nối để tận dụng dự báo cho quyết định điều khiển
+
+### Kết quả đạt được:
+- **Best Episode Reward**: 4388.3 (Episode 1011)
+- **Throughput tăng**: +88.5% so với đèn cố định
+- **Reward cải thiện**: +40.5%
+- **Trade-off**: Hàng đợi tăng nhẹ (2.25 → 4.25 xe) do chiến lược tối ưu toàn cục
+
+---
+
 ## Gợi ý Sử dụng
 
 Bạn có thể sử dụng nội dung này để bổ sung vào:

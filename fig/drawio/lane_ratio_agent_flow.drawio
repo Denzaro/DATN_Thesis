@@ -1,0 +1,94 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Luồng LaneRatioAgent" id="lane-ratio-flow">
+    <mxGraphModel dx="1036" dy="614" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="LaneRatioAgent: Luồng Policy Beta Distribution" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="110" y="28" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="input" value="&lt;span style=&quot;font-weight: normal;&quot;&gt;1. Relative vehicles&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;2. Relative queue&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;3. Total vehicles&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;4. Total queue&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fontStyle=1;align=left;" parent="1" vertex="1">
+          <mxGeometry x="65" y="122.5" width="124" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;dashed=1" parent="1" vertex="1">
+          <mxGeometry x="234" y="91" width="220" height="306" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp-title" value="Mạng Policy (MLP)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="244" y="101" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc1" value="Lớp FC 1&#xa;input_dim → 128" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="254" y="141" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="relu1" value="Kích hoạt ReLU" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="254" y="196" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fc2" value="Lớp FC 2&#xa;128 → 64" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="254" y="241" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="relu2" value="Kích hoạt ReLU" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="254" y="296" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="_5PBz86ToKhi2uJ7Olvp-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="fc3" target="sigma">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fc3" value="Lớp FC 3&#xa;64 → 2×N_lanes" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="254" y="341" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2" parent="1" source="input" target="fc1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-fc1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="fc1" target="relu1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-relu1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="relu1" target="fc2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-fc2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="fc2" target="relu2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-relu2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="relu2" target="fc3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_5PBz86ToKhi2uJ7Olvp-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="sigma" target="convert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sigma" value="Độ lệch chuẩn σ,&amp;nbsp;&lt;div&gt;Trung bình μ&lt;br&gt;N_lanes giá trị&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11" parent="1" vertex="1">
+          <mxGeometry x="284.5" y="428" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="beta-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;dashed=1" parent="1" vertex="1">
+          <mxGeometry x="528" y="91" width="220" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="beta-title" value="Phân Phối Beta" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="538" y="101" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="convert" value="Chuyển sang α, β&#xa;α = μ·(μ(1-μ)/σ² - 1)&#xa;β = (1-μ)·(μ(1-μ)/σ² - 1)" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=9" parent="1" vertex="1">
+          <mxGeometry x="548" y="151" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sample" value="Lấy mẫu từ Beta&#xa;r_i ~ Beta(α_i, β_i)" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="548" y="251" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="clamp" value="Giới hạn [ε, 1-ε]&#xa;ε = 0.01" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10" parent="1" vertex="1">
+          <mxGeometry x="548" y="331" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="norm" value="Chuẩn hóa tỷ lệ&#xa;r_i^norm = r_i / Σr_j" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=10;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="548" y="411" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-convert" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="convert" target="sample" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-sample" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="sample" target="clamp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-clamp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1" parent="1" source="clamp" target="norm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="output" value="Tỷ lệ làn đường&#xa;Σr_i = 1.0" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=13;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="558" y="521" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow-output" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2" parent="1" source="norm" target="output" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

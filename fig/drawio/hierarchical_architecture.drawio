@@ -1,0 +1,84 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Kiến Trúc Phân Cấp" id="hierarchical-arch">
+    <mxGraphModel dx="1036" dy="614" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Hệ Thống Điều Khiển Giao Thông Đa Tác Tử Phân Cấp" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="284.5" y="30" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sumo" value="Môi Trường Mô Phỏng&#xa;SUMO" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=14;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="440" y="240" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="duration-agent" value="DurationAgent&lt;br&gt;&lt;br&gt;LSTM + Attention (Dual-mode)&lt;br&gt;128 hidden units, 2 layers&lt;br&gt;&lt;br&gt;Đầu ra: Thời lượng mỗi pha&lt;br&gt;15-120 giây/pha" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="120" y="210" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-agent" value="LaneRatioAgent&#xa;&#xa;Beta Distribution&#xa;Policy Gradient&#xa;&#xa;Đầu ra: Tỷ lệ làn&#xa;Σ = 1.0" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=12;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="884.5" y="230" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sensors" value="Cảm Biến TraCI&#xa;E1 Detectors" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11" parent="1" vertex="1">
+          <mxGeometry x="500" y="440" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tls" value="Tín Hiệu Đèn Giao Thông&#xa;Giao Diện Điều Khiển" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=2;fontSize=11" parent="1" vertex="1">
+          <mxGeometry x="500" y="130" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="sumo" target="sensors" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow1-label" value="Dữ liệu trạng thái" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10" parent="arrow1" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="49" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="sensors" target="duration-agent" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2-label" value="lưu lượng, mật độ,&#xa;thời gian chờ" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" parent="arrow2" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="-78" y="-21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="sensors" target="lane-agent" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3-label" value="trạng thái giao thông" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" parent="arrow3" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="76" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="duration-agent" target="tls" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow4-label" value="Thời lượng xanh&#xa;15-120s" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" parent="arrow4" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="-48" y="21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="lane-agent" target="tls" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="980" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow5-label" value="Phân bổ làn đường" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9" parent="arrow5" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="4" relative="1" as="geometry">
+            <mxPoint x="26" y="16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2" parent="1" source="tls" target="sumo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow6-label" value="Áp dụng hành động" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10" parent="arrow6" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="45" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
