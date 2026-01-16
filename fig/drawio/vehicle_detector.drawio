@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
   <diagram name="Page-1" id="3o7AIeRR_VJB7JcFHsJe">
-    <mxGraphModel dx="1056" dy="1733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="967" dy="1733" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -70,6 +70,9 @@
         <mxCell id="4yIeASf09Wk0FxncehYY-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Ghép 4 phần ảnh lại thành 1 ảnh hoàn chỉnh để &lt;br&gt;trực quan hóa số liệu" vertex="1">
           <mxGeometry height="50" width="200" x="510" y="217.5" as="geometry" />
         </mxCell>
+        <mxCell id="zKprBajrywTWilQmj0I1-2" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="zKprBajrywTWilQmj0I1-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="4yIeASf09Wk0FxncehYY-20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Ghi số liệu vào file CSV" vertex="1">
           <mxGeometry height="50" width="200" x="510" y="310" as="geometry" />
         </mxCell>
@@ -83,10 +86,7 @@
           <mxGeometry height="60" width="100" x="100" y="-30" as="geometry" />
         </mxCell>
         <mxCell id="4yIeASf09Wk0FxncehYY-34" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=14;" value="Kết thúc" vertex="1">
-          <mxGeometry height="60" width="100" x="560" y="390" as="geometry" />
-        </mxCell>
-        <mxCell id="4yIeASf09Wk0FxncehYY-35" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="4yIeASf09Wk0FxncehYY-34">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry height="60" width="100" x="560" y="470" as="geometry" />
         </mxCell>
         <mxCell id="GFmUdF6Oi1lAVu-8vRkI-5" edge="1" parent="1" source="4yIeASf09Wk0FxncehYY-1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="4yIeASf09Wk0FxncehYY-10" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
@@ -107,6 +107,12 @@
             <mxPoint x="400" y="270" as="sourcePoint" />
             <mxPoint x="325" y="490" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="zKprBajrywTWilQmj0I1-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;" value="Chuẩn hoá mốc thời gian về đơn vị 5 phút" vertex="1">
+          <mxGeometry height="50" width="200" x="510" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="zKprBajrywTWilQmj0I1-3" edge="1" parent="1" source="zKprBajrywTWilQmj0I1-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="4yIeASf09Wk0FxncehYY-34">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
