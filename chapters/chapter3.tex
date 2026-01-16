@@ -14,7 +14,7 @@ Về giai đoạn tiền xử lý dữ liệu, nhận diện và đếm phương
     \item Các ảnh đầu vào cần được thực hiện các bước xử lý ảnh cơ bản như tăng độ phân giải, giảm nhiễu và chuẩn hóa kích thước.
     \item Hệ thống tích hợp mô hình YOLOv11 nhằm nhận diện các phương tiện giao thông chính trên từng ảnh snapshot, trong đó các phương tiện được quy ước và phân loại thành hai nhóm: xe hai bánh (xe máy) và xe bốn bánh (xe hơi). Ngoài ra, đối với các địa điểm có mật độ giao thông cao, hệ thống cần bổ sung các thuật toán xử lý ảnh để ước lượng số lượng xe máy dựa trên tỷ lệ che phủ trong các vùng quan tâm (ROI).
     \item Kết quả phát hiện bao gồm số lượng phương tiện theo từng loại tại mỗi thời điểm và tại từng địa điểm giám sát cụ thể, trong đó “địa điểm” được hiểu là vị trí camera đại diện cho một khu vực giao thông trên bản đồ.
-    \item Lưu trữ kết quả đếm phương tiện với timestamp và vị trí tương ứng để phục vụ cho các bước xử lý tiếp theo.
+    \item Lưu trữ kết quả đếm phương tiện với timestamp và vị trí tương ứng.
 \end{itemize}
 
 Tiếp đến là yêu cầu về mô phỏng giao thông:
@@ -63,7 +63,7 @@ Cuối cùng, về giai đoạn trực quan hóa và phân tích, hệ thống c
     \item \textbf{Khối tiền xử lý ảnh: } Khối tiền xử lý ảnh đảm nhiệm việc thực hiện các phép biến đổi cần thiết nhằm cải thiện chất lượng dữ liệu hình ảnh trước khi đưa vào mô hình nhận diện. Nguyên nhân là do các ảnh snapshot thu thập từ camera giao thông công khai trên mạng thường có chất lượng không đồng đều, chịu ảnh hưởng bởi nhiều yếu tố như độ phân giải thấp, nhiễu ảnh, điều kiện ánh sáng không ổn định và góc chụp chưa tối ưu. Do đó, khối này áp dụng một số kỹ thuật xử lý ảnh cơ bản, bao gồm tăng cường độ phân giải (super-resolution), lọc nhiễu (denoising), chuẩn hóa kích thước ảnh (resizing) và chia nhỏ ảnh nhằm đảm bảo dữ liệu đầu vào cho mô hình nhận diện đạt chất lượng tốt hơn và có tính nhất quán, dễ dàng nhận diện.
     \item \textbf{Khối nhận diện và phân tích phương tiện: } Khối nhận diện và phân tích phương tiện sử dụng mô hình học sâu YOLOv11 để thực hiện phát hiện và phân loại các phương tiện giao thông xuất hiện trong từng ảnh snapshot. Mô hình được khởi tạo từ trọng số huấn luyện sẵn (pre-trained) trên các tập dữ liệu lớn và đa dạng, nhờ đó có khả năng nhận diện hiệu quả các loại phương tiện phổ biến. Tuy nhiên, nhằm đơn giản hóa bài toán và phù hợp với mục tiêu nghiên cứu, các phương tiện được quy ước và gom nhóm thành hai lớp chính, bao gồm xe hai bánh (đại diện cho xe máy, xe đạp,...) và xe bốn bánh (đại diện cho xe hơi, xe tải, xe buýt,...). Bên cạnh đó, do chất lượng hình ảnh thu thập từ camera giao thông còn hạn chế và các bước tiền xử lý không thể khắc phục hoàn toàn các yếu tố bất lợi như góc quay cao, góc quay xiên hoặc mật độ giao thông lớn, một số phương tiện đặc biệt là xe máy có thể bị che khuất hoặc chồng chéo, dẫn đến độ chính xác nhận diện suy giảm. Để khắc phục vấn đề này, khối xử lý còn tích hợp các thuật toán xử lý ảnh bổ sung như Polygon Fill, Rectangle Fill, Pixel-wise Logic và Non-zero Pixel Count nhằm tính toán tỷ lệ che phủ của xe máy trong các vùng quan tâm. Trên cơ sở đó, số lượng xe máy trong từng vùng được ước lượng, góp phần nâng cao độ chính xác tổng thể của quá trình đếm phương tiện.
     \item \textbf{Khối mô phỏng: } Sử dụng phần mềm SUMO để tái hiện mạng lưới giao thông thực tế. Khối này tiếp nhận hạ tầng từ OSM và luồng phương tiện từ khối dự báo để thực hiện các kịch bản mô phỏng giao thông vi mô, phục vụ việc đánh giá chiến lược điều phối.
-    \item \textbf{Khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông: } Khối này chịu trách nhiệm dự báo lưu lượng giao thông trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện. Dữ liệu đếm phương tiện được chuyển đổi thành chuỗi thời gian và đưa vào mô hình LSTM (Long Short-Term Memory) để học các quy luật biến thiên của luồng giao thông. Trên cơ sở kết quả dự báo, khối này tính toán các thông số điều khiển tín hiệu tối ưu và gửi lệnh thông qua giao diện TraCI (Traffic Control Interface) để điều chỉnh chương trình đèn giao thông trong mô phỏng SUMO, nhằm tối ưu hóa khả năng thông hành của mạng lưới giao thông.
+    \item \textbf{Khối điều chỉnh tín hiệu đèn giao thông: } Đầu tiên khối này dự báo lưu lượng giao thông trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện. Dữ liệu đếm phương tiện được chuyển đổi thành chuỗi thời gian và đưa vào mô hình LSTM (Long Short-Term Memory) để học các quy luật biến thiên của luồng giao thông. Trên cơ sở kết quả được đưa ra, khối này tính toán các thông số điều khiển tín hiệu tối ưu và gửi lệnh thông qua giao diện TraCI (Traffic Control Interface) để điều chỉnh chương trình đèn giao thông trong mô phỏng SUMO, nhằm tối ưu hóa khả năng thông hành của mạng lưới giao thông.
     \item \textbf{Khối hiển thị và đánh giá kết quả: } Cung cấp giao diện đồ họa (Dashboard) để người dùng theo dõi trạng thái giao thông thời gian thực, quản lý các kịch bản mô phỏng thông qua Scenario Explorer và xuất ra các biểu đồ đánh giá hiệu quả (Waiting Time, Mean Speed).
 \end{itemize}
 
@@ -277,7 +277,30 @@ Cuối cùng, hệ thống đếm số pixel trong vùng ước lượng là xe 
 
 Như hình \ref{fig:result_static_config}, hệ thống sử dụng hệ số quy đổi từ tỷ lệ che phủ sang số lượng xe hai bánh được cấu hình trong tệp YAML để ước lượng số lượng xe hai bánh trong vùng ROI. Hệ số này được xác định dựa trên việc tính toán phần trăm che phủ trung bình của một xe hai bánh trong vùng quan tâm, từ đó suy ra số lượng xe hai bánh tương ứng với tỷ lệ che phủ đo được. Kết quả khi quy đổi ra sẽ được cộng vào số lượng xe hai bánh của thời điểm đó và lưu trữ cùng với số lượng xe ô tô đã được phát hiện bởi mô hình YOLOv11.
 
-Bước cuối cùng nhưng cũng không kém phần quan trọng, hệ thống sẽ tổng hợp các khung thời điểm về mỗi 5 phút để tạo thành chuỗi thời gian lưu lượng giao thông đồng nhất. Quá trình này bao gồm việc nhóm các bản ghi theo khoảng thời gian 5 phút, sau đó tính lượng trung bình phương tiện có trong khoảng thời gian đó. 
+Kế đến, hệ thống sẽ tổng hợp các khung thời điểm về mỗi năm phút để tạo thành chuỗi thời gian lưu lượng giao thông đồng nhất. Quá trình này bao gồm việc nhóm các bản ghi theo khoảng thời gian năm phút, sau đó tính lượng trung bình phương tiện có trong khoảng thời gian đó. 
+
+Cuối cùng, hệ thống sẽ thực hiện quá trình tinh chỉnh dữ liệu trước khi đưa vào hai khối điều khiển tín hiệu đèn giao thông và mô phỏng. Việc ùn tắc tại nút giao hoặc đường kính nút giao lớn làm một số phương tiện có thể xuất hiện trên 1 hoặc nhiều snapshot liên tiếp. Do đó, để tránh việc đếm số lượng phương tiện bị trùng lặp, hệ thống sẽ áp dụng thuật toán lọc trung bình như sau:
+\begin{equation}
+q_i(t) =
+\left(
+\frac{\bar{N}(t)\cdot 3600}{L_{\text{tot}}}
+\cdot
+\frac{L_i}{T_i}
+\right)
+\cdot
+\left(1 - \gamma_i\right)
+\end{equation}
+
+\noindent
+\text{trong đó:}
+\begin{itemize}
+    \item $q_i(t)$ là lưu lượng phương tiện của nhánh $i$ tại thời điểm $t$ (xe/giờ),
+    \item $\bar{N}(t)$ là số lượng phương tiện trung bình quan sát được tại nút giao trong khoảng thời gian $\Delta t$,
+    \item $L_{\text{tot}}$ là tổng số làn (đã quy đổi) kết nối với nút giao,
+    \item $L_i$ là số làn của nhánh $i$,
+    \item $T_i$ là thời gian trung bình để phương tiện vượt qua nút giao từ nhánh $i$,
+    \item $\gamma_i$ là hệ số tắc nghẽn, biểu diễn tỷ lệ phương tiện không tham gia dòng chảy.
+\end{itemize}
 
 \subsection{Thiết kế khối mô phỏng giao thông (SUMO)}
 Khối mô phỏng được thiết kế dựa trên một quy trình tự động hóa (Pipeline) tích hợp giữa dữ liệu địa không gian thực tế và các công cụ mô phỏng vi mô. Quy trình xây dựng môi trường mô phỏng bao gồm 5 giai đoạn chính:
@@ -320,11 +343,11 @@ Hình \ref{fig:map_step1}, \ref{fig:map_step2} và \ref{fig:map_step3} minh họ
     \item \textbf{Cấu hình xuất dữ liệu:} Tùy chỉnh các tham số chuyển đổi như gộp các nút giao gần nhau (junction grouping), tự động thêm đèn tín hiệu (TLS) và tạo luồng phương tiện ngẫu nhiên (random flows) để kiểm thử nhanh mạng lưới.
 \end{itemize}
 
-\subsection{Thiết kế khối dự báo lưu lượng và điều chỉnh tín hiệu đèn giao thông}
+\subsection{Thiết kế khối điều chỉnh tín hiệu đèn giao thông}
 
-\subsubsection{Giới thiệu khối dự báo}
+\subsubsection{Giới thiệu về dự báo lưu lượng trong điều chỉnh tín hiệu đèn}
 
-Khối dự báo lưu lượng giao thông chịu trách nhiệm dự báo mức độ tắc nghẽn trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện phương tiện. Kết quả dự báo được sử dụng để điều chỉnh tín hiệu đèn giao thông thông qua giao diện TraCI, nhằm tối ưu hóa khả năng thông hành của mạng lưới.
+Dự báo lưu lượng giao thông chịu trách nhiệm dự báo mức độ tắc nghẽn trong tương lai dựa trên dữ liệu lịch sử từ khối nhận diện phương tiện. Kết quả dự báo được sử dụng để điều chỉnh tín hiệu đèn giao thông thông qua giao diện TraCI, nhằm tối ưu hóa khả năng thông hành của mạng lưới.
 
 \subsubsection{Dữ liệu đầu vào từ mô phỏng SUMO}
 Dữ liệu được thu thập từ SUMO thông qua TraCI API với các thông tin chính:
